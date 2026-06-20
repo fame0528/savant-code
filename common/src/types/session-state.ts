@@ -49,6 +49,13 @@ export type AgentState = {
    * This is updated on every agent step via the /api/v1/token-count endpoint.
    */
   contextTokenCount: number
+  /**
+   * Number of times the context-pruner has actually shrunk the message
+   * history this run. Incremented by the context-pruner sub-agent right
+   * before its final `set_messages` yield (only on real pruning, not the
+   * no-op pass-through). Optional for backward compatibility.
+   */
+  compactCount?: number
 }
 
 export const AgentOutputSchema = z.discriminatedUnion('type', [
@@ -137,6 +144,7 @@ export function getInitialAgentState(): AgentState {
     systemPrompt: '',
     toolDefinitions: {},
     contextTokenCount: 0,
+    compactCount: 0,
   }
 }
 export function getInitialSessionState(

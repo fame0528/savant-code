@@ -94,5 +94,42 @@
 - FID-010 foundation shipped WITHOUT a version bump. Per the 1-bump-per-day rule, the next bump is the user's call (0.0.2, 0.0.3, ..., 0.0.10 → 0.1.0).
 - Commit message discipline: feat(agent-runtime):, fix(lint):, docs:, release: vX.Y.Z. No scope creep in commit types.
 
+### Session 2026-06-20-1734: FID-013 + FID-010 closure — search existing code FIRST
+
+**Key Learnings (CRITICAL — user-flagged):**
+
+- **"Search the actual codebase first, not the reference material."** I was reading `C:\Users\spenc\dev\savant-code\resoruces\codebuff\` as if it were external — but `resoruces/` is the **pre-rebrand source** of the same codebase. The user caught this and forced a re-grep on `savant-code/` itself, which revealed `agents/context-pruner.ts` (867 lines) — identical architecture to what I was about to design. The rebrand was name-only (Codebuff → Savant-Code); the functionality was preserved. New principle (now permanent):
+  - The source of truth is `savant-code/`, not `resoruces/`.
+  - `resoruces/` is a hint to look there, but only after confirming the codebase lacks the feature.
+  - Citing `resoruces/` as if external — when it's the pre-rebrand source of the same codebase — is a Law 1 (read 0-EOF before touch) AND Law 7 (search existing code first) violation. Both apply.
+  - Concretely: before designing any feature, grep `savant-code/` for the concept. If it exists, read the actual implementation. Only consult `resoruces/` if the codebase lacks the feature OR to confirm a pre-existing design.
+
+**FID-013 outcomes (closed):**
+
+- The wiring I planned to add (auto-compaction in the agent loop) was already in place via per-base-agent `handleSteps` in `agents/base2/base2.ts` (6 model variants), `agents/base2/base-deep.ts`, and `agents/general-agent/general-agent.ts`. Each base agent spawns `context-pruner` via `spawn_agent_inline` before each LLM step. `HIDDEN_AGENT_IDS = ['savant-code/context-pruner']` in `cli/src/utils/constants.ts:16` confirms it's auto-invoked, not user-spawned.
+- Three real improvements landed:
+  1. **DRY refactor in `base2.ts`:** 6 nearly-identical variant functions (handleStepsFree200k, handleStepsFree250k, handleStepsFree400k, handleSteps200k, handleSteps250k, handleSteps400k — ~120 LOC) replaced with a single `getBase2HandleSteps({ isFree, maxContextLength })` function that returns the right generator. Net: -92 LOC, single point of change.
+  2. **`compactCount?: number` added to `AgentState`** (initialized to 0 in `getInitialAgentState`; incremented in `context-pruner.ts:856` right before the final `set_messages` yield, only on real pruning not the no-op pass-through). Observability for debugging long-running sessions.
+  3. **Architecture doc `dev/notes/context-pruner-integration.md`** (~250 lines) explaining the spawn pattern, pruner logic, constants, how to add a new base agent, and how to add a new tool's pruning logic.
+- Verification: `bun test agents/__tests__/context-pruner.test.ts` → 128/128 pass in 309ms. `bun x tsc --noEmit -p tsconfig.json` → exit 0.
+
+**FID-010 outcomes (closed → archived):**
+
+- The LLM-based `compactMessages` foundation was **dead code** — zero production callers (grep verified). The codebase already had a deterministic, battle-tested context-pruner wired in.
+- Deleted `packages/agent-runtime/src/util/compaction.ts` and `packages/agent-runtime/src/__tests__/compaction.test.ts` (-440 LOC). Kept `common/src/constants/model-context-windows.ts` as a useful general utility.
+- FID-010 moved to `dev/fids/archive/`. Lesson: when the codebase already has a working design, do NOT re-implement it from reference material.
+
+**Agent Behavior:**
+
+- After being corrected on the resoruces misunderstanding, the agent went straight to grep + read 0-EOF on the actual codebase, then presented 3 real improvements (DRY refactor, compactCount observability, architecture doc) and 3 FID-010 dispositions (keep/delete/repurpose). User picked "all 3" for FID-013 + defaulted to option 2 (delete dead code) for FID-010. The recovery was fast because the new principle (search existing code first) is now internal.
+- The DRY refactor preserved byte-for-byte generator output (verified by inspection of each variant — only `maxContextLength` and `cacheExpiryMs` differed). Existing context-pruner tests (128) cover the refactored behavior without modification. This is a strong signal: when a refactor doesn't require test changes, the behavior is preserved.
+- The deleted LLM-based `compactMessages` (21 tests) was a wrong-direction re-implementation. Pattern: if a feature exists in the codebase but the agent's first instinct is to design it from scratch, the agent should grep FIRST.
+
+**Technical Insights:**
+
+- `Object.assign(initialAgentState, newAgentState)` pattern in `loopAgentSteps` (line 1075) propagates any field the sub-agent mutates, including `compactCount`. The sub-agent and parent share `agentState` by reference — mutating in the sub-agent is the established way to pass state back.
+- The `set_messages` tool yields a new message array; the runtime replaces `agentState.messageHistory` with the new array. The pruner's `set_messages` yield is the LAST yield in its `handleSteps` generator — anything after would be dead code.
+- The `isFree` distinction matters for `cacheExpiryMs`: free models use 30min TTL (shared-rate-limit causes more cache misses); paid models use the default. The DRY refactor preserves this via conditional spread: `...(cacheExpiryMs !== undefined && { cacheExpiryMs })`.
+
 ---
 <!-- Add new entries above this line -->

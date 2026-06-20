@@ -854,6 +854,11 @@ ${SUMMARY_DISCLAIMER}`,
       finalMessages.push({ ...latestLiveUserPromptMessage, sentAt: now })
     }
 
+    // Observability: increment compactCount on the shared agentState so the
+    // parent agent's loop can see how many times pruning has fired this run.
+    // Mutating agentState is safe here — it shares the parent's reference.
+    agentState.compactCount = (agentState.compactCount ?? 0) + 1
+
     yield {
       toolName: 'set_messages',
       input: {

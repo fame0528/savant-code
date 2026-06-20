@@ -17,6 +17,7 @@ dev
 !dev/fids/.gitkeep
 !dev/fids/archive/.gitkeep
 !dev/fids/archive/
+!dev/notes/
 !dev/session-summaries/.gitkeep
 !dev/LEARNINGS.md
 dist

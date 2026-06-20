@@ -376,130 +376,28 @@ function getBase2HandleSteps({
   isFree: boolean
   maxContextLength: 200_000 | 250_000 | 400_000
 }): Base2HandleSteps {
-  if (isFree) {
-    if (maxContextLength === 200_000) return handleStepsFree200k
-    if (maxContextLength === 250_000) return handleStepsFree250k
-    return handleStepsFree400k
-  }
-  if (maxContextLength === 200_000) return handleSteps200k
-  if (maxContextLength === 250_000) return handleSteps250k
-  return handleSteps400k
-}
-
-const handleStepsFree200k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 200_000,
-          ...(params ?? {}),
-          cacheExpiryMs: 30 * 60 * 1000,
+  // Free models use a 30-minute prompt-cache TTL (more cache-misses from
+  // shared-rate-limit infrastructure); paid models rely on the default.
+  // Centralized so all 6 (isFree × maxContextLength) variants stay in sync.
+  const cacheExpiryMs = isFree ? 30 * 60 * 1000 : undefined
+  return function* ({ params }) {
+    while (true) {
+      yield {
+        toolName: 'spawn_agent_inline',
+        input: {
+          agent_type: 'context-pruner',
+          params: {
+            maxContextLength,
+            ...(params ?? {}),
+            ...(cacheExpiryMs !== undefined && { cacheExpiryMs }),
+          },
         },
-      },
-      includeToolCall: false,
-    } as any
+        includeToolCall: false,
+      } as any
 
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
-  }
-}
-
-const handleStepsFree250k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 250_000,
-          ...(params ?? {}),
-          cacheExpiryMs: 30 * 60 * 1000,
-        },
-      },
-      includeToolCall: false,
-    } as any
-
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
-  }
-}
-
-const handleStepsFree400k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 400_000,
-          ...(params ?? {}),
-          cacheExpiryMs: 30 * 60 * 1000,
-        },
-      },
-      includeToolCall: false,
-    } as any
-
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
-  }
-}
-
-const handleSteps200k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 200_000,
-          ...(params ?? {}),
-        },
-      },
-      includeToolCall: false,
-    } as any
-
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
-  }
-}
-
-const handleSteps250k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 250_000,
-          ...(params ?? {}),
-        },
-      },
-      includeToolCall: false,
-    } as any
-
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
-  }
-}
-
-const handleSteps400k: Base2HandleSteps = function* ({ params }) {
-  while (true) {
-    yield {
-      toolName: 'spawn_agent_inline',
-      input: {
-        agent_type: 'context-pruner',
-        params: {
-          maxContextLength: 400_000,
-          ...(params ?? {}),
-        },
-      },
-      includeToolCall: false,
-    } as any
-
-    const { stepsComplete } = yield 'STEP'
-    if (stepsComplete) break
+      const { stepsComplete } = yield 'STEP'
+      if (stepsComplete) break
+    }
   }
 }
 
