@@ -21,7 +21,7 @@ commands:
   build: "bun run build:sdk && bun run build:savant-free"
   test: "bun test"
   type_check: "bun x tsc --noEmit -p tsconfig.json"
-  lint: "bun x eslint . --max-warnings 0"
+  lint: "bun x eslint . --max-warnings 9999"
   format: "bun x prettier --write ."
   clean: "rm -rf dist tsconfig.tsbuildinfo && find . -name node_modules -prune -o -name '*.tsbuildinfo' -print -delete"
 

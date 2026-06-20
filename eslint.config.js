@@ -13,6 +13,10 @@ export default tseslint.config(
       '**/.contentlayer/*',
       '**/node_modules/*',
       'agents-graveyard/**', // Archived/deprecated agents - no need to lint
+      'resoruces/**', // Local reference / research material (gitignored) - 33K+ files, lint OOMs without this
+      'cli/release/**', // Prebuilt npm release shim (codebuff)
+      'cli/release-staging/**', // Prebuilt npm release shim (codecane)
+      'free-build/cli/release/**', // Prebuilt npm release shim for savant-free
     ],
   },
 
