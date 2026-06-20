@@ -13,6 +13,7 @@ tags
 node_modules
 dev
 !dev/.gitkeep
+!dev/ECHO.md
 !dev/fids/.gitkeep
 !dev/fids/archive/.gitkeep
 !dev/fids/archive/
