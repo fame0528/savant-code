@@ -54,6 +54,9 @@ ECHO Protocol's default layout and is gitignored except for marker files
    - `project.name` and `project.version` set from the root `package.json`
 
 2. **`./dev/`** (root-level, not under `protocol/`) holds:
+   - `ECHO.md` — mirrored copy of `protocol/ECHO.md` so agents that look for
+     the spec at the default `./dev/` location find it (track this with
+     `protocol/ECHO.md` when syncing)
    - `LEARNINGS.md` — cross-session knowledge (tracked)
    - `fids/` — active FIDs (gitignored, archive/ tracked via `.gitkeep`)
    - `fids/archive/` — closed FIDs (gitignored, `.gitkeep` tracked)
@@ -87,6 +90,7 @@ overview.jpg
 coding-standards/
 templates/
 scripts/
+dev/ECHO.md        # mirror of protocol/ECHO.md at default agent lookup location
 ```
 
 Update `./protocol/VERSION` first, then propagate the same value to
