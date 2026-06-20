@@ -1,4 +1,4 @@
-﻿# SAVANT-CODE v0.0.1
+﻿# SAVANT-CODE v0.1.0
 
 <!-- markdownlint-disable MD033 -->
 <div align="center">
@@ -7,7 +7,7 @@
 
 **Multi-Agent AI Coding Assistant. TypeScript Monorepo. ECHO-Protocol Citizen.**
 
-Two products ship from this monorepo. **Savant-Code** is the full-featured AI coding agent for your terminal — multi-agent orchestration, custom skills, MCP tool discovery, and the [`@savant-code/sdk`](https://www.npmjs.com/package/@savant-code/sdk) for embedding agents in your own apps. **Savant-Free** is the free, ad-supported variant — no subscription, no API key, same agent runtime with paid features stripped at compile time via `SAVANT_FREE_MODE=true`.
+Two products ship from this monorepo. **Savant-Code** is the full-featured AI coding agent for your terminal — multi-agent orchestration, custom skills, MCP tool discovery, progressive skill loading, custom slash commands, stream-JSON output for CI, and the [`@savant-code/sdk`](https://www.npmjs.com/package/@savant-code/sdk) for embedding agents in your own apps. **Savant-Free** is the free, ad-supported variant — no subscription, no API key, same agent runtime with paid features stripped at compile time via `SAVANT_FREE_MODE=true`.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-%23000000?style=flat-square&logo=typescript&logoColor=%2300fbff)](https://www.typescriptlang.org/)[![Bun](https://img.shields.io/badge/Bun-1.3.14-%23000000?style=flat-square&logo=bun&logoColor=%2300fbff)](https://bun.sh/)[![React](https://img.shields.io/badge/React-19-%23000000?style=flat-square&logo=react&logoColor=%2300fbff)](https://react.dev/)[![OpenTUI](https://img.shields.io/badge/OpenTUI-0.2.2-%23000000?style=flat-square&logo=opentui&logoColor=%2300fbff)](https://github.com/sst/opentui)[![ECHO](https://img.shields.io/badge/ECHO-v0.1.3-%23000000?style=flat-square&logo=github&logoColor=%2300fbff)](protocol/ECHO.md)[![License](https://img.shields.io/badge/License-Apache_2.0-%23000000?style=flat-square&logo=apache&logoColor=%2300fbff)](LICENSE)[![Release](https://img.shields.io/badge/Release-v0.0.1-%23000000?style=flat-square&logo=semver&logoColor=%2300fbff)](https://github.com/fame0528/savant-code/releases/tag/v0.0.1)
 
@@ -72,6 +72,7 @@ The whole project ships under [ECHO Protocol v0.1.3](protocol/ECHO.md) — the s
 - **Cancellation** — `AbortSignal` propagates through subagent streams.
 - **Three module formats** — `dist/index.cjs` (require), `dist/index.mjs` (import), `dist/index.d.ts` (types).
 - **Pure types** — `sideEffects: false`, tree-shakeable.
+- **Stream-JSON event schema** (v0.1) — `StreamJsonEmitter` + `StreamEvent` types for non-interactive agent runs. Emit `session.start` / `message.user` / `message.assistant` (chunked) / `message.assistant.done` / `tool.call` / `tool.result` / `error` / `session.end` to any `Writable` stream.
 
 ### Agent Runtime (`@savant-code/agent-runtime`)
 
@@ -240,6 +241,40 @@ npm install -g savant-code
 cd ~/my-project
 savant-code
 ```
+
+### 7. Use in CI / scripts (stream-JSON, v0.1+)
+
+```bash
+# Auto-detected when stdout is not a TTY
+savant-code "fix the failing tests" | jq -c 'select(.type | IN("message.assistant.done", "session.end"))'
+
+# Or be explicit
+savant-code --output-format stream-json "refactor the auth module" > session.ndjson 2> diagnostics.log
+```
+
+Exit code: `0` on success, `1` on error or cancellation. One JSON object per line, versioned with `v: 1`. See [protocol/CHANGELOG.md](protocol/CHANGELOG.md) for the event schema.
+
+### 8. Define a custom slash command (v0.1+)
+
+```text
+.savant/commands/
+  review.md          → /review
+  pr.md              → /pr
+```
+
+Each `.md` file has optional YAML frontmatter and a body template:
+
+```markdown
+---
+description: Review code changes with focus on a specific area
+aliases: [rev]
+argument-hint: "<area>"
+---
+
+Please review the recent changes with focus on $1. Use $@ for the full context.
+```
+
+Placeholders (per opencode convention): `$1`–`$N` (positional, shell-quoted), `$ARG` / `$@` (entire args), `$SELECTION` (editor selection). Built-in commands always win on collision. Strict mode (`SAVANT_CODE_STRICT_COMMANDS=1` + `~/.savant/allowlist.json`) gates which custom commands are allowed to load.
 
 ---
 
