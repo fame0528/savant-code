@@ -3,7 +3,7 @@
 <!-- markdownlint-disable MD033 -->
 <div align="center">
 
-<img src="assets/codebuff-vs-claude-code.png" alt="Savant-Code — Multi-Agent AI Coding Assistant" width="850" />
+<img src="assets/banner.png" alt="Savant-Code — Multi-Agent AI Coding Assistant" width="850" />
 
 **Multi-Agent AI Coding Assistant. TypeScript Monorepo. ECHO-Protocol Citizen.**
 
