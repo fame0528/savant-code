@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "noEmit": true,
+    "ignoreDeprecations": "5.0",
 
     "strict": true,
     "noImplicitReturns": true,

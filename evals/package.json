@@ -1,6 +1,6 @@
 ﻿{
   "name": "@savant-code/evals",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Evaluation scripts for Savant-Code (public buffbench subset)",
   "private": true,
   "type": "module",

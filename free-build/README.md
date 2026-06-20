@@ -87,8 +87,6 @@ bun savant-free/cli/build.ts 1.0.0
 - [GitHub](https://github.com/savant-code/savant-code)
 - [Website](https://savant-code.dev)
 
-> Built on the [Savant-Code](https://savant-code.dev) platform.
-
 ## License
 
 MIT

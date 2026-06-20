@@ -19,7 +19,7 @@ Savant-Free is the public, free coding agent built from the Savant-Code agent fr
 - `packages/agent-runtime/` - agent runtime and tool handling
 - `packages/code-map/` - source parsing helpers
 - `packages/llm-providers/` - public LLM provider shims
-- `savant-free/` - Savant-Free CLI, release files, and e2e tests
+- `free-build/` - free ad-supported variant of the CLI (Savant-Free), build & release files
 - `scripts/tmux/` - tmux helpers for CLI testing
 
 ## Conventions
