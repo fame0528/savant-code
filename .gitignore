@@ -32,6 +32,10 @@ database.db
 database.db-shm
 database.db-wal
 
+# Local research / reference material (not part of source)
+resoruces/
+.kilo/
+
 debug/
 .context/
 docs/bot-detection.md

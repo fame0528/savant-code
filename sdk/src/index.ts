@@ -40,8 +40,22 @@ export { loadLocalAgents } from './agents/load-agents'
 export { loadMCPConfig, loadMCPConfigSync } from './agents/load-mcp-config'
 export { loadSkills } from './skills/load-skills'
 export { formatAvailableSkillsXml } from '@savant-code/common/util/skills'
-export type { LoadSkillsOptions } from './skills/load-skills'
-export type { SkillDefinition, SkillsMap } from '@savant-code/common/types/skill'
+
+export {
+  loadSkills,
+  loadSkillsMetadata,
+  activateSkill,
+  type LoadSkillsOptions,
+  type ActivateSkillOptions,
+} from './skills/load-skills'
+
+export type {
+  SkillDefinition,
+  SkillMetadata,
+  SkillFrontmatter,
+  SkillsMap,
+  SkillsMetadataMap,
+} from '@savant-code/common/types/skill'
 export type {
   LoadedAgents,
   LoadedAgentDefinition,

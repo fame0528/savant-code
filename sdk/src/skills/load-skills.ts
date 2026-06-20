@@ -10,7 +10,9 @@ import {
 import {
   SkillFrontmatterSchema,
   type SkillDefinition,
+  type SkillMetadata,
   type SkillsMap,
+  type SkillsMetadataMap,
 } from '@savant-code/common/types/skill'
 import matter from 'gray-matter'
 
@@ -40,14 +42,33 @@ function parseFrontmatter(content: string): {
 }
 
 /**
- * Loads a single skill from a SKILL.md file.
- * Returns null if the skill is invalid.
+ * Extracts the `file://` or `path:` metadata value from a SKILL.md body.
+ * Used for optional referenced-file resolution (FID-2026-0620-004 step 3).
  */
-function loadSkillFromFile(
+function extractReferencedFiles(body: string): string[] {
+  // Pattern: <!-- referenced: <path1>, <path2> -->
+  const match = body.match(/<!--\s*referenced:\s*([^*]+?)\s*-->/)
+  if (!match) return []
+  return match[1]
+    .split(',')
+    .map((p) => p.trim())
+    .filter(Boolean)
+}
+
+/**
+ * Loads a single skill's metadata (frontmatter only) from a SKILL.md file.
+ * Returns null if the skill is invalid.
+ *
+ * FID-2026-0620-004 — progressive skill loading (tier 1: discovery).
+ * This reads the entire file (we need the frontmatter) but does NOT
+ * expose the body content to callers. The body is only read in full by
+ * `activateSkill()`.
+ */
+function loadSkillMetadataFromFile(
   skillDir: string,
   skillFilePath: string,
   verbose: boolean,
-): SkillDefinition | null {
+): SkillMetadata | null {
   const dirName = path.basename(skillDir)
 
   // Read the file
@@ -98,20 +119,21 @@ function loadSkillFromFile(
     description: frontmatter.description,
     license: frontmatter.license,
     metadata: frontmatter.metadata,
-    content,
+    autoActivate: frontmatter.autoActivate,
     filePath: skillFilePath,
   }
 }
 
 /**
- * Discovers skills from a skills directory.
- * Looks for <skillsDir>/<skill-name>/SKILL.md files.
+ * Discovers skill metadata from a skills directory (tier 1: discovery).
+ * Looks for <skillsDir>/<skill-name>/SKILL.md files and reads only the
+ * frontmatter from each. Bodies are NOT loaded here.
  */
-function discoverSkillsFromDirectory(
+function discoverSkillsMetadataFromDirectory(
   skillsDir: string,
   verbose: boolean,
-): SkillsMap {
-  const skills: SkillsMap = {}
+): SkillsMetadataMap {
+  const skills: SkillsMetadataMap = {}
 
   let entries: string[]
   try {
@@ -147,7 +169,7 @@ function discoverSkillsFromDirectory(
       continue
     }
 
-    const skill = loadSkillFromFile(skillDir, skillFilePath, verbose)
+    const skill = loadSkillMetadataFromFile(skillDir, skillFilePath, verbose)
     if (skill) {
       skills[skill.name] = skill
     }
@@ -159,7 +181,7 @@ function discoverSkillsFromDirectory(
 /**
  * Gets the default skills directories to search.
  * Searches both .claude/skills and .agents/skills for Claude Code compatibility.
- * 
+ *
  * Order (later overrides earlier):
  * - ~/.claude/skills/ (global Claude-compatible)
  * - ~/.agents/skills/ (global Savant-Code)
@@ -187,46 +209,46 @@ export type LoadSkillsOptions = {
   verbose?: boolean
 }
 
+export type ActivateSkillOptions = {
+  /** Working directory for project skills. Defaults to process.cwd() */
+  cwd?: string
+  /** Optional specific skills directory path (searched instead of default roots) */
+  skillsPath?: string
+  /** Whether to log errors during loading */
+  verbose?: boolean
+  /**
+   * If `true`, also load any files referenced via the
+   * `<!-- referenced: path1, path2 -->` directive in the skill body.
+   * Their contents are appended to the returned `content` field.
+   * Defaults to `false` (v1 — most skills don't use this).
+   */
+  loadReferencedFiles?: boolean
+}
+
 /**
- * Load skills from .agents/skills and .claude/skills directories.
+ * TIER 1 — Discovery: load only the frontmatter of every SKILL.md in the
+ * default search roots. The full body content is NOT loaded.
  *
- * By default, searches for skills in (later overrides earlier):
- * - `~/.claude/skills/` (global, Claude Code compatible)
- * - `~/.agents/skills/` (global)
- * - `{cwd}/.claude/skills/` (project, Claude Code compatible)
- * - `{cwd}/.agents/skills/` (project, highest priority)
+ * FID-2026-0620-004 — progressive skill loading.
  *
- * Each skill must be in its own directory with a SKILL.md file:
- * - `.agents/skills/my-skill/SKILL.md`
- * - `.claude/skills/my-skill/SKILL.md`
+ * Use this at session start. The returned skills can be advertised in the
+ * system prompt via `formatAvailableSkillsXml` (name + description only).
+ * When a specific skill is needed, call `activateSkill(name)` to load its
+ * full content.
  *
- * @param options.cwd - Working directory for project skills
- * @param options.skillsPath - Optional path to a specific skills directory
- * @param options.verbose - Whether to log errors during loading
- * @returns Record of skill definitions keyed by skill name
- *
- * @example
- * ```typescript
- * // Load from default locations
- * const skills = await loadSkills({ verbose: true })
- *
- * // Load from a specific directory
- * const skills = await loadSkills({ skillsPath: './my-skills' })
- *
- * // Access a skill
- * const gitReleaseSkill = skills['git-release']
- * console.log(gitReleaseSkill.description)
- * ```
+ * @returns Map of skill name → metadata (no body content)
  */
-export async function loadSkills(options: LoadSkillsOptions = {}): Promise<SkillsMap> {
+export async function loadSkillsMetadata(
+  options: LoadSkillsOptions = {},
+): Promise<SkillsMetadataMap> {
   const { cwd = process.cwd(), skillsPath, verbose = false } = options
 
-  const skills: SkillsMap = {}
+  const skills: SkillsMetadataMap = {}
 
   const skillsDirs = skillsPath ? [skillsPath] : getDefaultSkillsDirs(cwd)
 
   for (const skillsDir of skillsDirs) {
-    const dirSkills = discoverSkillsFromDirectory(skillsDir, verbose)
+    const dirSkills = discoverSkillsMetadataFromDirectory(skillsDir, verbose)
     // Later directories override earlier ones (project overrides global)
     Object.assign(skills, dirSkills)
   }
@@ -234,4 +256,140 @@ export async function loadSkills(options: LoadSkillsOptions = {}): Promise<Skill
   return skills
 }
 
+/**
+ * TIER 2 — Activation: load the full body of a single skill on demand.
+ *
+ * FID-2026-0620-004 — progressive skill loading.
+ *
+ * Use this when the agent invokes the `activate_skill` tool or the user
+ * types `/skill:<name>`. The skill is located by name across the same
+ * default search roots as `loadSkillsMetadata`.
+ *
+ * @returns The full SkillDefinition with `content` populated, or `null`
+ *   if the skill cannot be found / parsed.
+ */
+export async function activateSkill(
+  skillName: string,
+  options: ActivateSkillOptions = {},
+): Promise<SkillDefinition | null> {
+  const { cwd = process.cwd(), skillsPath, verbose = false, loadReferencedFiles = false } = options
 
+  const skillsDirs = skillsPath ? [skillsPath] : getDefaultSkillsDirs(cwd)
+
+  for (const skillsDir of skillsDirs) {
+    const candidates = discoverSkillsMetadataFromDirectory(skillsDir, verbose)
+    const candidate = candidates[skillName]
+    if (!candidate) continue
+
+    // Read the full file again (cheap, single read; could be cached)
+    let content: string
+    try {
+      content = fs.readFileSync(candidate.filePath, 'utf8')
+    } catch (err) {
+      if (verbose) {
+        console.error(
+          `Failed to read skill file during activation: ${candidate.filePath}`,
+        )
+      }
+      return null
+    }
+
+    let fullContent = content
+
+    // TIER 3 — Reference resolution (optional, opt-in via flag)
+    if (loadReferencedFiles) {
+      const body = content.split('---').slice(2).join('---').trim()
+      const referenced = extractReferencedFiles(body)
+      if (referenced.length > 0) {
+        const skillDir = path.dirname(candidate.filePath)
+        const resolved = referenced
+          .map((rel) => {
+            try {
+              return fs.readFileSync(path.join(skillDir, rel), 'utf8')
+            } catch {
+              if (verbose) {
+                console.warn(
+                  `Failed to read referenced file '${rel}' for skill '${skillName}'`,
+                )
+              }
+              return null
+            }
+          })
+          .filter((c): c is string => c !== null)
+        if (resolved.length > 0) {
+          fullContent +=
+            '\n\n<!-- referenced files -->\n' + resolved.join('\n\n---\n\n')
+        }
+      }
+    }
+
+    return {
+      name: candidate.name,
+      description: candidate.description,
+      license: candidate.license,
+      metadata: candidate.metadata,
+      autoActivate: candidate.autoActivate,
+      content: fullContent,
+      filePath: candidate.filePath,
+    }
+  }
+
+  if (verbose) {
+    console.error(`Skill not found in any search root: ${skillName}`)
+  }
+  return null
+}
+
+/**
+ * TIER 1+2 — Eager loader (legacy / backwards-compatible).
+ *
+ * FID-2026-0620-004 — progressive skill loading.
+ *
+ * Discovers all skills AND eagerly populates `content` for those with
+ * `autoActivate: true` in their frontmatter. Skills without `autoActivate`
+ * are returned with empty `content` (use `activateSkill(name)` to load
+ * them on demand).
+ *
+ * Most consumers should prefer `loadSkillsMetadata` + `activateSkill` for
+ * the full progressive experience. This function is kept for:
+ *   - Backwards compatibility with code that expects populated `content`
+ *   - Tools that need the full body in one shot (e.g. for snapshot tests)
+ *
+ * @returns Map of skill name → SkillDefinition (content populated only for
+ *   skills with `autoActivate: true`)
+ */
+export async function loadSkills(
+  options: LoadSkillsOptions = {},
+): Promise<SkillsMap> {
+  const metadata = await loadSkillsMetadata(options)
+
+  const skills: SkillsMap = {}
+  for (const [name, meta] of Object.entries(metadata)) {
+    if (meta.autoActivate) {
+      const full = await activateSkill(name, options)
+      skills[name] =
+        full ??
+        ({
+          name: meta.name,
+          description: meta.description,
+          license: meta.license,
+          metadata: meta.metadata,
+          autoActivate: meta.autoActivate,
+          content: '',
+          filePath: meta.filePath,
+        } as SkillDefinition)
+    } else {
+      skills[name] = {
+        name: meta.name,
+        description: meta.description,
+        license: meta.license,
+        metadata: meta.metadata,
+        autoActivate: meta.autoActivate,
+        content: '',
+        filePath: meta.filePath,
+      }
+    }
+  }
+
+  return skills
+}

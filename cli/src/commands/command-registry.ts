@@ -18,7 +18,10 @@ import { getChatGptOAuthStatus } from '../utils/chatgpt-oauth'
 import { AGENT_MODES, END_SESSION_MESSAGE, IS_SAVANT_FREE } from '../utils/constants'
 import { getSystemMessage, getUserMessage } from '../utils/message-history'
 import { capturePendingAttachments } from '../utils/pending-attachments'
-import { getSkillByName } from '../utils/skill-registry'
+import {
+  activateSkillByName,
+  getSkillByName,
+} from '../utils/skill-registry'
 
 import type { MultilineInputHandle } from '../components/multiline-input'
 import type { InputValue, PendingAttachment } from '../types/store'
@@ -643,13 +646,17 @@ export function findCommand(cmd: string): CommandDefinition | undefined {
 
 /**
  * Creates a dynamic command definition for a skill.
- * When invoked, the skill's content is sent to the agent.
+ * When invoked, the skill's content is loaded on demand (FID-2026-0620-004
+ * progressive loading — tier 2 activation) and sent to the agent.
  */
 function createSkillCommand(skillName: string): CommandDefinition {
   return defineCommandWithArgs({
     name: skillName,
-    handler: (params, args) => {
-      const skill = getSkillByName(skillName)
+    handler: async (params, args) => {
+      // Progressive loading: load full body on demand. If the skill was
+      // auto-activate this is a single read; otherwise it's the first read
+      // and is cached for subsequent invocations.
+      const skill = (await activateSkillByName(skillName)) ?? getSkillByName(skillName)
       if (!skill) {
         params.setMessages((prev) => [
           ...prev,

@@ -8,7 +8,7 @@ import {
   SKILL_NAME_MAX_LENGTH,
 } from '@savant-code/common/constants/skills'
 
-import { loadSkills } from '../skills/load-skills'
+import { activateSkill, loadSkills, loadSkillsMetadata } from '../skills/load-skills'
 
 const writeSkill = ({
   skillsRoot,
@@ -267,5 +267,95 @@ describe('loadSkills', () => {
     expect(skills['custom-skill']?.filePath).toBe(
       path.join(customSkillsDir, 'custom-skill', 'SKILL.md'),
     )
+  })
+})
+
+describe('loadSkillsMetadata (FID-2026-0620-004 progressive loading)', () => {
+  let tempRoot: string
+  let homeDir: string
+  let projectDir: string
+
+  beforeEach(() => {
+    tempRoot = mkdtempSync(path.join(os.tmpdir(), 'savant-code-sdk-load-skills-meta-'))
+    homeDir = path.join(tempRoot, 'home')
+    projectDir = path.join(tempRoot, 'project')
+
+    mkdirSync(homeDir, { recursive: true })
+    mkdirSync(projectDir, { recursive: true })
+
+    spyOn(os, 'homedir').mockReturnValue(homeDir)
+  })
+
+  afterEach(() => {
+    mock.restore()
+    rmSync(tempRoot, { recursive: true, force: true })
+  })
+
+  test('returns metadata only — does NOT populate content', async () => {
+    writeSkill({
+      skillsRoot: path.join(projectDir, '.agents', 'skills'),
+      skillDirName: 'meta-skill',
+      description: 'Metadata only',
+      body: '# Meta Skill\nThis body should NOT be in the metadata view',
+    })
+
+    const metadata = await loadSkillsMetadata({ cwd: projectDir })
+
+    expect(Object.keys(metadata)).toEqual(['meta-skill'])
+    expect(metadata['meta-skill']?.description).toBe('Metadata only')
+    expect(metadata['meta-skill']?.filePath).toBe(
+      path.join(projectDir, '.agents', 'skills', 'meta-skill', 'SKILL.md'),
+    )
+    // The whole point of progressive loading: no `content` field on metadata.
+    expect((metadata['meta-skill'] as unknown as { content?: string }).content).toBeUndefined()
+  })
+})
+
+describe('activateSkill (FID-2026-0620-004 progressive loading)', () => {
+  let tempRoot: string
+  let homeDir: string
+  let projectDir: string
+
+  beforeEach(() => {
+    tempRoot = mkdtempSync(path.join(os.tmpdir(), 'savant-code-sdk-activate-skill-'))
+    homeDir = path.join(tempRoot, 'home')
+    projectDir = path.join(tempRoot, 'project')
+
+    mkdirSync(homeDir, { recursive: true })
+    mkdirSync(projectDir, { recursive: true })
+
+    spyOn(os, 'homedir').mockReturnValue(homeDir)
+  })
+
+  afterEach(() => {
+    mock.restore()
+    rmSync(tempRoot, { recursive: true, force: true })
+  })
+
+  test('loads full content on demand for a discovered skill', async () => {
+    writeSkill({
+      skillsRoot: path.join(projectDir, '.agents', 'skills'),
+      skillDirName: 'activatable',
+      description: 'On demand',
+      body: '# Activatable\nThe full body content here.',
+    })
+
+    // First confirm metadata-only path doesn't include body
+    const metadata = await loadSkillsMetadata({ cwd: projectDir })
+    expect((metadata['activatable'] as unknown as { content?: string }).content).toBeUndefined()
+
+    // Then activate to get the body
+    const full = await activateSkill('activatable', { cwd: projectDir })
+    expect(full).not.toBeNull()
+    expect(full?.name).toBe('activatable')
+    expect(full?.content).toContain('The full body content here.')
+  })
+
+  test('returns null for an unknown skill', async () => {
+    const result = await activateSkill('does-not-exist', {
+      cwd: projectDir,
+      verbose: false,
+    })
+    expect(result).toBeNull()
   })
 })
