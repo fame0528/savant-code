@@ -1,21 +1,17 @@
-import { createStdoutEmitter } from '@savant-code/sdk'
-import type { StreamEvent } from '@savant-code/sdk'
+import {
+  SavantClient,
+  createStdoutEmitter,
+  createMapPrintModeContext,
+  mapPrintModeToStream,
+} from '@savant-code/sdk'
 
 /**
- * CLI handler for stream-JSON output mode (FID-2026-0620-006).
+ * CLI handler for stream-JSON output mode (FID-2026-0620-006, FID-2026-0620-007).
  *
- * This is a minimal viable implementation: when `--output-format stream-json`
- * is set (or auto-detected from non-TTY stdout), the CLI skips the TUI
- * renderer entirely and emits NDJSON events to stdout.
- *
- * For v0.1, this:
- * 1. Emits `session.start` with a placeholder session id
- * 2. Echoes the initial prompt as `message.user` (if provided)
- * 3. Calls a placeholder agent run loop (delegates to a future SDK call)
- * 4. Emits `session.end` with `complete` status
- *
- * v0.1+ will replace the placeholder loop with a real `SavantClient.run()`
- * that streams events through `handleEvent`.
+ * When `--output-format stream-json` is set (or auto-detected from non-TTY
+ * stdout), the CLI skips the TUI renderer entirely and emits NDJSON events
+ * to stdout. v0.2 wires the real `SavantClient.run()` stream (FID-007) to
+ * the `StreamEvent` schema via `mapPrintModeToStream`.
  */
 export async function runStreamJsonMode(options: {
   initialPrompt: string | null
@@ -25,6 +21,24 @@ export async function runStreamJsonMode(options: {
 }): Promise<number> {
   const emitter = createStdoutEmitter()
   const sessionId = crypto.randomUUID()
+  const mapContext = createMapPrintModeContext({
+    sessionId,
+    model: options.model,
+    defaultAgent: options.agent,
+  })
+
+  // AbortController wired to stdin EOF + SIGINT (Q3 from FID-007)
+  const abortController = new AbortController()
+  const onStdinEnd = () => abortController.abort()
+  const onSigInt = () => abortController.abort()
+  let cancelled = false
+
+  process.stdin.on('end', onStdinEnd)
+  process.on('SIGINT', onSigInt)
+  const cleanup = () => {
+    process.stdin.removeListener('end', onStdinEnd)
+    process.removeListener('SIGINT', onSigInt)
+  }
 
   // 1. session.start
   emitter.emit({
@@ -47,32 +61,46 @@ export async function runStreamJsonMode(options: {
     })
   }
 
-  // 3. Run the agent (placeholder — see FID-2026-0620-006 v0.1+ roadmap)
+  // 3. Run the agent via SavantClient
   try {
-    await placeholderAgentRun({
-      emitter,
-      sessionId,
+    const client = new SavantClient({ cwd: options.cwd })
+    await client.run({
+      agent: options.agent,
       prompt: options.initialPrompt ?? '',
+      signal: abortController.signal,
+      handleEvent: (printEvent) => {
+        const streamEvents = mapPrintModeToStream(printEvent, mapContext)
+        for (const ev of streamEvents) {
+          emitter.emit(ev)
+        }
+      },
     })
   } catch (err) {
-    const errorEvent: StreamEvent = {
-      v: 1,
-      type: 'error',
-      message: err instanceof Error ? err.message : String(err),
-      ts: Date.now(),
+    const isAbort =
+      err instanceof Error &&
+      (err.name === 'AbortError' || /abort/i.test(err.message))
+    if (isAbort) cancelled = true
+
+    if (!cancelled) {
+      emitter.emit({
+        v: 1,
+        type: 'error',
+        message: err instanceof Error ? err.message : String(err),
+        ts: Date.now(),
+      })
     }
-    emitter.emit(errorEvent)
     emitter.emit({
       v: 1,
       type: 'session.end',
-      reason: 'error',
+      reason: cancelled ? 'cancelled' : 'error',
       ts: Date.now(),
     })
+    cleanup()
     await emitter.flush()
     return 1
   }
 
-  // 4. session.end (success)
+  cleanup()
   emitter.emit({
     v: 1,
     type: 'session.end',
@@ -81,45 +109,4 @@ export async function runStreamJsonMode(options: {
   })
   await emitter.flush()
   return 0
-}
-
-/**
- * Placeholder agent run — emits a single assistant message acknowledging
- * the prompt. The real implementation will be wired up in v0.1+ once
- * `SavantClient.run()` exposes a streaming event callback that maps to
- * the StreamEvent schema.
- *
- * For now, this just echoes "Savant-Code stream-json mode v0.1 active."
- * so the end-to-end pipe works for CI verification.
- */
-async function placeholderAgentRun(params: {
-  emitter: ReturnType<typeof createStdoutEmitter>
-  sessionId: string
-  prompt: string
-}): Promise<void> {
-  const { emitter } = params
-  const messageId = crypto.randomUUID()
-
-  const reply = params.prompt
-    ? `[stream-json v0.1] Received prompt: "${params.prompt.slice(0, 50)}${params.prompt.length > 50 ? '...' : ''}". Agent run will be wired up in v0.1+ when SavantClient.run() exposes streaming events.`
-    : '[stream-json v0.1] No prompt provided. Use the initial prompt argument to send a message.'
-
-  // Chunked: split into ~10-char deltas (Q10)
-  const chunkSize = 10
-  for (let i = 0; i < reply.length; i += chunkSize) {
-    emitter.emit({
-      v: 1,
-      type: 'message.assistant',
-      id: messageId,
-      delta: reply.slice(i, i + chunkSize),
-      ts: Date.now(),
-    })
-  }
-
-  emitter.emit({
-    v: 1,
-    type: 'message.assistant.done',
-    id: messageId,
-    ts: Date.now(),
-  })
 }

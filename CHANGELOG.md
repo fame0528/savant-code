@@ -6,6 +6,25 @@ All notable changes to this project are documented here.
 
 ---
 
+## v0.2.0 — 2026-06-20
+
+Sprint B-1: finishes the FID-006 v0.1+ TODO — `stream-json` mode now emits real agent output instead of the placeholder "got your prompt" message.
+
+- [MEDIUM] **FID-2026-0620-007 — `SavantClient` → `StreamEvent` integration** (commit pending). New `mapPrintModeToStream` mapper in `sdk/src/utils/print-mode-to-stream.ts` converts every `PrintModeEvent` (9 types: `start`, `text`, `reasoning_delta`, `tool_call`, `tool_result`, `error`, `finish`, `download`, `subagent_start`/`finish`) to one or more `StreamEvent`s. `stream-json-runner.ts` now calls `SavantClient.run({ handleEvent })` and pipes events through the mapper. 2 new event variants added to the schema (backwards-compat): `message.reasoning`, `message.reasoning.done`. Cancellation via stdin EOF or SIGINT → `session.end: cancelled` (exit 1). Perfection Loop converged in 3 passes (1 actionable improvement: reasoning id uses `runId`; 4 cosmetic cleanups in pass 3). 12 new mapper tests; 21/21 total pass in the affected suites.
+
+### Verification
+
+- `type_check` (`bun x tsc --noEmit -p tsconfig.json`): PASS (exit 0)
+- `bun test sdk/src/__tests__/print-mode-to-stream.test.ts sdk/src/__tests__/stream-json-emitter.test.ts`: **21 pass, 0 fail, 67 expect() calls** (275ms)
+- call-graph reachability: 39 grep matches, all new symbols wired
+
+### Notes
+
+- v0.1.0 → v0.2.0 is a minor bump (new event types, backwards-compat). Existing stream-json consumers using only the 8 original event types continue to work.
+- Subagent events (`subagent_start`, `subagent_finish`) are suppressed in v0.2; will be exposed in v0.3.
+
+---
+
 ## v0.1.0 — 2026-06-20
 
 Sprint A — first feature release of the public `savant-code` monorepo. Adds 3 cross-cutting user-facing features (all backwards-compatible). Bumped from `0.0.1` per semver minor-bump convention.

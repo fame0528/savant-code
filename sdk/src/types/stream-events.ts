@@ -20,6 +20,8 @@ export type StreamEventType =
   | 'message.user'
   | 'message.assistant'
   | 'message.assistant.done'
+  | 'message.reasoning'
+  | 'message.reasoning.done'
   | 'tool.call'
   | 'tool.result'
   | 'error'
@@ -48,6 +50,15 @@ export type StreamEvent = {
     }
   | {
       type: 'message.assistant.done'
+      id: string
+    }
+  | {
+      type: 'message.reasoning'
+      id: string
+      delta: string
+    }
+  | {
+      type: 'message.reasoning.done'
       id: string
     }
   | {

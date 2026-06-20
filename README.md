@@ -1,4 +1,4 @@
-﻿# SAVANT-CODE v0.1.0
+﻿# SAVANT-CODE v0.2.0
 
 <!-- markdownlint-disable MD033 -->
 <div align="center">
@@ -7,7 +7,7 @@
 
 **Multi-Agent AI Coding Assistant. TypeScript Monorepo. ECHO-Protocol Citizen.**
 
-Two products ship from this monorepo. **Savant-Code** is the full-featured AI coding agent for your terminal — multi-agent orchestration, custom skills, MCP tool discovery, progressive skill loading, custom slash commands, stream-JSON output for CI, and the [`@savant-code/sdk`](https://www.npmjs.com/package/@savant-code/sdk) for embedding agents in your own apps. **Savant-Free** is the free, ad-supported variant — no subscription, no API key, same agent runtime with paid features stripped at compile time via `SAVANT_FREE_MODE=true`.
+Two products ship from this monorepo. **Savant-Code** is the full-featured AI coding agent for your terminal — multi-agent orchestration, custom skills, MCP tool discovery, progressive skill loading, custom slash commands, stream-JSON output for CI (now with real agent output via `SavantClient` integration in v0.2), and the [`@savant-code/sdk`](https://www.npmjs.com/package/@savant-code/sdk) for embedding agents in your own apps. **Savant-Free** is the free, ad-supported variant — no subscription, no API key, same agent runtime with paid features stripped at compile time via `SAVANT_FREE_MODE=true`.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-%23000000?style=flat-square&logo=typescript&logoColor=%2300fbff)](https://www.typescriptlang.org/)[![Bun](https://img.shields.io/badge/Bun-1.3.14-%23000000?style=flat-square&logo=bun&logoColor=%2300fbff)](https://bun.sh/)[![React](https://img.shields.io/badge/React-19-%23000000?style=flat-square&logo=react&logoColor=%2300fbff)](https://react.dev/)[![OpenTUI](https://img.shields.io/badge/OpenTUI-0.2.2-%23000000?style=flat-square&logo=opentui&logoColor=%2300fbff)](https://github.com/sst/opentui)[![ECHO](https://img.shields.io/badge/ECHO-v0.1.3-%23000000?style=flat-square&logo=github&logoColor=%2300fbff)](protocol/ECHO.md)[![License](https://img.shields.io/badge/License-Apache_2.0-%23000000?style=flat-square&logo=apache&logoColor=%2300fbff)](LICENSE)[![Release](https://img.shields.io/badge/Release-v0.0.1-%23000000?style=flat-square&logo=semver&logoColor=%2300fbff)](https://github.com/fame0528/savant-code/releases/tag/v0.0.1)
 

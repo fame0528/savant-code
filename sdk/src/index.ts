@@ -55,6 +55,12 @@ export {
 } from './utils/stream-json-emitter'
 
 export {
+  mapPrintModeToStream,
+  createMapPrintModeContext,
+  type MapPrintModeContext,
+} from './utils/print-mode-to-stream'
+
+export {
   STREAM_JSON_SCHEMA_VERSION,
   type StreamEvent,
   type StreamEventType,
