@@ -2,6 +2,7 @@
 import { AGENT_MODES, IS_SAVANT_FREE } from '../utils/constants'
 import { getChatGptOAuthStatus } from '../utils/chatgpt-oauth'
 
+import type { CustomCommandsMap } from '@savant-code/common/types/custom-command'
 import type { SkillsMap } from '@savant-code/common/types/skill'
 
 
@@ -221,17 +222,37 @@ function truncateDescription(description: string): string {
 }
 
 /**
- * Returns SLASH_COMMANDS merged with skill commands.
+ * Returns SLASH_COMMANDS merged with skill commands and custom commands
+ * (FID-2026-0620-005).
+ *
  * Skills become slash commands that users can invoke directly.
+ * Custom commands (loaded from .savant/commands/*.md) become slash
+ * commands too, with their frontmatter `description` shown in the menu.
  */
-export function getSlashCommandsWithSkills(skills: SkillsMap): SlashCommand[] {
+export function getSlashCommandsWithSkills(
+  skills: SkillsMap,
+  customCommands: CustomCommandsMap = {},
+): SlashCommand[] {
   const skillCommands: SlashCommand[] = Object.values(skills).map((skill) => ({
     id: `skill:${skill.name}`,
     label: `skill:${skill.name}`,
     description: truncateDescription(skill.description),
   }))
 
-  let commands = [...SLASH_COMMANDS, ...skillCommands]
+  const customSlashCommands: SlashCommand[] = Object.values(customCommands).map(
+    (cmd) => ({
+      id: cmd.name,
+      label: cmd.name,
+      description: truncateDescription(cmd.frontmatter.description),
+      aliases: cmd.frontmatter.aliases,
+    }),
+  )
+
+  let commands = [
+    ...SLASH_COMMANDS,
+    ...customSlashCommands,
+    ...skillCommands,
+  ]
 
   if (IS_SAVANT_FREE && !getChatGptOAuthStatus().connected) {
     commands = commands.map((cmd) => {

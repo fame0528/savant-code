@@ -40,6 +40,7 @@ import { clearLogFile, logger } from './utils/logger'
 import { shouldShowProjectPicker } from './utils/project-picker'
 import { saveRecentProject } from './utils/recent-projects'
 import { installProcessCleanupHandlers, TERMINAL_RESET_SEQUENCES } from './utils/renderer-cleanup'
+import { initializeCustomCommandRegistry } from './utils/custom-command-registry'
 import { initializeSkillRegistry } from './utils/skill-registry'
 import { detectTerminalTheme } from './utils/terminal-color-detection'
 import { setOscDetectedTheme } from './utils/theme-system'
@@ -216,6 +217,10 @@ async function main(): Promise<void> {
 
   // Initialize skill registry (loads skills from .agents/skills)
   await initializeSkillRegistry()
+
+  // Initialize custom command registry (loads .savant/commands/*.md)
+  // FID-2026-0620-005
+  await initializeCustomCommandRegistry()
 
   // Handle publish command before rendering the app
   if (isPublishCommand) {

@@ -16,6 +16,8 @@ import { useFeedbackStore } from '../state/feedback-store'
 import { useLoginStore } from '../state/login-store'
 import { getChatGptOAuthStatus } from '../utils/chatgpt-oauth'
 import { AGENT_MODES, END_SESSION_MESSAGE, IS_SAVANT_FREE } from '../utils/constants'
+import { createCustomCommandHandler } from '../utils/custom-command-handler'
+import { getCustomCommandByName } from '../utils/custom-command-registry'
 import { getSystemMessage, getUserMessage } from '../utils/message-history'
 import { capturePendingAttachments } from '../utils/pending-attachments'
 import {
@@ -630,6 +632,12 @@ export function findCommand(cmd: string): CommandDefinition | undefined {
   )
   if (staticCommand) {
     return staticCommand
+  }
+
+  // Check custom commands (FID-2026-0620-005 — .savant/commands/*.md)
+  const custom = getCustomCommandByName(lowerCmd)
+  if (custom) {
+    return createCustomCommandHandler(custom)
   }
 
   // Check if this is a skill command (prefixed with "skill:")
