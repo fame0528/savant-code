@@ -1,49 +1,52 @@
-# Protocol Config — Project-specific configuration for ECHO Protocol
+# Protocol Config — Savant-Code (savant-free) configuration for ECHO Protocol v0.1.3
 #
-# QUICK START: Change these 3 lines for your project:
-#   1. language:       "rust" | "typescript" | "python" | "go" | "java" | "csharp"
-#   2. commands.build: your compile/build command
-#   3. commands.test:  your test runner command
+# This file configures the ECHO Protocol (scaffolded at ./protocol/) for the
+# Savant-Code monorepo. Language: typescript. Runtime: bun 1.3.x.
+#
+# All paths are anchored at the repository root (NOT at protocol/).
+# The runtime state (FIDs, session summaries, LEARNINGS) lives at ./dev/.
 
 project:
-  name: "my-project"
-  description: "Brief project description"
-  version: "0.1.1"
+  name: "savant-code"
+  description: "Public, free coding agent built from the Savant-Code agent framework (savant-free monorepo)."
+  version: "1.0.0"
 
 protocol:
-  version: "0.1.1"
+  version: "0.1.3"
   strict_mode: true  # true = all 15 laws active (default), false = core 4 laws only
 
-language: "CHANGE_ME"  # rust | typescript | python | go | java | csharp
+language: "typescript"
 
 commands:
-  build: "echo 'set your build command'"
-  test: "echo 'set your test command'"
-  type_check: "echo 'set your type check command'"
-  lint: "echo 'set your lint command'"
-  format: "echo 'set your format command'"
-  clean: "echo 'set your clean command'"
+  build: "bun run build:sdk && bun run build:savant-free"
+  test: "bun test"
+  type_check: "bun x tsc --noEmit -p tsconfig.json"
+  lint: "bun x eslint . --max-warnings 0"
+  format: "bun x prettier --write ."
+  clean: "rm -rf dist tsconfig.tsbuildinfo && find . -name node_modules -prune -o -name '*.tsbuildinfo' -print -delete"
 
 paths:
-  src: "src/"
-  tests: "tests/"
+  src: "cli/src sdk/src common/src packages packages/agent-runtime/src packages/code-map/src packages/llm-providers/src"
+  tests: "cli/ src/ packages/ sdk/ common/"
   docs: "docs/"
   dev: "dev/"
   fids: "dev/fids/"
   fids_archive: "dev/fids/archive/"
   session_summaries: "dev/session-summaries/"
   learnings: "dev/LEARNINGS.md"
+  protocol_root: "protocol/"
 
 quality:
-  max_file_lines: 300
-  max_function_lines: 50
-  max_line_length: 100
+  # TypeScript coding-standards overrides (see protocol/coding-standards/typescript.md)
+  max_file_lines: 400       # TS override (default 300) — React/service files tend to be longer
+  max_function_lines: 60    # TS override (default 50) — component render logic can be slightly longer
+  max_line_length: 100      # matches TS standard
   max_complexity: 10
   max_params: 4
   max_comment_density: 0.33
   max_nesting_depth: 3
 
-# Naming rules: see coding-standards/{language}.md
+# Naming rules: see protocol/coding-standards/typescript.md
 
 testing:
   fuzz_enabled: false
