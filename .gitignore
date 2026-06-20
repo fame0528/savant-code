@@ -1,0 +1,48 @@
+﻿.DS_Store
+.idea/
+.vercel
+
+# Environment files (secrets) - Bun loads .env.* files natively
+.env
+.env.*
+!.env.example
+
+# ctags
+tags
+
+node_modules
+dev
+!dev/.gitkeep
+!dev/fids/.gitkeep
+!dev/fids/archive/.gitkeep
+!dev/fids/archive/
+!dev/session-summaries/.gitkeep
+!dev/LEARNINGS.md
+dist
+dist-env
+tsconfig.tsbuildinfo
+.savant-code
+__mock-projects__
+npm-app/src/__tests__/data/
+.aider*
+.savant-code*
+**.log
+database.db
+database.db-shm
+database.db-wal
+
+debug/
+.context/
+docs/bot-detection.md
+.codex
+
+# Nx cache directories
+.nx/cache
+.nx/workspace-data
+
+# Infisical config (user-specific)
+.infisical.json
+.gstack/
+
+# Buffbench DEBUG_ERROR dumps
+evals/buffbench/*-error-*.json
