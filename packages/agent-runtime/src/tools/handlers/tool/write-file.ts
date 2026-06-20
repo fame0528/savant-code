@@ -1,12 +1,12 @@
-﻿import { AbortError } from '@savant-code/common/util/error'
+import { AbortError } from '@savant-code/common/util/error'
 import { partition } from 'lodash'
 
 import { processFileBlock } from '../../../process-file-block'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
   ClientToolCall,
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { RequestOptionalFileFn } from '@savant-code/common/types/contracts/client'
@@ -62,7 +62,7 @@ export function getFileProcessingValues(
 export const handleWriteFile = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<'write_file'>
+    toolCall: SavantCodeToolCall<'write_file'>
 
     agentState: AgentState
     clientSessionId: string
@@ -159,7 +159,7 @@ export const handleWriteFile = (async (
       requestClientToolCall,
     ),
   }
-}) satisfies Savant-CodeToolHandlerFunction<'write_file'>
+}) satisfies SavantCodeToolHandlerFunction<'write_file'>
 
 export async function postStreamProcessing<T extends FileProcessingTools>(
   toolCall: FileProcessing<T>,

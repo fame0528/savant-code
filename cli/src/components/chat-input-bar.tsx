@@ -1,4 +1,4 @@
-﻿import {
+import {
   isShallowScanRoot,
   SHALLOW_SCAN_MAX_DEPTH,
 } from '@savant-code/common/project-file-tree'

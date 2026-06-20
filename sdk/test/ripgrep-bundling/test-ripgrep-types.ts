@@ -1,4 +1,4 @@
-﻿// Test TypeScript types for ripgrep bundling functionality
+// Test TypeScript types for ripgrep bundling functionality
 import { getBundledRgPath, ToolHelpers } from '@savant-code/sdk'
 ;(async () => {
   console.log('ðŸ§ª Testing ripgrep TypeScript types...')

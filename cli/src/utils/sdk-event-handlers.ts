@@ -1,4 +1,4 @@
-﻿import { match } from 'ts-pattern'
+import { match } from 'ts-pattern'
 
 import {
   appendTextToRootStream,

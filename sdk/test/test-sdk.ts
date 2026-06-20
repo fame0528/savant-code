@@ -1,4 +1,4 @@
-﻿import { SavantClient } from '../src/client'
+import { SavantClient } from '../src/client'
 import { getUserCredentials } from '../src/credentials'
 
 export async function testSdk() {
@@ -12,7 +12,7 @@ export async function testSdk() {
   })
 
   const run = await client.run({
-    agent: 'savant-code/base2@latest',
+    agent: 'SavantCode/base2@latest',
     prompt: 'Create a simple calculator class',
     handleEvent: (event) => {
       console.log(event)

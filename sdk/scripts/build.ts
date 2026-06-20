@@ -1,4 +1,4 @@
-﻿// Build script for @savant-code/sdk using Bun's bundler with dual package support
+// Build script for @savant-code/sdk using Bun's bundler with dual package support
 // Creates ESM + CJS bundles with TypeScript declarations
 
 import { mkdir, cp, readFile, writeFile, rm } from 'fs/promises'

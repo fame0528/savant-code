@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 
 import { FeedbackInputMode } from './feedback-input-mode'

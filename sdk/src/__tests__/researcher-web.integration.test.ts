@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import { homedir } from 'os'
 import path from 'path'
 
@@ -20,7 +20,7 @@ function loadEnvValue(name: string): string | undefined {
   }
 
   for (const envPath of [
-    path.join(homedir(), 'savant-code', '.env.local'),
+    path.join(homedir(), 'SavantCode', '.env.local'),
     path.join(process.cwd(), '.env.local'),
   ]) {
     if (!existsSync(envPath)) continue

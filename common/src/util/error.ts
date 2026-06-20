@@ -1,4 +1,4 @@
-﻿export type ErrorOr<T, E extends ErrorObject = ErrorObject> =
+export type ErrorOr<T, E extends ErrorObject = ErrorObject> =
   | Success<T>
   | Failure<E>
 
@@ -72,7 +72,7 @@ export type ErrorObject = {
   stack?: string
   /** HTTP status code from error.status (used by some libraries) */
   status?: number
-  /** HTTP status code from error.statusCode (used by AI SDK and Savant-Code errors) */
+  /** HTTP status code from error.statusCode (used by AI SDK and SavantCode errors) */
   statusCode?: number
   /** Optional machine-friendly error code, if available */
   code?: string

@@ -1,6 +1,6 @@
-﻿export const SAVANT_FREE_COUNTDOWN_VISIBLE_MS = 5 * 60_000
+export const SAVANT_FREE_COUNTDOWN_VISIBLE_MS = 5 * 60_000
 
-export const formatSavant-FreeSessionCountdown = (ms: number): string => {
+export const formatSavantFreeSessionCountdown = (ms: number): string => {
   if (ms <= 0) return 'expiringâ€¦'
   const totalSeconds = Math.ceil(ms / 1000)
   const m = Math.floor(totalSeconds / 60)
@@ -8,10 +8,10 @@ export const formatSavant-FreeSessionCountdown = (ms: number): string => {
   return `${m}:${s.toString().padStart(2, '0')}`
 }
 
-export const formatSavant-FreeSessionRemaining = (ms: number): string => {
+export const formatSavantFreeSessionRemaining = (ms: number): string => {
   if (ms <= 0) return 'expiringâ€¦'
   if (ms < SAVANT_FREE_COUNTDOWN_VISIBLE_MS) {
-    return `${formatSavant-FreeSessionCountdown(ms)} left`
+    return `${formatSavantFreeSessionCountdown(ms)} left`
   }
   const totalMinutes = Math.ceil(ms / 60_000)
   if (totalMinutes < 60) return `${totalMinutes}m left`

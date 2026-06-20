@@ -1,4 +1,4 @@
-﻿import { IS_DEV, IS_TEST, IS_CI } from '@savant-code/common/env'
+import { IS_DEV, IS_TEST, IS_CI } from '@savant-code/common/env'
 
 import { getApiClient } from './savant-code-api'
 import { getCliEnv } from './env'

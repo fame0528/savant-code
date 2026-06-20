@@ -1,4 +1,4 @@
-﻿import { WEBSITE_URL } from '@savant-code/sdk'
+import { WEBSITE_URL } from '@savant-code/sdk'
 import type {
   PublishAgentsResponse,
 } from '@savant-code/common/types/api/agents/publish'
@@ -89,9 +89,9 @@ const DEFAULT_RETRY_CONFIG: Required<RetryConfig> = {
 }
 
 /**
- * Configuration for creating a Savant-Code API client
+ * Configuration for creating a SavantCode API client
  */
-export interface Savant-CodeApiClientConfig {
+export interface SavantCodeApiClientConfig {
   /** Base URL for API requests (defaults to WEBSITE_URL from SDK) */
   baseUrl?: string
   /** Auth token for Bearer authentication */
@@ -122,7 +122,7 @@ export interface RequestOptions {
   headers?: Record<string, string>
 }
 
-export interface Savant-CodeApiClient {
+export interface SavantCodeApiClient {
   readonly baseUrl: string
   readonly authToken?: string
 
@@ -293,11 +293,11 @@ const isRetryableError = (error: unknown): boolean => {
 }
 
 /**
- * Create a Savant-Code API client for making authenticated requests to the Savant-Code API
+ * Create a SavantCode API client for making authenticated requests to the SavantCode API
  */
-export function createSavant-CodeApiClient(
-  config: Savant-CodeApiClientConfig = {},
-): Savant-CodeApiClient {
+export function createSavantCodeApiClient(
+  config: SavantCodeApiClientConfig = {},
+): SavantCodeApiClient {
   const {
     baseUrl = WEBSITE_URL,
     authToken,
@@ -568,7 +568,7 @@ export function createSavant-CodeApiClient(
 // Shared singleton client
 // ============================================================================
 
-let sharedClient: Savant-CodeApiClient | null = null
+let sharedClient: SavantCodeApiClient | null = null
 let sharedAuthToken: string | undefined
 // Track the token that was used to create the current client instance
 let clientCreatedWithToken: string | undefined
@@ -581,10 +581,10 @@ let clientCreatedWithToken: string | undefined
  * to ensure a specific auth token is used. The client is recreated whenever
  * the auth token changes.
  */
-export function getApiClient(): Savant-CodeApiClient {
+export function getApiClient(): SavantCodeApiClient {
   // Recreate client if it doesn't exist or if the token has changed since creation
   if (!sharedClient || clientCreatedWithToken !== sharedAuthToken) {
-    sharedClient = createSavant-CodeApiClient({ authToken: sharedAuthToken })
+    sharedClient = createSavantCodeApiClient({ authToken: sharedAuthToken })
     clientCreatedWithToken = sharedAuthToken
   }
   return sharedClient

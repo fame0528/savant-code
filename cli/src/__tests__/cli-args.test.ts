@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, beforeEach, afterEach } from 'bun:test'
+import { describe, test, expect, beforeEach, afterEach } from 'bun:test'
 import { Command } from 'commander'
 
 import { parseArgs } from '../cli-args'
@@ -66,10 +66,10 @@ describe('CLI Argument Parsing', () => {
   test('parses --agent with full agent ID', () => {
     const result = parseTestArgs([
       '--agent',
-      'savant-code/base-lite@1.0.0',
+      'SavantCode/base-lite@1.0.0',
       'hello',
     ])
-    expect(result.agent).toBe('savant-code/base-lite@1.0.0')
+    expect(result.agent).toBe('SavantCode/base-lite@1.0.0')
     expect(result.initialPrompt).toBe('hello')
   })
 
@@ -142,11 +142,11 @@ describe('CLI Argument Parsing', () => {
   })
 })
 
-describe('Savant-Free CLI Argument Parsing', () => {
+describe('SavantFree CLI Argument Parsing', () => {
   test('accepts login as a command, not an unexpected argument', () => {
     const result = parseArgs({
-      argv: ['node', 'savant-free', 'login'],
-      isSavant-Free: true,
+      argv: ['node', 'SavantFree', 'login'],
+      isSavantFree: true,
       version: '1.0.0',
     })
 
@@ -157,8 +157,8 @@ describe('Savant-Free CLI Argument Parsing', () => {
 
   test('allows cwd before the login command', () => {
     const result = parseArgs({
-      argv: ['node', 'savant-free', '--cwd', '/tmp', 'login'],
-      isSavant-Free: true,
+      argv: ['node', 'SavantFree', '--cwd', '/tmp', 'login'],
+      isSavantFree: true,
       version: '1.0.0',
     })
 
@@ -169,8 +169,8 @@ describe('Savant-Free CLI Argument Parsing', () => {
 
   test('allows cwd after the login command', () => {
     const result = parseArgs({
-      argv: ['node', 'savant-free', 'login', '--cwd', '/tmp'],
-      isSavant-Free: true,
+      argv: ['node', 'SavantFree', 'login', '--cwd', '/tmp'],
+      isSavantFree: true,
       version: '1.0.0',
     })
 

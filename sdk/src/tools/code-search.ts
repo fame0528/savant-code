@@ -1,4 +1,4 @@
-﻿import { spawn } from 'child_process'
+import { spawn } from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -11,7 +11,7 @@ import { Logger } from '@savant-code/common/types/contracts/logger'
 // Hidden directories to include in code search by default.
 // These are searched in addition to '.' to ensure important config/workflow files are discoverable.
 const INCLUDED_HIDDEN_DIRS = [
-  '.agents', // Savant-Code agent definitions
+  '.agents', // SavantCode agent definitions
   '.claude', // Claude settings
   '.github', // GitHub Actions, workflows, issue templates
   '.gitlab', // GitLab CI configuration

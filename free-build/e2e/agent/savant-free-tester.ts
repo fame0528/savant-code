@@ -1,45 +1,45 @@
-﻿import type { AgentDefinition } from '@savant-code/sdk'
+import type { AgentDefinition } from '@savant-code/sdk'
 
 /**
- * Agent definition for testing the Savant-Free CLI via tmux.
+ * Agent definition for testing the SavantFree CLI via tmux.
  *
  * This agent is designed to be used with the custom tmux tools from
- * `createSavant-FreeTmuxTools()`. It receives a testing task in its prompt
- * and uses tmux tools to start Savant-Free, interact with it, and verify behavior.
+ * `createSavantFreeTmuxTools()`. It receives a testing task in its prompt
+ * and uses tmux tools to start SavantFree, interact with it, and verify behavior.
  *
  * Example usage:
  * ```ts
- * const { tools, cleanup } = createSavant-FreeTmuxTools(binaryPath)
+ * const { tools, cleanup } = createSavantFreeTmuxTools(binaryPath)
  * const result = await client.run({
- *   agent: savant-freeTesterAgent.id,
- *   prompt: 'Start savant-free and verify the welcome screen shows Savant-Free branding',
- *   agentDefinitions: [savant-freeTesterAgent],
+ *   agent: SavantFreeTesterAgent.id,
+ *   prompt: 'Start SavantFree and verify the welcome screen shows SavantFree branding',
+ *   agentDefinitions: [SavantFreeTesterAgent],
  *   customToolDefinitions: tools,
  *   handleEvent: collector.handleEvent,
  * })
  * await cleanup()
  * ```
  */
-export const savant-freeTesterAgent: AgentDefinition = {
+export const SavantFreeTesterAgent: AgentDefinition = {
   id: 'savant-free-tester',
-  displayName: 'Savant-Free E2E Tester',
+  displayName: 'SavantFree E2E Tester',
   model: 'anthropic/claude-sonnet-4.5',
   toolNames: [
-    'start_savant-free',
-    'send_to_savant-free',
-    'capture_savant-free_output',
-    'stop_savant-free',
+    'start_SavantFree',
+    'send_to_SavantFree',
+    'capture_SavantFree_output',
+    'stop_SavantFree',
   ],
-  instructionsPrompt: `You are a QA tester for the Savant-Free CLI application.
+  instructionsPrompt: `You are a QA tester for the SavantFree CLI application.
 
-Your job is to verify that Savant-Free behaves correctly by interacting with it
+Your job is to verify that SavantFree behaves correctly by interacting with it
 through tmux tools. Follow these steps:
 
-1. Call start_savant-free to launch the CLI
-2. Use capture_savant-free_output (with waitSeconds) to see the terminal output
-3. Use send_to_savant-free to type commands or text
+1. Call start_SavantFree to launch the CLI
+2. Use capture_SavantFree_output (with waitSeconds) to see the terminal output
+3. Use send_to_SavantFree to type commands or text
 4. Capture output again to verify behavior
-5. ALWAYS call stop_savant-free when done
+5. ALWAYS call stop_SavantFree when done
 
 Key things to verify:
 - The CLI starts without errors or crashes

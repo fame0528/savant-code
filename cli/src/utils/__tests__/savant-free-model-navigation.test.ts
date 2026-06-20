@@ -1,16 +1,16 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import {
-  savant-freeModelNavigationDirectionForKey,
-  nextSavant-FreeModelId,
+  SavantFreeModelNavigationDirectionForKey,
+  nextSavantFreeModelId,
 } from '../savant-free-model-navigation'
 
-describe('nextSavant-FreeModelId', () => {
+describe('nextSavantFreeModelId', () => {
   test('moves to the next model when moving forward', () => {
     const modelIds = ['glm', 'minimax']
 
     expect(
-      nextSavant-FreeModelId({
+      nextSavantFreeModelId({
         modelIds,
         focusedId: 'minimax',
         direction: 'forward',
@@ -22,7 +22,7 @@ describe('nextSavant-FreeModelId', () => {
     const modelIds = ['glm', 'minimax']
 
     expect(
-      nextSavant-FreeModelId({
+      nextSavantFreeModelId({
         modelIds,
         focusedId: 'minimax',
         direction: 'backward',
@@ -34,7 +34,7 @@ describe('nextSavant-FreeModelId', () => {
     const modelIds = ['glm', 'minimax', 'other']
 
     expect(
-      nextSavant-FreeModelId({
+      nextSavantFreeModelId({
         modelIds,
         focusedId: 'minimax',
         direction: 'forward',
@@ -44,7 +44,7 @@ describe('nextSavant-FreeModelId', () => {
 
   test('returns null when no model exists', () => {
     expect(
-      nextSavant-FreeModelId({
+      nextSavantFreeModelId({
         modelIds: [],
         focusedId: 'glm',
         direction: 'forward',
@@ -53,50 +53,50 @@ describe('nextSavant-FreeModelId', () => {
   })
 })
 
-describe('savant-freeModelNavigationDirectionForKey', () => {
+describe('SavantFreeModelNavigationDirectionForKey', () => {
   test('maps arrow keys to model navigation directions', () => {
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'down' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'down' })).toBe(
       'forward',
     )
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'right' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'right' })).toBe(
       'forward',
     )
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'up' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'up' })).toBe(
       'backward',
     )
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'left' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'left' })).toBe(
       'backward',
     )
   })
 
   test('maps tab and shift-tab to model navigation directions', () => {
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'tab' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'tab' })).toBe(
       'forward',
     )
     expect(
-      savant-freeModelNavigationDirectionForKey({ name: 'tab', shift: true }),
+      SavantFreeModelNavigationDirectionForKey({ name: 'tab', shift: true }),
     ).toBe('backward')
   })
 
   test('maps terminal tab sequences to model navigation directions', () => {
-    expect(savant-freeModelNavigationDirectionForKey({ sequence: '\t' })).toBe(
+    expect(SavantFreeModelNavigationDirectionForKey({ sequence: '\t' })).toBe(
       'forward',
     )
     expect(
-      savant-freeModelNavigationDirectionForKey({ sequence: '\x1b[9u' }),
+      SavantFreeModelNavigationDirectionForKey({ sequence: '\x1b[9u' }),
     ).toBe('forward')
     expect(
-      savant-freeModelNavigationDirectionForKey({ sequence: '\x1b[Z' }),
+      SavantFreeModelNavigationDirectionForKey({ sequence: '\x1b[Z' }),
     ).toBe('backward')
     expect(
-      savant-freeModelNavigationDirectionForKey({ sequence: '\x1b[9;2u' }),
+      SavantFreeModelNavigationDirectionForKey({ sequence: '\x1b[9;2u' }),
     ).toBe('backward')
     expect(
-      savant-freeModelNavigationDirectionForKey({ sequence: '\x1b[27;2;9~' }),
+      SavantFreeModelNavigationDirectionForKey({ sequence: '\x1b[27;2;9~' }),
     ).toBe('backward')
   })
 
   test('ignores non-navigation keys', () => {
-    expect(savant-freeModelNavigationDirectionForKey({ name: 'enter' })).toBeNull()
+    expect(SavantFreeModelNavigationDirectionForKey({ name: 'enter' })).toBeNull()
   })
 })

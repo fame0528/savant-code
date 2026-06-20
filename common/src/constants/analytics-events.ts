@@ -1,11 +1,11 @@
-﻿/**
+/**
  * Enum of analytics event types used throughout the application
  */
 export enum AnalyticsEvent {
   // Cross-surface â€” DAU
   // Emitted exactly once per user-submitted message/prompt, on each surface
   // (cli / web / chat), and never sampled. `distinct_id` is the canonical
-  // savant-code Postgres user id on every surface, so unique-users of this event
+  // SavantCode Postgres user id on every surface, so unique-users of this event
   // gives accurate per-surface DAU (filter on the `surface` property) and a
   // combined DAU (no filter). The `surface` property is one of: cli, web, chat.
   MESSAGE_SENT = 'message_sent',
@@ -21,7 +21,7 @@ export enum AnalyticsEvent {
   SLASH_COMMAND_USED = 'cli.slash_command_used',
   TERMINAL_COMMAND_COMPLETED = 'cli.terminal_command_completed',
   USER_INPUT_COMPLETE = 'cli.user_input_complete',
-  UPDATE_SAVANT_CODE_FAILED = 'cli.update_savant-code_failed',
+  UPDATE_SAVANT_CODE_FAILED = 'cli.update_SavantCode_failed',
   FEEDBACK_BUTTON_HOVERED = 'cli.feedback_button_hovered',
   FOLLOWUP_CLICKED = 'cli.followup_clicked',
   SUGGESTED_PROMPT_SHOWN = 'cli.suggested_prompt_shown',
@@ -73,7 +73,7 @@ export enum AnalyticsEvent {
   ONBOARD_PAGE_INSTALL_COMMAND_COPIED = 'onboard_page.install_command_copied',
 
   // Web - Creator Attribution
-  SAVANT_CODE_REFERRER_ATTRIBUTED = 'savant-code.referrer_attributed',
+  SAVANT_CODE_REFERRER_ATTRIBUTED = 'SavantCode.referrer_attributed',
 
   // Web - Install Dialog
   INSTALL_DIALOG_CD_COMMAND_COPIED = 'install_dialog.cd_command_copied',
@@ -163,19 +163,19 @@ export enum AnalyticsEvent {
   CHATGPT_OAUTH_RATE_LIMITED = 'sdk.chatgpt_oauth_rate_limited',
   CHATGPT_OAUTH_AUTH_ERROR = 'sdk.chatgpt_oauth_auth_error',
 
-  // Savant-Free - Creator Attribution
-  SAVANT_FREE_REFERRER_ATTRIBUTED = 'savant-free.referrer_attributed',
+  // SavantFree - Creator Attribution
+  SAVANT_FREE_REFERRER_ATTRIBUTED = 'SavantFree.referrer_attributed',
 
-  // Savant-Free - Get Started Page
-  SAVANT_FREE_GET_STARTED_VIEWED = 'savant-free.get_started_viewed',
-  SAVANT_FREE_GET_STARTED_HELP_EXPANDED = 'savant-free.get_started_help_expanded',
-  SAVANT_FREE_GET_STARTED_EDITOR_CLICKED = 'savant-free.get_started_editor_clicked',
+  // SavantFree - Get Started Page
+  SAVANT_FREE_GET_STARTED_VIEWED = 'SavantFree.get_started_viewed',
+  SAVANT_FREE_GET_STARTED_HELP_EXPANDED = 'SavantFree.get_started_help_expanded',
+  SAVANT_FREE_GET_STARTED_EDITOR_CLICKED = 'SavantFree.get_started_editor_clicked',
 
-  // Savant-Free - Home Page
-  SAVANT_FREE_HOME_INSTALL_COMMAND_COPIED = 'savant-free.home_install_command_copied',
-  SAVANT_FREE_HOME_GITHUB_CLICKED = 'savant-free.home_github_clicked',
-  SAVANT_FREE_HOME_INSTALL_GUIDE_EXPANDED = 'savant-free.home_install_guide_expanded',
-  SAVANT_FREE_HOME_FAQ_OPENED = 'savant-free.home_faq_opened',
+  // SavantFree - Home Page
+  SAVANT_FREE_HOME_INSTALL_COMMAND_COPIED = 'SavantFree.home_install_command_copied',
+  SAVANT_FREE_HOME_GITHUB_CLICKED = 'SavantFree.home_github_clicked',
+  SAVANT_FREE_HOME_INSTALL_GUIDE_EXPANDED = 'SavantFree.home_install_guide_expanded',
+  SAVANT_FREE_HOME_FAQ_OPENED = 'SavantFree.home_faq_opened',
 
   // Common
   FLUSH_FAILED = 'common.flush_failed',

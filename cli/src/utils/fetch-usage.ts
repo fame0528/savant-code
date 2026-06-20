@@ -1,9 +1,9 @@
-﻿import { getAuthToken } from './auth'
+import { getAuthToken } from './auth'
 import { getApiClient } from './savant-code-api'
 import { logger } from './logger'
 import { useChatStore } from '../state/chat-store'
 
-import type { Savant-CodeApiClient } from './savant-code-api'
+import type { SavantCodeApiClient } from './savant-code-api'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 
 export interface FetchAndUpdateUsageParams {
@@ -14,7 +14,7 @@ export interface FetchAndUpdateUsageParams {
     setInputMode: (mode: 'usage' | 'default') => void
   }
   logger?: Logger
-  apiClient?: Savant-CodeApiClient
+  apiClient?: SavantCodeApiClient
 }
 
 /**

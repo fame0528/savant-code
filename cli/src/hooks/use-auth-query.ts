@@ -1,4 +1,4 @@
-﻿import { createHash } from 'crypto'
+import { createHash } from 'crypto'
 
 import { getCiEnv } from '@savant-code/common/env-ci'
 import {

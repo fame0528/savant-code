@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Example: Code Reviewer
  *
  * A simple script that submits code for AI review.
@@ -29,7 +29,7 @@ async function main() {
   console.log('```\n')
 
   const result = await client.run({
-    agent: 'savant-code/base2@latest',
+    agent: 'SavantCode/base2@latest',
     prompt: `Review this code and identify any bugs or issues:\n\n${SAMPLE_CODE}`,
     handleStreamChunk: (chunk) => {
       if (typeof chunk === 'string') {

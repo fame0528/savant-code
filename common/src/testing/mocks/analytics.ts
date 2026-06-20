@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Typed analytics mock factory for testing.
  *
  * Provides type-safe mocks for analytics functions used throughout the codebase.

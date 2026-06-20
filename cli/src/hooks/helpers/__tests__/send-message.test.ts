@@ -1,4 +1,4 @@
-﻿import { describe, expect, test, mock, beforeEach, afterEach } from 'bun:test'
+import { describe, expect, test, mock, beforeEach, afterEach } from 'bun:test'
 
 import type { ChatMessage } from '../../../types/chat'
 import type { SendMessageTimerController } from '../../../utils/send-message-timer'
@@ -9,18 +9,18 @@ const ensureEnv = () => {
   process.env.NEXT_PUBLIC_SC_ENVIRONMENT =
     process.env.NEXT_PUBLIC_SC_ENVIRONMENT || 'test'
   process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL =
-    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL || 'https://app.savant-code.test'
+    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL || 'https://app.SavantCode.test'
   process.env.NEXT_PUBLIC_SUPPORT_EMAIL =
-    process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@savant-code.test'
+    process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@SavantCode.test'
   process.env.NEXT_PUBLIC_POSTHOG_API_KEY =
     process.env.NEXT_PUBLIC_POSTHOG_API_KEY || 'phc_test_key'
   process.env.NEXT_PUBLIC_POSTHOG_HOST_URL =
-    process.env.NEXT_PUBLIC_POSTHOG_HOST_URL || 'https://posthog.savant-code.test'
+    process.env.NEXT_PUBLIC_POSTHOG_HOST_URL || 'https://posthog.SavantCode.test'
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY =
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_123'
   process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL =
     process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL ||
-    'https://stripe.savant-code.test'
+    'https://stripe.SavantCode.test'
   process.env.NEXT_PUBLIC_WEB_PORT = process.env.NEXT_PUBLIC_WEB_PORT || '3000'
 }
 
@@ -1686,7 +1686,7 @@ describe('resetEarlyReturnState', () => {
   })
 })
 
-describe('savant-free gate errors', () => {
+describe('SavantFree gate errors', () => {
   const makeUpdater = (messages: ChatMessage[]) => {
     const updater = createBatchedMessageUpdater('ai-1', (fn: any) => {
       const next = fn(messages)
@@ -1725,7 +1725,7 @@ describe('savant-free gate errors', () => {
       updateChainInProgress: () => {},
     })
     updater.flush()
-    expect(messages[0].userError).toContain('Another savant-free CLI took over')
+    expect(messages[0].userError).toContain('Another SavantFree CLI took over')
   })
 
   test('handleRunError suppresses the inline error for 410 session_expired (ended banner takes over)', () => {

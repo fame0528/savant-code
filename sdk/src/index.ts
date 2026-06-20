@@ -1,4 +1,4 @@
-﻿export type * from '@savant-code/common/types/json'
+export type * from '@savant-code/common/types/json'
 export type * from '@savant-code/common/types/messages/savant-code-message'
 export type * from '@savant-code/common/types/messages/data-content'
 export type * from '@savant-code/common/types/print-mode'
@@ -38,7 +38,6 @@ export { getUserInfoFromApiKey } from './impl/database'
 export * from './credentials'
 export { loadLocalAgents } from './agents/load-agents'
 export { loadMCPConfig, loadMCPConfigSync } from './agents/load-mcp-config'
-export { loadSkills } from './skills/load-skills'
 export { formatAvailableSkillsXml } from '@savant-code/common/util/skills'
 
 export {

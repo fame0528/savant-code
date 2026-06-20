@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import { getBundledRgPath } from '@savant-code/sdk'
 import { spawnSync } from 'bun'

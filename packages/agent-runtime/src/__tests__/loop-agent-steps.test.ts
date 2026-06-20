@@ -1,4 +1,4 @@
-﻿import * as analytics from '@savant-code/common/analytics'
+import * as analytics from '@savant-code/common/analytics'
 import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { createTestAgentRuntimeParams } from '@savant-code/common/testing/fixtures/agent-runtime'
 import { clearMockedModules } from '@savant-code/common/testing/mock-modules'
@@ -980,7 +980,7 @@ describe('loopAgentSteps - runAgentStep vs runProgrammaticStep behavior', () => 
         throw new APICallError({
           statusCode: 403,
           message: 'Forbidden',
-          url: 'https://api.savant-code.dev/v1/chat/completions',
+          url: 'https://api.SavantCode.dev/v1/chat/completions',
           requestBodyValues: {},
           responseBody: JSON.stringify({
             error: 'free_mode_unavailable',
@@ -1032,7 +1032,7 @@ describe('loopAgentSteps - runAgentStep vs runProgrammaticStep behavior', () => 
         throw new APICallError({
           statusCode: 500,
           message: 'Internal Server Error',
-          url: 'https://api.savant-code.dev/v1/chat/completions',
+          url: 'https://api.SavantCode.dev/v1/chat/completions',
           requestBodyValues: {},
           responseBody: undefined,
           isRetryable: true,
@@ -1068,12 +1068,12 @@ describe('loopAgentSteps - runAgentStep vs runProgrammaticStep behavior', () => 
       const apiError = new APICallError({
         statusCode: 409,
         message: 'Conflict',
-        url: 'https://api.savant-code.dev/v1/chat/completions',
+        url: 'https://api.SavantCode.dev/v1/chat/completions',
         requestBodyValues: {},
         responseBody: JSON.stringify({
           error: 'session_superseded',
           message:
-            'Another instance of savant-free has taken over this session. Only one instance per account is allowed.',
+            'Another instance of SavantFree has taken over this session. Only one instance per account is allowed.',
         }),
         isRetryable: true,
       })
@@ -1095,7 +1095,7 @@ describe('loopAgentSteps - runAgentStep vs runProgrammaticStep behavior', () => 
       expect(result.output.type).toBe('error')
       if (result.output.type === 'error') {
         expect(result.output.message).toBe(
-          'Another instance of savant-free has taken over this session. Only one instance per account is allowed.',
+          'Another instance of SavantFree has taken over this session. Only one instance per account is allowed.',
         )
         expect(result.output.message).not.toContain('Agent run error:')
         expect(result.output.error).toBe('session_superseded')

@@ -1,13 +1,13 @@
-﻿import { describe, test, expect, mock, beforeEach } from 'bun:test'
+import { describe, test, expect, mock, beforeEach } from 'bun:test'
 
 import type { FeedbackRequest } from '@savant-code/common/schemas/feedback'
 
-import { createSavant-CodeApiClient } from '../savant-code-api'
+import { createSavantCodeApiClient } from '../savant-code-api'
 
 // Type for mocked fetch function
 type MockFetch = (url: string, options?: RequestInit) => Promise<Response>
 
-describe('createSavant-CodeApiClient', () => {
+describe('createSavantCodeApiClient', () => {
   let mockFetch: ReturnType<typeof mock<MockFetch>>
 
   beforeEach(() => {
@@ -22,24 +22,24 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('client creation', () => {
     test('should create client with default base URL', () => {
-      const client = createSavant-CodeApiClient()
+      const client = createSavantCodeApiClient()
       expect(client.baseUrl).toBeTruthy()
     })
 
     test('should create client with custom base URL', () => {
-      const client = createSavant-CodeApiClient({ baseUrl: 'https://custom.api' })
+      const client = createSavantCodeApiClient({ baseUrl: 'https://custom.api' })
       expect(client.baseUrl).toBe('https://custom.api')
     })
 
     test('should store auth token', () => {
-      const client = createSavant-CodeApiClient({ authToken: 'test-token' })
+      const client = createSavantCodeApiClient({ authToken: 'test-token' })
       expect(client.authToken).toBe('test-token')
     })
   })
 
   describe('GET requests', () => {
     test('should make GET request with correct URL', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -52,7 +52,7 @@ describe('createSavant-CodeApiClient', () => {
     })
 
     test('should add query parameters', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -67,7 +67,7 @@ describe('createSavant-CodeApiClient', () => {
     })
 
     test('should include Authorization header when authToken provided', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         authToken: 'my-token',
         fetch: mockFetch as unknown as typeof fetch,
@@ -85,7 +85,7 @@ describe('createSavant-CodeApiClient', () => {
     })
 
     test('should not include Authorization header when includeAuth is false', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         authToken: 'my-token',
         fetch: mockFetch as unknown as typeof fetch,
@@ -103,7 +103,7 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('POST requests', () => {
     test('should make POST request with JSON body', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -122,7 +122,7 @@ describe('createSavant-CodeApiClient', () => {
     })
 
     test('should include Cookie header when includeCookie is true', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         authToken: 'my-token',
         fetch: mockFetch as unknown as typeof fetch,
@@ -147,7 +147,7 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('PUT requests', () => {
     test('should make PUT request with JSON body', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -167,7 +167,7 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('PATCH requests', () => {
     test('should make PATCH request with JSON body', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -184,7 +184,7 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('DELETE requests', () => {
     test('should make DELETE request without body', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetch as unknown as typeof fetch,
       })
@@ -212,7 +212,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockSuccessFetch as unknown as typeof fetch,
       })
@@ -236,7 +236,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockErrorFetch as unknown as typeof fetch,
       })
@@ -261,7 +261,7 @@ describe('createSavant-CodeApiClient', () => {
         } as unknown as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockErrorFetch as unknown as typeof fetch,
       })
@@ -284,7 +284,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockNoContentFetch as unknown as typeof fetch,
       })
@@ -316,7 +316,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response)
       })
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockRetryFetch as unknown as typeof fetch,
         retry: {
@@ -342,7 +342,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockBadRequestFetch as unknown as typeof fetch,
         retry: { maxRetries: 3, initialDelayMs: 10 },
@@ -365,7 +365,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockServerErrorFetch as unknown as typeof fetch,
         retry: { maxRetries: 3 },
@@ -391,7 +391,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response)
       })
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockNetworkErrorFetch as unknown as typeof fetch,
         retry: { maxRetries: 3, initialDelayMs: 10 },
@@ -419,7 +419,7 @@ describe('createSavant-CodeApiClient', () => {
         },
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockFetchWithSignal as unknown as typeof fetch,
         defaultTimeoutMs: 5000,
@@ -438,7 +438,7 @@ describe('createSavant-CodeApiClient', () => {
         return Promise.reject(error)
       })
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockAbortFetch as unknown as typeof fetch,
       })
@@ -452,7 +452,7 @@ describe('createSavant-CodeApiClient', () => {
 
   describe('custom headers', () => {
     test('should merge custom headers', async () => {
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         authToken: 'my-token',
         fetch: mockFetch as unknown as typeof fetch,
@@ -481,15 +481,15 @@ describe('createSavant-CodeApiClient', () => {
         return Promise.reject(error)
       })
 
-      const client = createSavant-CodeApiClient({
-        baseUrl: 'https://savant-free.com',
+      const client = createSavantCodeApiClient({
+        baseUrl: 'https://SavantFree.com',
         fetch: mockTlsFetch as unknown as typeof fetch,
       })
 
       await expect(
         client.post('/api/auth/cli/code', { fingerprintId: 'test' }),
       ).rejects.toThrow(
-        'TLS certificate verification failed for https://savant-free.com.',
+        'TLS certificate verification failed for https://SavantFree.com.',
       )
     })
 
@@ -500,8 +500,8 @@ describe('createSavant-CodeApiClient', () => {
         return Promise.reject(error)
       })
 
-      const client = createSavant-CodeApiClient({
-        baseUrl: 'https://savant-free.com',
+      const client = createSavantCodeApiClient({
+        baseUrl: 'https://SavantFree.com',
         fetch: mockTlsFetch as unknown as typeof fetch,
         retry: {
           maxRetries: 3,
@@ -512,7 +512,7 @@ describe('createSavant-CodeApiClient', () => {
       await expect(
         client.post('/api/auth/cli/code', { fingerprintId: 'test' }),
       ).rejects.toThrow(
-        'TLS certificate verification failed for https://savant-free.com.',
+        'TLS certificate verification failed for https://SavantFree.com.',
       )
       expect(mockTlsFetch).toHaveBeenCalledTimes(1)
     })
@@ -535,7 +535,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockRateLimitFetch as unknown as typeof fetch,
         retry: { maxRetries: 3, initialDelayMs: 10 },
@@ -558,7 +558,7 @@ describe('createSavant-CodeApiClient', () => {
         } as Response),
       )
 
-      const client = createSavant-CodeApiClient({
+      const client = createSavantCodeApiClient({
         baseUrl: 'https://test.api',
         fetch: mockServerErrorFetch as unknown as typeof fetch,
         retry: {

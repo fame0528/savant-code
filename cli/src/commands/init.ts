@@ -1,4 +1,4 @@
-﻿import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 
 import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
@@ -17,7 +17,7 @@ import { getSystemMessage } from '../utils/message-history'
 
 import type { PostUserMessageFn } from '../types/contracts/send-message'
 
-const brandName = IS_SAVANT_FREE ? 'Savant-Free' : 'Savant-Code'
+const brandName = IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'
 
 const INITIAL_KNOWLEDGE_FILE = `# Project knowledge
 

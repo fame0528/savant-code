@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Shared mock types for testing.
  *
  * This module provides common mock types and factory functions that are

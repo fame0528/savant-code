@@ -1,11 +1,11 @@
-﻿import { postStreamProcessing } from './write-file'
+import { postStreamProcessing } from './write-file'
 import { processStrReplace } from '../../../process-str-replace'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type { FileProcessingState } from './write-file'
 import type {
   ClientToolCall,
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { RequestOptionalFileFn } from '@savant-code/common/types/contracts/client'
@@ -15,7 +15,7 @@ import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 export const handleStrReplace = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<'str_replace'>
+    toolCall: SavantCodeToolCall<'str_replace'>
 
     fileProcessingState: FileProcessingState
     logger: Logger
@@ -94,4 +94,4 @@ export const handleStrReplace = (async (
   }
 
   return { output: clientToolResult }
-}) satisfies Savant-CodeToolHandlerFunction<'str_replace'>
+}) satisfies SavantCodeToolHandlerFunction<'str_replace'>

@@ -1,4 +1,4 @@
-﻿import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
+import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
 import { FILE_READ_STATUS } from '@savant-code/common/old-constants'
 import * as projectFileTree from '@savant-code/common/project-file-tree'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'

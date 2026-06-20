@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Event collector utility for capturing and asserting on streaming events.
  */
 

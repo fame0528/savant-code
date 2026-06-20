@@ -1,9 +1,9 @@
-﻿import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { setCurrentChatId } from '../project-files'
 import { createStreamController } from './stream-state'
 import { useChatStore } from '../state/chat-store'
-import { getSavant-FreeInstanceId } from './use-savant-free-session'
+import { getSavantFreeInstanceId } from './use-savant-free-session'
 import { getSavantClient } from '../utils/savant-code-client'
 import { AGENT_MODE_TO_COST_MODE, IS_SAVANT_FREE } from '../utils/constants'
 import { createEventHandlerState } from '../utils/create-event-handler-state'
@@ -362,10 +362,10 @@ export const useSendMessage = ({
       if (!client) {
         logger.error(
           {},
-          '[send-message] No Savant-Code client available. Please ensure you are authenticated.',
+          '[send-message] No SavantCode client available. Please ensure you are authenticated.',
         )
         // Show error to user instead of silently failing
-        const brandName = IS_SAVANT_FREE ? 'Savant-Free' : 'Savant-Code'
+        const brandName = IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'
         setMessages((prev) => [
           ...prev,
           createErrorChatMessage(
@@ -450,7 +450,7 @@ export const useSendMessage = ({
           },
         })
 
-        const savant-freeInstanceId = getSavant-FreeInstanceId()
+        const SavantFreeInstanceId = getSavantFreeInstanceId()
         const runConfig = createRunConfig({
           logger,
           agent: resolvedAgent,
@@ -461,9 +461,9 @@ export const useSendMessage = ({
           eventHandlerState,
           signal: abortController.signal,
           costMode: AGENT_MODE_TO_COST_MODE[agentMode],
-          extraSavant-CodeMetadata:
-            IS_SAVANT_FREE && savant-freeInstanceId
-              ? { savant-free_instance_id: savant-freeInstanceId }
+          extraSavantCodeMetadata:
+            IS_SAVANT_FREE && SavantFreeInstanceId
+              ? { SavantFree_instance_id: SavantFreeInstanceId }
               : undefined,
         })
 

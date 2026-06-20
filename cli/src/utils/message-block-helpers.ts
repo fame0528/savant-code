@@ -1,4 +1,4 @@
-﻿import { isEqual } from 'lodash'
+import { isEqual } from 'lodash'
 
 import { formatToolOutput } from './savant-code-client'
 import { shouldCollapseByDefault, shouldCollapseForParent } from './constants'
@@ -13,7 +13,7 @@ import type {
  * Extracts the base agent name from a potentially scoped/versioned agent type string.
  *
  * @example
- * getAgentBaseName('savant-code/file-picker@0.0.2') // 'file-picker'
+ * getAgentBaseName('SavantCode/file-picker@0.0.2') // 'file-picker'
  * getAgentBaseName('file-picker@1.0.0') // 'file-picker'
  * getAgentBaseName('file-picker') // 'file-picker'
  * getAgentBaseName('file_picker') // 'file-picker'

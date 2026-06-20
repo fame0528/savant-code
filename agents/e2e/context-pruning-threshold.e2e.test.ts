@@ -1,4 +1,4 @@
-﻿/**
+/**
  * E2E Test: Context Pruning Threshold Verification
  *
  * This test verifies that context pruning triggers at the correct token count

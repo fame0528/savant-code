@@ -1,15 +1,15 @@
-﻿/**
- * E2E test that verifies Savant-Free can read and use knowledge.md from the project.
+/**
+ * E2E test that verifies SavantFree can read and use knowledge.md from the project.
  *
- * Starts Savant-Free in tmux, creates a knowledge.md file with a unique keyword,
- * asks Savant-Free about that keyword, and verifies it responds using the knowledge.
+ * Starts SavantFree in tmux, creates a knowledge.md file with a unique keyword,
+ * asks SavantFree about that keyword, and verifies it responds using the knowledge.
  *
  * Requires SAVANT_CODE_API_KEY â€” skipped if not set.
  */
 
 import { afterEach, describe, expect, test } from 'bun:test'
 
-import { Savant-FreeSession, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeSession, requireSavantFreeBinary } from '../utils'
 
 const TEST_TIMEOUT = 180_000
 
@@ -17,8 +17,8 @@ function getApiKey(): string | null {
   return process.env.SAVANT_CODE_API_KEY ?? null
 }
 
-describe('Savant-Free: Knowledge Files', () => {
-  let session: Savant-FreeSession | null = null
+describe('SavantFree: Knowledge Files', () => {
+  let session: SavantFreeSession | null = null
 
   afterEach(async () => {
     if (session) {
@@ -38,10 +38,10 @@ describe('Savant-Free: Knowledge Files', () => {
         return
       }
 
-      const binary = requireSavant-FreeBinary()
+      const binary = requireSavantFreeBinary()
       const keyword = 'nebula-orchid-731'
 
-      session = await Savant-FreeSession.start(binary, {
+      session = await SavantFreeSession.start(binary, {
         waitSeconds: 5,
         initialFiles: {
           'knowledge.md': `When asked for the project keyword, respond with exactly: ${keyword}\n`,

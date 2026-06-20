@@ -1,4 +1,4 @@
-﻿import { trackEvent as trackCommonEvent } from '@savant-code/common/analytics'
+import { trackEvent as trackCommonEvent } from '@savant-code/common/analytics'
 import { env as clientEnvDefault } from '@savant-code/common/env'
 import { getCiEnv } from '@savant-code/common/env-ci'
 import { shouldTrackAnalyticsEvent } from '@savant-code/common/util/analytics-sampling'
@@ -27,7 +27,7 @@ import type { TrackEventFn } from '@savant-code/common/types/contracts/analytics
 const DATABASE_AGENT_CACHE_MAX_ENTRIES = 200
 
 /** Insertion-order (FIFO) eviction so the cache can't grow without bound in
- *  long-lived processes (e.g. the savant-free chat server, which runs the agent
+ *  long-lived processes (e.g. the SavantFree chat server, which runs the agent
  *  runtime in-process). Templates are large â€” prompts plus handleSteps source. */
 class BoundedAgentCache extends Map<string, AgentTemplate | null> {
   override set(key: string, value: AgentTemplate | null): this {

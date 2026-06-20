@@ -1,4 +1,4 @@
-﻿// Find tree-sitter.wasm so the SDK's tree-sitter parser singleton can load
+// Find tree-sitter.wasm so the SDK's tree-sitter parser singleton can load
 // it at runtime. Must be the very first import in `index.tsx`: subsequent
 // imports (the SDK / code-map) eagerly construct the parser, and its init
 // reads what we publish here on `globalThis` and via the env var.
@@ -14,8 +14,8 @@
 //
 // It's 200KB, the npm tarball already contains the binary; adding one
 // more file is trivial. The build script copies the wasm into `cli/bin/`
-// after compile, the release workflow tarballs both, and the savant-free /
-// savant-code downloader extracts both into the same directory. At runtime,
+// after compile, the release workflow tarballs both, and the SavantFree /
+// SavantCode downloader extracts both into the same directory. At runtime,
 // `process.execPath` plus a relative file lookup gets us the wasm with
 // zero bundler involvement.
 

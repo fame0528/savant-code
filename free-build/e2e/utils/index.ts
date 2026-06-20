@@ -1,6 +1,6 @@
-﻿export { getSavant-FreeBinaryPath, requireSavant-FreeBinary, REPO_ROOT } from './binary-helpers'
-export { Savant-FreeSession } from './savant-free-session'
-export { createSavant-FreeTmuxTools } from './tmux-custom-tools'
+export { getSavantFreeBinaryPath, requireSavantFreeBinary, REPO_ROOT } from './binary-helpers'
+export { SavantFreeSession } from './savant-free-session'
+export { createSavantFreeTmuxTools } from './tmux-custom-tools'
 export {
   tmuxStart,
   tmuxSend,

@@ -1,4 +1,4 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import { useCallback, useEffect, useState } from 'react'
 
 import { useAuthQuery, useLogoutMutation } from './use-auth-query'
@@ -15,7 +15,7 @@ import type { User } from '../utils/auth'
 const setAuthLoggerContext = (params: { userId: string; email: string }) => {
   loggerContext.userId = params.userId
   loggerContext.userEmail = params.email
-  identifyUser(params.userId, { email: params.email, savant-free: IS_SAVANT_FREE })
+  identifyUser(params.userId, { email: params.email, SavantFree: IS_SAVANT_FREE })
 }
 
 const clearAuthLoggerContext = () => {

@@ -1,4 +1,4 @@
-﻿import z from 'zod/v4'
+import z from 'zod/v4'
 
 import { FileChangeSchema } from '../actions'
 import { addMessageParams } from './params/tool/add-message'
@@ -84,7 +84,7 @@ export const toolParams = {
 }
 
 // Tool call from LLM after parsing
-export type Savant-CodeToolCall<T extends ToolName = ToolName> = {
+export type SavantCodeToolCall<T extends ToolName = ToolName> = {
   [K in ToolName]: {
     toolName: K
     input: z.infer<(typeof toolParams)[K]['inputSchema']>
@@ -97,7 +97,7 @@ export type SavantToolOutput<T extends ToolName = ToolName> = {
     : never
 }[T]
 
-export type Savant-CodeToolMessage<T extends ToolName = ToolName> = ToolMessage & {
+export type SavantCodeToolMessage<T extends ToolName = ToolName> = ToolMessage & {
   content: SavantToolOutput<T>
 }
 

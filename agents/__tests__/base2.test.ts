@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import {
   SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID,
@@ -14,7 +14,7 @@ import { createBase2 } from '../base2/base2'
 import codeReviewerLite from '../reviewer/code-reviewer-lite'
 
 describe('base2 reviewer selection', () => {
-  test('Savant-Code lite uses DeepSeek V4 Flash and its matching reviewer', () => {
+  test('SavantCode lite uses DeepSeek V4 Flash and its matching reviewer', () => {
     const base2 = createBase2('lite')
 
     expect(base2.model).toBe(SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID)

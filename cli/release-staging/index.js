@@ -109,10 +109,10 @@ const { getProxyUrl, httpGet } = createReleaseHttpClient({
 
 function getPostHogConfig() {
   const apiKey =
-    process.env.CODEBUFF_POSTHOG_API_KEY ||
+    process.env.SAVANT_CODE_POSTHOG_API_KEY ||
     process.env.NEXT_PUBLIC_POSTHOG_API_KEY
   const host =
-    process.env.CODEBUFF_POSTHOG_HOST ||
+    process.env.SAVANT_CODE_POSTHOG_HOST ||
     process.env.NEXT_PUBLIC_POSTHOG_HOST_URL
 
   if (!apiKey || !host) {
@@ -135,7 +135,7 @@ function trackUpdateFailed(errorMessage, version, context = {}) {
 
     const payload = JSON.stringify({
       api_key: posthogConfig.apiKey,
-      event: 'cli.update_codebuff_failed',
+      event: 'cli.update_SAVANT_CODE_failed',
       properties: {
         distinct_id: `anonymous-${CONFIG.homeDir}`,
         error: errorMessage,
@@ -209,7 +209,7 @@ function getPlatformKey() {
 function getTargetOverride() {
   const envNames = [
     `${packageName.toUpperCase()}_BINARY_TARGET`,
-    'CODEBUFF_BINARY_TARGET',
+    'SAVANT_CODE_BINARY_TARGET',
     'CLI_BINARY_TARGET',
   ]
 
@@ -425,7 +425,7 @@ async function downloadBinary(version, targetKey = getDownloadTargetKey()) {
   }
 
   const downloadUrl = `${
-    process.env.NEXT_PUBLIC_CODEBUFF_APP_URL || 'https://codebuff.com'
+    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL || 'https://codebuff.com'
   }/api/releases/download/${version}/${fileName}`
 
   // Ensure config directory exists

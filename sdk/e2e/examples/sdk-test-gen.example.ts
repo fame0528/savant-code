@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Example: SDK Test Generator
  *
  * Generates unit tests for code.
@@ -39,7 +39,7 @@ async function main() {
   console.log('Generated tests:\n')
 
   const result = await client.run({
-    agent: 'savant-code/base2@latest',
+    agent: 'SavantCode/base2@latest',
     prompt: `Generate unit tests for these functions using Jest:\n\n${CODE_TO_TEST}`,
     handleStreamChunk: (chunk) => {
       if (typeof chunk === 'string') {

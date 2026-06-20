@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Terminal title utilities using OSC (Operating System Command) escape sequences.
  *
  * OSC sequence format for setting title:
@@ -15,7 +15,7 @@ import { IS_SAVANT_FREE } from './constants'
 import { getCliEnv } from './env'
 
 const MAX_TITLE_LENGTH = 60
-const TITLE_PREFIX = IS_SAVANT_FREE ? 'Savant-Free: ' : 'Savant-Code: '
+const TITLE_PREFIX = IS_SAVANT_FREE ? 'SavantFree: ' : 'SavantCode: '
 const OSC_TERMINATOR = '\x07' // BEL
 
 function isInTmux(env: ReturnType<typeof getCliEnv>): boolean {

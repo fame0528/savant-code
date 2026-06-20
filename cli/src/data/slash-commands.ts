@@ -1,4 +1,4 @@
-﻿import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
+import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
 import { AGENT_MODES, IS_SAVANT_FREE } from '../utils/constants'
 import { getChatGptOAuthStatus } from '../utils/chatgpt-oauth'
 
@@ -23,7 +23,7 @@ export interface SlashCommand {
   insertText?: string
 }
 
-// Generate mode commands from the AGENT_MODES constant (excluded in Savant-Free)
+// Generate mode commands from the AGENT_MODES constant (excluded in SavantFree)
 const MODE_COMMANDS: SlashCommand[] = IS_SAVANT_FREE
   ? []
   : AGENT_MODES.map((mode) => ({
@@ -150,7 +150,7 @@ const ALL_SLASH_COMMANDS: SlashCommand[] = [
   {
     id: 'feedback',
     label: 'feedback',
-    description: IS_SAVANT_FREE ? 'Share general feedback about Savant-Free' : 'Share general feedback about Savant-Code',
+    description: IS_SAVANT_FREE ? 'Share general feedback about SavantFree' : 'Share general feedback about SavantCode',
   },
   {
     id: 'bash',

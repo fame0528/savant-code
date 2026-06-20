@@ -1,4 +1,4 @@
-﻿import { endSavant-FreeSessionBestEffort } from '../hooks/use-savant-free-session'
+import { endSavantFreeSessionBestEffort } from '../hooks/use-savant-free-session'
 
 import { flushAnalytics } from './analytics'
 import { withTimeout } from './terminal-color-detection'
@@ -7,13 +7,13 @@ import { withTimeout } from './terminal-color-detection'
 const EXIT_CLEANUP_TIMEOUT_MS = 1_000
 
 /**
- * Flush analytics + release the savant-free seat (best-effort), then exit 0.
+ * Flush analytics + release the SavantFree seat (best-effort), then exit 0.
  * Shared by every savant-free-specific screen's Ctrl+C / X handler so they all
  * run the same cleanup.
  */
-export async function exitSavant-FreeCleanly(): Promise<never> {
+export async function exitSavantFreeCleanly(): Promise<never> {
   await withTimeout(
-    Promise.allSettled([flushAnalytics(), endSavant-FreeSessionBestEffort()]),
+    Promise.allSettled([flushAnalytics(), endSavantFreeSessionBestEffort()]),
     EXIT_CLEANUP_TIMEOUT_MS,
     undefined,
   )

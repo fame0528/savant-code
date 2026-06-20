@@ -1,4 +1,4 @@
-﻿import z from 'zod/v4'
+import z from 'zod/v4'
 
 import { $getNativeToolCallExampleString, jsonToolResultSchema } from '../utils'
 
@@ -52,7 +52,7 @@ const inputSchema = z
     widget: widgetSchema.describe('The UI widget to render.'),
   })
   .describe(
-    'Render a small interactive UI widget in the Savant-Code CLI. Currently supports a button that opens a link.',
+    'Render a small interactive UI widget in the SavantCode CLI. Currently supports a button that opens a link.',
   )
 
 const outputSchema = z.object({
@@ -60,7 +60,7 @@ const outputSchema = z.object({
 })
 
 const description = `
-Render a small interactive UI widget in the Savant-Code CLI.
+Render a small interactive UI widget in the SavantCode CLI.
 
 Currently supported widgets:
 - button: renders a clickable button with text and an http(s) link.

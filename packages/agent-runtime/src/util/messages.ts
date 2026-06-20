@@ -1,4 +1,4 @@
-﻿import { AssertionError } from 'assert'
+import { AssertionError } from 'assert'
 
 import { buildArray } from '@savant-code/common/util/array'
 import { getErrorObject } from '@savant-code/common/util/error'
@@ -11,7 +11,7 @@ import { countTokensJson } from './token-counter'
 
 import type { System } from '../llm-api/claude'
 import type {
-  Savant-CodeToolMessage,
+  SavantCodeToolMessage,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
@@ -211,7 +211,7 @@ export function trimMessagesToFitTokenLimit(params: {
 
       const terminalResultMessage = cloneDeep(
         m,
-      ) as Savant-CodeToolMessage<'run_terminal_command'>
+      ) as SavantCodeToolMessage<'run_terminal_command'>
 
       const result = simplifyTerminalHelper({
         toolResult: terminalResultMessage.content,
@@ -274,7 +274,7 @@ export function getMessagesSubset(params: {
 
   // Remove cache_control from all messages
   for (const message of messagesSubset) {
-    for (const provider of ['anthropic', 'openrouter', 'savant-code'] as const) {
+    for (const provider of ['anthropic', 'openrouter', 'SavantCode'] as const) {
       delete message.providerOptions?.[provider]?.cacheControl
     }
   }
@@ -368,7 +368,7 @@ export function getEditedFiles(params: {
       .filter(
         (
           m,
-        ): m is Savant-CodeToolMessage<
+        ): m is SavantCodeToolMessage<
           'create_plan' | 'str_replace' | 'write_file'
         > => {
           return (
@@ -413,7 +413,7 @@ export function getPreviouslyReadFiles(params: {
       try {
         files.push(
           ...(
-            message as Savant-CodeToolMessage<'read_files'>
+            message as SavantCodeToolMessage<'read_files'>
           ).content[0].value.filter(
             (
               file,
@@ -431,7 +431,7 @@ export function getPreviouslyReadFiles(params: {
 
     if (message.toolName === 'find_files') {
       try {
-        const v = (message as Savant-CodeToolMessage<'find_files'>).content[0]
+        const v = (message as SavantCodeToolMessage<'find_files'>).content[0]
           .value
         if ('message' in v) {
           continue

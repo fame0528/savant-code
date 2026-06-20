@@ -1,4 +1,4 @@
-﻿import type { TrackEventFn } from './analytics'
+import type { TrackEventFn } from './analytics'
 import type { SendActionFn } from './client'
 import type { OpenRouterProviderRoutingOptions , AgentTemplate } from '../agent-template'
 import type { ParamsExcluding } from '../function-params'
@@ -62,10 +62,10 @@ export type PromptAiSdkStreamFn = (
     localAgentTemplates?: Record<string, AgentTemplate>
     /** Cost mode - 'free' mode means 0 credits charged for all agents */
     costMode?: string
-    /** Extra key/values merged into the request's `savant-code_metadata` field.
-     *  Used to forward client-scoped identifiers (e.g. `savant-free_instance_id`)
+    /** Extra key/values merged into the request's `SavantCode_metadata` field.
+     *  Used to forward client-scoped identifiers (e.g. `SavantFree_instance_id`)
      *  that server-side gates read from the chat-completions body. */
-    extraSavant-CodeMetadata?: Record<string, string>
+    extraSavantCodeMetadata?: Record<string, string>
     sendAction: SendActionFn
     logger: Logger
     trackEvent: TrackEventFn

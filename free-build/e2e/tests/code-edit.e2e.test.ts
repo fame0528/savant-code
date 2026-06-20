@@ -1,7 +1,7 @@
-﻿/**
- * E2E test that verifies Savant-Free can perform a simple code edit.
+/**
+ * E2E test that verifies SavantFree can perform a simple code edit.
  *
- * Starts Savant-Free in tmux, sends a prompt asking it to add a console.log
+ * Starts SavantFree in tmux, sends a prompt asking it to add a console.log
  * to a file, and verifies the file was modified correctly.
  *
  * Requires SAVANT_CODE_API_KEY â€” skipped if not set.
@@ -9,7 +9,7 @@
 
 import { afterEach, describe, expect, test } from 'bun:test'
 
-import { Savant-FreeSession, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeSession, requireSavantFreeBinary } from '../utils'
 
 const TEST_TIMEOUT = 1_000_000
 
@@ -17,8 +17,8 @@ function getApiKey(): string | null {
   return process.env.SAVANT_CODE_API_KEY ?? null
 }
 
-describe.skip('Savant-Free: Code Edit', () => {
-  let session: Savant-FreeSession | null = null
+describe.skip('SavantFree: Code Edit', () => {
+  let session: SavantFreeSession | null = null
 
   afterEach(async () => {
     if (session) {
@@ -38,7 +38,7 @@ describe.skip('Savant-Free: Code Edit', () => {
         return
       }
 
-      const binary = requireSavant-FreeBinary()
+      const binary = requireSavantFreeBinary()
       const initialContent = [
         'function greet(name) {',
         "  return 'Hello, ' + name",
@@ -46,8 +46,8 @@ describe.skip('Savant-Free: Code Edit', () => {
         '',
       ].join('\n')
 
-      // Create the file before starting savant-free so it's in the initial context
-      session = await Savant-FreeSession.start(binary, {
+      // Create the file before starting SavantFree so it's in the initial context
+      session = await SavantFreeSession.start(binary, {
         waitSeconds: 5,
         initialFiles: { 'index.js': initialContent },
       })
@@ -58,7 +58,7 @@ describe.skip('Savant-Free: Code Edit', () => {
       // Verify the file was created
       expect(session.readFile('index.js')).toBe(initialContent)
 
-      // Send a prompt asking savant-free to add a console.log
+      // Send a prompt asking SavantFree to add a console.log
       await session.send('Add console.log("hello world") to index.js')
 
       // Wait for the file to be modified with the console.log

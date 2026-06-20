@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import React, { useRef, useState } from 'react'
 
 import { Button } from './button'
@@ -46,8 +46,8 @@ const CATEGORY_OPTIONS = [
     shortLabel: 'Bug',
     highlightKey: 'warning',
     placeholder: IS_SAVANT_FREE
-      ? 'Report a problem with Savant-Free (crashes, errors, UI issues, etc.)'
-      : 'Report a problem with Savant-Code (crashes, errors, UI issues, etc.)',
+      ? 'Report a problem with SavantFree (crashes, errors, UI issues, etc.)'
+      : 'Report a problem with SavantCode (crashes, errors, UI issues, etc.)',
   },
   {
     id: 'other',

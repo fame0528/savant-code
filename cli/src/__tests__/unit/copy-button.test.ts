@@ -1,4 +1,4 @@
-﻿import { createMockTimers } from '@savant-code/common/testing/mocks/timers'
+import { createMockTimers } from '@savant-code/common/testing/mocks/timers'
 import { describe, test, expect, beforeEach, afterEach } from 'bun:test'
 
 import {

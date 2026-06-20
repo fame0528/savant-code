@@ -1,11 +1,11 @@
-﻿import { afterEach, describe, expect, test } from 'bun:test'
+import { afterEach, describe, expect, test } from 'bun:test'
 
-import { Savant-FreeSession, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeSession, requireSavantFreeBinary } from '../utils'
 
 const TEST_TIMEOUT = 60_000
 
-describe('Savant-Free: Ads Behavior', () => {
-  let session: Savant-FreeSession | null = null
+describe('SavantFree: Ads Behavior', () => {
+  let session: SavantFreeSession | null = null
 
   afterEach(async () => {
     if (session) {
@@ -17,8 +17,8 @@ describe('Savant-Free: Ads Behavior', () => {
   test(
     'ads commands are not available',
     async () => {
-      const binary = requireSavant-FreeBinary()
-      session = await Savant-FreeSession.start(binary)
+      const binary = requireSavantFreeBinary()
+      session = await SavantFreeSession.start(binary)
       await session.waitForReady()
 
       // Type "/ads" to check for ads commands in autocomplete
@@ -35,13 +35,13 @@ describe('Savant-Free: Ads Behavior', () => {
   test(
     'startup screen does not show ad-related UI',
     async () => {
-      const binary = requireSavant-FreeBinary()
-      session = await Savant-FreeSession.start(binary)
+      const binary = requireSavantFreeBinary()
+      session = await SavantFreeSession.start(binary)
       await session.waitForReady()
 
       const output = await session.capture()
 
-      // Ads are always enabled in Savant-Free â€” no credits or toggle UI
+      // Ads are always enabled in SavantFree â€” no credits or toggle UI
       expect(output).not.toMatch(/\+\d+ credits/)
       expect(output).not.toContain('Hide ads')
       expect(output).not.toContain('/ads:enable')

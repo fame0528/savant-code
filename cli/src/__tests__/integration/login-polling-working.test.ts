@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, mock } from 'bun:test'
+import { describe, test, expect, mock } from 'bun:test'
 
 import { createMockLogger } from '@savant-code/common/testing/mock-types'
 import { generateLoginUrl, pollLoginStatus } from '../../login/login-flow'

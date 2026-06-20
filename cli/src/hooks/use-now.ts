@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /**
  * Returns `Date.now()`, refreshed at the given interval. Pass `enabled: false`
@@ -6,7 +6,7 @@
  * this independently; setIntervals are cheap and React batches the resulting
  * renders.
  *
- * Intended for short-lived UI countdowns like the savant-free session timer or
+ * Intended for short-lived UI countdowns like the SavantFree session timer or
  * elapsed-in-queue display.
  */
 export function useNow(intervalMs: number, enabled = true): number {

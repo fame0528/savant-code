@@ -1,4 +1,4 @@
-﻿import { globalStopSequence } from './constants'
+import { globalStopSequence } from './constants'
 
 import type { AgentTemplate } from './templates/types'
 import type { TrackEventFn } from '@savant-code/common/types/contracts/analytics'
@@ -18,7 +18,7 @@ export const getAgentStreamFromTemplate = (params: {
   apiKey: string
   clientSessionId: string
   costMode?: string
-  extraSavant-CodeMetadata?: Record<string, string>
+  extraSavantCodeMetadata?: Record<string, string>
   fingerprintId: string
   includeCacheControl?: boolean
   localAgentTemplates: Record<string, AgentTemplate>
@@ -48,7 +48,7 @@ export const getAgentStreamFromTemplate = (params: {
     apiKey,
     clientSessionId,
     costMode,
-    extraSavant-CodeMetadata,
+    extraSavantCodeMetadata,
     fingerprintId,
     includeCacheControl,
     localAgentTemplates,
@@ -80,7 +80,7 @@ export const getAgentStreamFromTemplate = (params: {
     apiKey,
     clientSessionId,
     costMode,
-    extraSavant-CodeMetadata,
+    extraSavantCodeMetadata,
     fingerprintId,
     includeCacheControl,
     logger,
@@ -108,7 +108,7 @@ export const getAgentStreamFromTemplate = (params: {
   if (!aiSdkStreamParams.providerOptions) {
     aiSdkStreamParams.providerOptions = {}
   }
-  for (const provider of ['openrouter', 'savant-code'] as const) {
+  for (const provider of ['openrouter', 'SavantCode'] as const) {
     if (!aiSdkStreamParams.providerOptions[provider]) {
       aiSdkStreamParams.providerOptions[provider] = {}
     }

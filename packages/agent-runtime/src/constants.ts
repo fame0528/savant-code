@@ -1,4 +1,4 @@
-﻿import { endsAgentStepParam } from '@savant-code/common/tools/constants'
+import { endsAgentStepParam } from '@savant-code/common/tools/constants'
 
 export const globalStopSequence = `${JSON.stringify(endsAgentStepParam)}`
 

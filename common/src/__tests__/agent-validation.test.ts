@@ -1,4 +1,4 @@
-﻿import { beforeEach, describe, expect, it, test } from 'bun:test'
+import { beforeEach, describe, expect, it, test } from 'bun:test'
 
 import { validateAgents } from '../templates/agent-validation'
 import { DynamicAgentDefinitionSchema } from '../types/dynamic-agent-template'

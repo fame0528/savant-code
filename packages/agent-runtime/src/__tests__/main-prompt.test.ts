@@ -1,4 +1,4 @@
-﻿import * as analytics from '@savant-code/common/analytics'
+import * as analytics from '@savant-code/common/analytics'
 import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { createTestAgentRuntimeParams } from '@savant-code/common/testing/fixtures/agent-runtime'
 import { promptSuccess } from '@savant-code/common/util/error'

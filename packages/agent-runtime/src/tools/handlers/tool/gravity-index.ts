@@ -1,10 +1,10 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import { callGravityIndexAPI } from '../../../llm-api/savant-code-web-api'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
@@ -28,21 +28,21 @@ const isJSONObject = (value: JSONValue | undefined): value is JSONObject =>
 /** Gravity attribution surface, so clicks/conversions are attributable to the
  *  product the request came from rather than all reading as CLI traffic. */
 const gravitySurface = (agentTemplate: { id: string }): string => {
-  if (agentTemplate.id === 'base-chat') return 'savant-free_chat'
-  // Savant-Free Web project agents are the `base2-free*` family.
-  if (agentTemplate.id.startsWith('base2-free')) return 'savant-free_web'
-  return 'savant-code_cli'
+  if (agentTemplate.id === 'base-chat') return 'SavantFree_chat'
+  // SavantFree Web project agents are the `base2-free*` family.
+  if (agentTemplate.id.startsWith('base2-free')) return 'SavantFree_web'
+  return 'SavantCode_cli'
 }
 
 /** Surfaces that run under a shared service-account API key. For these we must
  *  send a per-end-user identifier so Gravity attributes conversions to the real
  *  user instead of collapsing every request onto the service account. */
 const isServiceAccountSurface = (surface: string): boolean =>
-  surface === 'savant-free_chat' || surface === 'savant-free_web'
+  surface === 'SavantFree_chat' || surface === 'SavantFree_web'
 
 export const handleGravityIndex = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'gravity_index'>
+  toolCall: SavantCodeToolCall<'gravity_index'>
   agentTemplate: AgentTemplate
   logger: Logger
   apiKey: string
@@ -114,7 +114,7 @@ export const handleGravityIndex = (async (params: {
     const input = {
       ...existingInput,
       external_session_id: clientSessionId,
-      // Shared service-account surfaces (Savant-Free Web) authenticate the web API
+      // Shared service-account surfaces (SavantFree Web) authenticate the web API
       // with one account key, so the API-key owner can't identify the end user.
       // `fingerprintId` is the stable per-end-user/per-project signal there
       // (e.g. `savant-free-chat-<userId>` or the project id), so forward it as the
@@ -196,4 +196,4 @@ export const handleGravityIndex = (async (params: {
     )
     return { output: jsonToolResult({ errorMessage }), creditsUsed }
   }
-}) satisfies Savant-CodeToolHandlerFunction<'gravity_index'>
+}) satisfies SavantCodeToolHandlerFunction<'gravity_index'>

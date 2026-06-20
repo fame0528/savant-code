@@ -1,4 +1,4 @@
-﻿import { Client } from '@modelcontextprotocol/sdk/client/index.js'
+import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js'
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
@@ -113,7 +113,7 @@ export async function getMCPClient(config: MCPConfig): Promise<string> {
   }
 
   const client = new Client({
-    name: 'savant-code',
+    name: 'SavantCode',
     version: '1.0.0',
   })
 

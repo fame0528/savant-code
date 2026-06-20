@@ -1,4 +1,4 @@
-﻿import { SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
+import { SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
 
 import { publisher } from '../constants'
 import type { SecretAgentDefinition } from '../types/secret-agent-definition'

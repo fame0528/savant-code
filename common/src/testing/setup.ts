@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Test setup utilities for common patterns.
  *
  * Provides helper functions for setting up and tearing down test fixtures

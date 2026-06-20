@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SDK environment helper for dependency injection.
  *
  * This module provides SDK-specific env helpers that extend the base
@@ -30,7 +30,7 @@ export const getSdkEnv = (): SdkEnv => ({
   OVERRIDE_ARCH: process.env.OVERRIDE_ARCH,
 })
 
-export const getSavant-CodeApiKeyFromEnv = (): string | undefined => {
+export const getSavantCodeApiKeyFromEnv = (): string | undefined => {
   return process.env[API_KEY_ENV_VAR]
 }
 

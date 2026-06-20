@@ -1,4 +1,4 @@
-﻿// Re-export all constants from domain-specific files for backwards compatibility
+// Re-export all constants from domain-specific files for backwards compatibility
 // This allows existing imports from '@savant-code/common/old-constants' to continue working
 
 export * from './model-config'

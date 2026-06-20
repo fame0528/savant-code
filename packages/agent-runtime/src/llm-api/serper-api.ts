@@ -1,4 +1,4 @@
-﻿import { withTimeout } from '@savant-code/common/util/promise'
+import { withTimeout } from '@savant-code/common/util/promise'
 
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 

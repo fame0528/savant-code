@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 /**
  * Long-running smoke test for a compiled CLI binary.
  *
@@ -34,12 +34,12 @@ import { existsSync } from 'fs'
 // (not shimmer / animated) so they survive ANSI styling as contiguous
 // substrings. Cover the multiple boot states the binary might land on:
 //
-//   - "will run commands on your behalf" â€” savant-code/savant-free main surface
+//   - "will run commands on your behalf" â€” SavantCode/SavantFree main surface
 //     header (authed + session ready)
 //   - "Press ENTER to login" / "Open this URL" â€” login modal (no cached
 //     creds â€” typical CI smoke)
-//   - "Pick a model to start" / waiting-room copy â€” savant-free queue gate
-//   - "Free mode isn't available" â€” savant-free country-block screen (CI
+//   - "Pick a model to start" / waiting-room copy â€” SavantFree queue gate
+//   - "Free mode isn't available" â€” SavantFree country-block screen (CI
 //     runners with anonymized-network egress like GitHub Actions land here)
 //   - "Enter a coding task" â€” chat input prompt
 //   - OpenTUI terminal handshakes such as alternate-screen / Kitty keyboard
@@ -70,7 +70,7 @@ const BOOT_SIGNAL_PATTERNS = [
 // startup" (earlyFatalHandler in cli/src/index.tsx, fires while main()
 // is still wiring up) and "Unhandled rejection:" / "Uncaught exception:"
 // (installProcessCleanupHandlers in cli/src/utils/renderer-cleanup.ts,
-// fires after the renderer is up). The wasm-load rejection on savant-free
+// fires after the renderer is up). The wasm-load rejection on SavantFree
 // 0.0.62 surfaced through the *late* renderer-cleanup path, after the
 // boot screen had already rendered.
 const FATAL_PATTERNS = [
@@ -84,7 +84,7 @@ const FATAL_PATTERNS = [
 
 // Long enough that an unhandled rejection from the eager Parser.init has
 // time to surface through the renderer-cleanup handler â€” that path is
-// what tripped savant-free 0.0.62 in the wild while a 5s window let CI pass.
+// what tripped SavantFree 0.0.62 in the wild while a 5s window let CI pass.
 // Async wasm rejections can fire >5s after spawn (after React mounts and
 // the renderer is up).
 const DEFAULT_RUN_SECONDS = 10

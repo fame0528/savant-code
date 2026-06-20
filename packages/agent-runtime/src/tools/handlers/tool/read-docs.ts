@@ -1,11 +1,11 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import { callDocsSearchAPI } from '../../../llm-api/savant-code-web-api'
 
 import type { fetchContext7LibraryDocumentation } from '../../../llm-api/context7-api'
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { ClientEnv, CiEnv } from '@savant-code/common/types/contracts/env'
@@ -15,7 +15,7 @@ import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 export const handleReadDocs = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<'read_docs'>
+    toolCall: SavantCodeToolCall<'read_docs'>
 
     agentStepId: string
     clientSessionId: string
@@ -157,4 +157,4 @@ export const handleReadDocs = (async (
       creditsUsed,
     }
   }
-}) satisfies Savant-CodeToolHandlerFunction<'read_docs'>
+}) satisfies SavantCodeToolHandlerFunction<'read_docs'>

@@ -1,4 +1,4 @@
-﻿import { openaiModels, openrouterModels } from '@savant-code/common/old-constants'
+import { openaiModels, openrouterModels } from '@savant-code/common/old-constants'
 import { isAbortError, unwrapPromptResult } from '@savant-code/common/util/error'
 
 import type {

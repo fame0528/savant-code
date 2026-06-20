@@ -1,4 +1,4 @@
-﻿import { AgentTemplateTypes } from '@savant-code/common/types/session-state'
+import { AgentTemplateTypes } from '@savant-code/common/types/session-state'
 
 import type { ToolName } from '@savant-code/common/tools/constants'
 import type {

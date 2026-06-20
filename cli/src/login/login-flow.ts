@@ -1,7 +1,7 @@
-﻿import { createSavant-CodeApiClient } from '../utils/savant-code-api'
+import { createSavantCodeApiClient } from '../utils/savant-code-api'
 
 import type {
-  Savant-CodeApiClient,
+  SavantCodeApiClient,
   LoginCodeResponse,
 } from '../utils/savant-code-api'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
@@ -11,7 +11,7 @@ export type LoginUrlResponse = LoginCodeResponse
 
 export interface GenerateLoginUrlDeps {
   logger: Logger
-  apiClient?: Savant-CodeApiClient
+  apiClient?: SavantCodeApiClient
 }
 
 export interface GenerateLoginUrlOptions {
@@ -28,7 +28,7 @@ export async function generateLoginUrl(
 
   const apiClient =
     providedApiClient ??
-    createSavant-CodeApiClient({
+    createSavantCodeApiClient({
       baseUrl,
     })
 
@@ -60,7 +60,7 @@ interface PollLoginStatusDeps {
   sleep: (ms: number) => Promise<void>
   logger: Logger
   now?: () => number
-  apiClient?: Savant-CodeApiClient
+  apiClient?: SavantCodeApiClient
 }
 
 interface PollLoginStatusOptions {
@@ -99,7 +99,7 @@ export async function pollLoginStatus(
 
   const apiClient =
     providedApiClient ??
-    createSavant-CodeApiClient({
+    createSavantCodeApiClient({
       baseUrl,
     })
 

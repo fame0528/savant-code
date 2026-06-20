@@ -1,10 +1,10 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import { callWebSearchAPI } from '../../../llm-api/savant-code-web-api'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { ClientEnv, CiEnv } from '@savant-code/common/types/contracts/env'
@@ -12,7 +12,7 @@ import type { Logger } from '@savant-code/common/types/contracts/logger'
 
 export const handleWebSearch = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'web_search'>
+  toolCall: SavantCodeToolCall<'web_search'>
   logger: Logger
   apiKey: string
 
@@ -148,4 +148,4 @@ export const handleWebSearch = (async (params: {
     )
     return { output: jsonToolResult({ errorMessage }), creditsUsed }
   }
-}) satisfies Savant-CodeToolHandlerFunction<'web_search'>
+}) satisfies SavantCodeToolHandlerFunction<'web_search'>

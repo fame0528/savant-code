@@ -1,4 +1,4 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import { isFreeMode } from '@savant-code/common/constants/free-agents'
 import { models, PROFIT_MARGIN } from '@savant-code/common/old-constants'
 import { buildArray } from '@savant-code/common/util/array'
@@ -75,8 +75,8 @@ export function getProviderOptions(params: {
   n?: number
   costMode?: string
   cacheDebugCorrelation?: string
-  extraSavant-CodeMetadata?: Record<string, string>
-}): { savant-code: JSONObject } {
+  extraSavantCodeMetadata?: Record<string, string>
+}): { SavantCode: JSONObject } {
   const {
     model,
     runId,
@@ -86,7 +86,7 @@ export function getProviderOptions(params: {
     n,
     costMode,
     cacheDebugCorrelation,
-    extraSavant-CodeMetadata,
+    extraSavantCodeMetadata,
   } = params
 
   let providerConfig: Record<string, any>
@@ -106,14 +106,14 @@ export function getProviderOptions(params: {
 
   return {
     ...providerOptions,
-    // Could either be "savant-code" or "openaiCompatible"
-    savant-code: {
-      ...providerOptions?.savant-code,
+    // Could either be "SavantCode" or "openaiCompatible"
+    SavantCode: {
+      ...providerOptions?.SavantCode,
       // All values here get appended to the request body
-      savant-code_metadata: {
+      SavantCode_metadata: {
         // Caller-supplied keys go first so they can't override reserved
         // identifiers like run_id/client_id/cost_mode that the server trusts.
-        ...(extraSavant-CodeMetadata ?? {}),
+        ...(extraSavantCodeMetadata ?? {}),
         run_id: runId,
         client_id: clientSessionId,
         ...(n && { n }),
@@ -127,7 +127,7 @@ export function getProviderOptions(params: {
   }
 }
 
-// Usage accounting type for OpenRouter/Savant-Code backend responses
+// Usage accounting type for OpenRouter/SavantCode backend responses
 // Forked from https://github.com/OpenRouterTeam/ai-sdk-provider/
 type OpenRouterUsageAccounting = {
   cost: number | null
@@ -339,7 +339,7 @@ export async function* promptAiSdkStream(
     model: aiSDKModel,
     messages: convertCbToModelMessages(params),
     ...(isChatGptOAuth && { maxRetries: 0 }),
-    // For ChatGPT OAuth direct, don't send savant-code metadata/provider options to OpenAI
+    // For ChatGPT OAuth direct, don't send SavantCode metadata/provider options to OpenAI
     ...(isChatGptOAuth
       ? {}
       : {
@@ -546,7 +546,7 @@ export async function* promptAiSdkStream(
 
         markChatGptOAuthRateLimited()
 
-        // In free mode, don't fall back to Savant-Code backend â€” fail instead
+        // In free mode, don't fall back to SavantCode backend â€” fail instead
         if (isFreeMode(params.costMode)) {
           throw new Error(
             `ChatGPT rate limit reached. Please wait a few minutes and try again. (${rateLimitErrorDetails})`,
@@ -597,14 +597,14 @@ export async function* promptAiSdkStream(
         }
 
         // Refresh failed or already retried
-        // In free mode, don't fall back to Savant-Code backend â€” fail instead
+        // In free mode, don't fall back to SavantCode backend â€” fail instead
         if (isFreeMode(params.costMode)) {
           throw new Error(
             'ChatGPT OAuth authentication failed. Please reconnect with /connect:chatgpt and try again.',
           )
         }
 
-        // Fall back to Savant-Code backend
+        // Fall back to SavantCode backend
         const fallbackResult = yield* promptAiSdkStream({
           ...params,
           skipChatGptOAuth: true,
@@ -625,7 +625,7 @@ export async function* promptAiSdkStream(
       throw chunkValue.error
     }
     if (chunkValue.type === 'reasoning-delta') {
-      const reasoningExcluded = (['openrouter', 'savant-code'] as const).some(
+      const reasoningExcluded = (['openrouter', 'SavantCode'] as const).some(
         (p) =>
           (params.providerOptions?.[p] as OpenRouterProviderOptions | undefined)
             ?.reasoning?.exclude,
@@ -695,9 +695,9 @@ export async function* promptAiSdkStream(
     const providerMetadata = providerMetadataResult ?? {}
 
     let costOverrideDollars: number | undefined
-    if (providerMetadata.savant-code) {
-      if (providerMetadata.savant-code.usage) {
-        const openrouterUsage = providerMetadata.savant-code
+    if (providerMetadata.SavantCode) {
+      if (providerMetadata.SavantCode.usage) {
+        const openrouterUsage = providerMetadata.SavantCode
           .usage as OpenRouterUsageAccounting
 
         costOverrideDollars =
@@ -736,7 +736,7 @@ export async function promptAiSdk(
   const modelParams: ModelRequestParams = {
     apiKey: params.apiKey,
     model: params.model,
-    skipChatGptOAuth: true, // Always use Savant-Code backend for non-streaming
+    skipChatGptOAuth: true, // Always use SavantCode backend for non-streaming
   }
   const { model: aiSDKModel } = await getModelForRequest(modelParams)
 
@@ -764,9 +764,9 @@ export async function promptAiSdk(
 
   const providerMetadata = response.providerMetadata ?? {}
   let costOverrideDollars: number | undefined
-  if (providerMetadata.savant-code) {
-    if (providerMetadata.savant-code.usage) {
-      const openrouterUsage = providerMetadata.savant-code
+  if (providerMetadata.SavantCode) {
+    if (providerMetadata.SavantCode.usage) {
+      const openrouterUsage = providerMetadata.SavantCode
         .usage as OpenRouterUsageAccounting
 
       costOverrideDollars =
@@ -803,7 +803,7 @@ export async function promptAiSdkStructured<T>(
   const modelParams: ModelRequestParams = {
     apiKey: params.apiKey,
     model: params.model,
-    skipChatGptOAuth: true, // Always use Savant-Code backend for non-streaming
+    skipChatGptOAuth: true, // Always use SavantCode backend for non-streaming
   }
   const { model: aiSDKModel } = await getModelForRequest(modelParams)
 
@@ -834,9 +834,9 @@ export async function promptAiSdkStructured<T>(
 
   const providerMetadata = response.providerMetadata ?? {}
   let costOverrideDollars: number | undefined
-  if (providerMetadata.savant-code) {
-    if (providerMetadata.savant-code.usage) {
-      const openrouterUsage = providerMetadata.savant-code
+  if (providerMetadata.SavantCode) {
+    if (providerMetadata.SavantCode.usage) {
+      const openrouterUsage = providerMetadata.SavantCode
         .usage as OpenRouterUsageAccounting
 
       costOverrideDollars =

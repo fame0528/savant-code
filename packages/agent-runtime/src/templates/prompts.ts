@@ -1,4 +1,4 @@
-﻿import { buildArray } from '@savant-code/common/util/array'
+import { buildArray } from '@savant-code/common/util/array'
 import { schemaToJsonStr } from '@savant-code/common/util/zod-schema'
 import { z } from 'zod/v4'
 
@@ -22,7 +22,7 @@ function ensureJsonSchemaCompatible(schema: z.ZodType): z.ZodType {
 
 /**
  * Gets the short agent name from a fully qualified agent ID.
- * E.g., 'savant-code/file-picker@1.0.0' -> 'file-picker'
+ * E.g., 'SavantCode/file-picker@1.0.0' -> 'file-picker'
  */
 export function getAgentShortName(agentType: AgentTemplateType): string {
   const withoutVersion = agentType.split('@')[0]

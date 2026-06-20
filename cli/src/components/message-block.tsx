@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { memo, useState } from 'react'
 
 import { BlocksRenderer } from './blocks/blocks-renderer'

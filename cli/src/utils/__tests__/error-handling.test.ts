@@ -1,7 +1,7 @@
-﻿import { describe, test, expect } from 'bun:test'
+import { describe, test, expect } from 'bun:test'
 
 import {
-  getSavant-FreeRateLimitErrorMessage,
+  getSavantFreeRateLimitErrorMessage,
   getFreeModeUnavailableErrorMessage,
   isOutOfCreditsError,
   isFreeModeUnavailableError,
@@ -88,7 +88,7 @@ describe('error-handling', () => {
           statusCode: 403,
           responseBody: JSON.stringify({
             error: 'free_mode_unavailable',
-            message: 'Savant-Free cannot be used from VPN traffic.',
+            message: 'SavantFree cannot be used from VPN traffic.',
           }),
         }),
       ).toBe(true)
@@ -130,10 +130,10 @@ describe('error-handling', () => {
     })
   })
 
-  describe('getSavant-FreeRateLimitErrorMessage', () => {
+  describe('getSavantFreeRateLimitErrorMessage', () => {
     test('returns the generic message for untyped 429 errors', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           statusCode: 429,
           message: 'Too Many Requests',
         }),
@@ -142,7 +142,7 @@ describe('error-handling', () => {
 
     test('returns the generic message for thrown API errors with status 429', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           status: 429,
           message: 'Too Many Requests',
         }),
@@ -151,7 +151,7 @@ describe('error-handling', () => {
 
     test('returns the generic message for retry-wrapped untyped 429 errors', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           message: 'Failed after 4 attempts. Last error: Too Many Requests',
           lastError: {
             statusCode: 429,
@@ -162,12 +162,12 @@ describe('error-handling', () => {
     })
 
     test('returns null for non-429 status codes', () => {
-      expect(getSavant-FreeRateLimitErrorMessage({ statusCode: 402 })).toBe(null)
-      expect(getSavant-FreeRateLimitErrorMessage({ statusCode: 500 })).toBe(null)
+      expect(getSavantFreeRateLimitErrorMessage({ statusCode: 402 })).toBe(null)
+      expect(getSavantFreeRateLimitErrorMessage({ statusCode: 500 })).toBe(null)
     })
 
     test('returns null for string statusCode', () => {
-      expect(getSavant-FreeRateLimitErrorMessage({ statusCode: '429' })).toBe(
+      expect(getSavantFreeRateLimitErrorMessage({ statusCode: '429' })).toBe(
         null,
       )
     })
@@ -177,7 +177,7 @@ describe('error-handling', () => {
         'Free mode rate limit exceeded (1 minute limit). Try again in 30 seconds.'
 
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           statusCode: 429,
           error: 'free_mode_rate_limited',
           message,
@@ -190,7 +190,7 @@ describe('error-handling', () => {
         'Free mode rate limit exceeded (1 minute limit). Try again in 30 seconds.'
 
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           statusCode: 429,
           message: 'Too Many Requests',
           responseBody: JSON.stringify({
@@ -206,7 +206,7 @@ describe('error-handling', () => {
         'Free mode rate limit exceeded (1 minute limit). Try again in 30 seconds.'
 
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           message: 'Failed after 4 attempts. Last error: Too Many Requests',
           lastError: {
             statusCode: 429,
@@ -222,7 +222,7 @@ describe('error-handling', () => {
 
     test('falls back to the generic message when typed quota errors have no message', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           statusCode: 429,
           error: 'free_mode_rate_limited',
         }),
@@ -231,7 +231,7 @@ describe('error-handling', () => {
 
     test('appends detail from agent-run output objects for untyped 429s', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           type: 'error',
           statusCode: 429,
           message: 'Model is at capacity. Please try again later.',
@@ -243,7 +243,7 @@ describe('error-handling', () => {
 
     test('appends detail from OpenAI-style nested provider error bodies', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           statusCode: 429,
           message: 'Too Many Requests',
           responseBody: JSON.stringify({
@@ -261,7 +261,7 @@ describe('error-handling', () => {
 
     test('does not echo bare HTTP status text from output objects', () => {
       expect(
-        getSavant-FreeRateLimitErrorMessage({
+        getSavantFreeRateLimitErrorMessage({
           type: 'error',
           statusCode: 429,
           message: 'Too Many Requests',

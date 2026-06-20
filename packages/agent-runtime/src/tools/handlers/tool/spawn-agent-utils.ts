@@ -1,4 +1,4 @@
-﻿import { MAX_AGENT_STEPS_DEFAULT } from '@savant-code/common/constants/agents'
+import { MAX_AGENT_STEPS_DEFAULT } from '@savant-code/common/constants/agents'
 import { toolNames } from '@savant-code/common/tools/constants'
 import {
   normalizeAgentIdForLookup,
@@ -43,7 +43,7 @@ export type SubagentContextParams = AgentRuntimeDeps &
   AgentRuntimeScopedDeps & {
     clientSessionId: string
     costMode?: string
-    extraSavant-CodeMetadata?: Record<string, string>
+    extraSavantCodeMetadata?: Record<string, string>
     fileContext: ProjectFileContext
     localAgentTemplates: Record<string, AgentTemplate>
     repoId: string | undefined
@@ -97,7 +97,7 @@ export function extractSubagentContextParams(
     // Core context params
     clientSessionId: params.clientSessionId,
     costMode: params.costMode,
-    extraSavant-CodeMetadata: params.extraSavant-CodeMetadata,
+    extraSavantCodeMetadata: params.extraSavantCodeMetadata,
     fileContext: params.fileContext,
     localAgentTemplates: params.localAgentTemplates,
     repoId: params.repoId,

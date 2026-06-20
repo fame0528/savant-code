@@ -1,4 +1,4 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import {
   validateAndGetAgentTemplate,
@@ -8,9 +8,9 @@ import {
   extractSubagentContextParams,
 } from './spawn-agent-utils'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
@@ -33,7 +33,7 @@ type ToolName = 'spawn_agents'
 export const handleSpawnAgents = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<ToolName>
+    toolCall: SavantCodeToolCall<ToolName>
 
     agentState: AgentState
     agentTemplate: AgentTemplate
@@ -252,4 +252,4 @@ export const handleSpawnAgents = (async (
   })
 
   return { output: jsonToolResult(reports) }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>

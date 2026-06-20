@@ -1,17 +1,17 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import {
   addDaysToDateKey,
-  calculateSavant-FreeStreak,
-  getSavant-FreeUsageDateKey,
+  calculateSavantFreeStreak,
+  getSavantFreeUsageDateKey,
 } from '../savant-free-streak'
 
-describe('savant-free streak helpers', () => {
-  test('formats usage dates in the Savant-Free reset timezone', () => {
-    expect(getSavant-FreeUsageDateKey(new Date('2026-05-27T06:30:00.000Z'))).toBe(
+describe('SavantFree streak helpers', () => {
+  test('formats usage dates in the SavantFree reset timezone', () => {
+    expect(getSavantFreeUsageDateKey(new Date('2026-05-27T06:30:00.000Z'))).toBe(
       '2026-05-26',
     )
-    expect(getSavant-FreeUsageDateKey(new Date('2026-05-27T08:30:00.000Z'))).toBe(
+    expect(getSavantFreeUsageDateKey(new Date('2026-05-27T08:30:00.000Z'))).toBe(
       '2026-05-27',
     )
   })
@@ -24,7 +24,7 @@ describe('savant-free streak helpers', () => {
 
   test('counts a streak that includes today', () => {
     expect(
-      calculateSavant-FreeStreak({
+      calculateSavantFreeStreak({
         todayDateKey: '2026-05-27',
         usageDates: ['2026-05-25', '2026-05-23', '2026-05-27', '2026-05-26'],
       }),
@@ -37,7 +37,7 @@ describe('savant-free streak helpers', () => {
 
   test('keeps yesterday-anchored streaks alive before today is used', () => {
     expect(
-      calculateSavant-FreeStreak({
+      calculateSavantFreeStreak({
         todayDateKey: '2026-05-27',
         usageDates: ['2026-05-26', '2026-05-25', '2026-05-24'],
       }),
@@ -50,7 +50,7 @@ describe('savant-free streak helpers', () => {
 
   test('returns zero after a missed full day', () => {
     expect(
-      calculateSavant-FreeStreak({
+      calculateSavantFreeStreak({
         todayDateKey: '2026-05-27',
         usageDates: ['2026-05-25', '2026-05-24'],
       }),

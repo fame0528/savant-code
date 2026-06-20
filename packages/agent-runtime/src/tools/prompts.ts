@@ -1,4 +1,4 @@
-﻿import { endsAgentStepParam } from '@savant-code/common/tools/constants'
+import { endsAgentStepParam } from '@savant-code/common/tools/constants'
 import { toolParams } from '@savant-code/common/tools/list'
 import { AVAILABLE_SKILLS_PLACEHOLDER } from '@savant-code/common/tools/params/tool/skill'
 import { getToolCallString } from '@savant-code/common/tools/utils'

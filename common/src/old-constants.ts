@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @deprecated Import from '@savant-code/common/constants' or specific files instead:
  * - '@savant-code/common/constants/model-config' for model-related constants
  * - '@savant-code/common/constants/limits' for billing and numeric limits

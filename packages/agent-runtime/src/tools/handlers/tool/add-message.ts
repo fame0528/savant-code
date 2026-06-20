@@ -1,15 +1,15 @@
-﻿import { assistantMessage, userMessage } from '@savant-code/common/util/messages'
+import { assistantMessage, userMessage } from '@savant-code/common/util/messages'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentState } from '@savant-code/common/types/session-state'
 
 export const handleAddMessage = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'add_message'>
+  toolCall: SavantCodeToolCall<'add_message'>
 
   agentState: AgentState
 }): Promise<{
@@ -31,4 +31,4 @@ export const handleAddMessage = (async (params: {
   )
 
   return { output: [{ type: 'json', value: { message: 'Message added.' } }] }
-}) satisfies Savant-CodeToolHandlerFunction<'add_message'>
+}) satisfies SavantCodeToolHandlerFunction<'add_message'>

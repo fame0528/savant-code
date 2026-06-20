@@ -1,4 +1,4 @@
-﻿import { SAVANT_FREE_PREMIUM_SESSION_RESET_TIMEZONE } from '../constants/savant-free-models'
+import { SAVANT_FREE_PREMIUM_SESSION_RESET_TIMEZONE } from '../constants/savant-free-models'
 
 export const SAVANT_FREE_STREAK_TIME_ZONE = SAVANT_FREE_PREMIUM_SESSION_RESET_TIMEZONE
 
@@ -13,13 +13,13 @@ function dateKeyFromParts(parts: Intl.DateTimeFormatPart[]): string {
   const day = get('day')
 
   if (!year || !month || !day) {
-    throw new Error('Failed to format Savant-Free usage date')
+    throw new Error('Failed to format SavantFree usage date')
   }
 
   return `${year}-${month}-${day}`
 }
 
-export function getSavant-FreeUsageDateKey(
+export function getSavantFreeUsageDateKey(
   now: Date = new Date(),
   timeZone = SAVANT_FREE_STREAK_TIME_ZONE,
 ): string {
@@ -42,7 +42,7 @@ export function addDaysToDateKey(dateKey: string, days: number): string {
   return new Date(date.getTime() + days * DAY_MS).toISOString().slice(0, 10)
 }
 
-export function calculateSavant-FreeStreak(params: {
+export function calculateSavantFreeStreak(params: {
   usageDates: readonly string[]
   todayDateKey: string
 }): {

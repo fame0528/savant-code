@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Typed stream mock factory for testing LLM streaming.
  *
  * Provides type-safe utilities for creating mock LLM streams

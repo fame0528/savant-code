@@ -1,13 +1,13 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 
 export const handleSuggestFollowups = (async (params: {
   previousToolCallFinished: Promise<unknown>
-  toolCall: Savant-CodeToolCall<'suggest_followups'>
+  toolCall: SavantCodeToolCall<'suggest_followups'>
   logger: Logger
 }): Promise<{ output: SavantToolOutput<'suggest_followups'> }> => {
   const { previousToolCallFinished, toolCall } = params
@@ -15,4 +15,4 @@ export const handleSuggestFollowups = (async (params: {
 
   await previousToolCallFinished
   return { output: [{ type: 'json', value: { message: 'Followups suggested!' } }] }
-}) satisfies Savant-CodeToolHandlerFunction<'suggest_followups'>
+}) satisfies SavantCodeToolHandlerFunction<'suggest_followups'>

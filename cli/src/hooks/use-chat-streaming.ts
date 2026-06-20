@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Chat streaming hook - connection status, timer, queue management, and exit handling.
  */
 

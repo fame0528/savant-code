@@ -1,4 +1,4 @@
-﻿import { existsSync } from 'fs'
+import { existsSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -120,7 +120,7 @@ export function getBundledRgPath(
   const distVendorPath = join(
     process.cwd(),
     'node_modules',
-    '@savant-code',
+    '@SavantCode',
     'sdk',
     'dist',
     'vendor',

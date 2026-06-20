@@ -1,4 +1,4 @@
-﻿import { getSavant-FreeModel } from '@savant-code/common/constants/savant-free-models'
+import { getSavantFreeModel } from '@savant-code/common/constants/savant-free-models'
 import { TextAttributes } from '@opentui/core'
 import React, { useEffect, useState } from 'react'
 
@@ -6,16 +6,16 @@ import { Button } from './button'
 import { ScrollToBottomButton } from './scroll-to-bottom-button'
 import { ShimmerText } from './shimmer-text'
 
-import { useSavant-FreeSessionProgress } from '../hooks/use-savant-free-session-progress'
+import { useSavantFreeSessionProgress } from '../hooks/use-savant-free-session-progress'
 import { useTheme } from '../hooks/use-theme'
 import { formatElapsedTime } from '../utils/format-elapsed-time'
 import {
   SAVANT_FREE_COUNTDOWN_VISIBLE_MS,
-  formatSavant-FreeSessionCountdown,
-  formatSavant-FreeSessionRemaining,
+  formatSavantFreeSessionCountdown,
+  formatSavantFreeSessionRemaining,
 } from '../utils/savant-free-session-display'
 
-import type { Savant-FreeSessionResponse } from '../types/savant-free-session'
+import type { SavantFreeSessionResponse } from '../types/savant-free-session'
 import type { StatusIndicatorState } from '../utils/status-indicator-state'
 
 /** A small status-bar action button with hover-bold styling. */
@@ -57,7 +57,7 @@ interface StatusBarProps {
   statusIndicatorState: StatusIndicatorState
   onStop?: () => void
   onEndSession?: () => void
-  savant-freeSession: Savant-FreeSessionResponse | null
+  SavantFreeSession: SavantFreeSessionResponse | null
 }
 
 export const StatusBar = ({
@@ -67,7 +67,7 @@ export const StatusBar = ({
   statusIndicatorState,
   onStop,
   onEndSession,
-  savant-freeSession,
+  SavantFreeSession,
 }: StatusBarProps) => {
   const theme = useTheme()
   const [elapsedSeconds, setElapsedSeconds] = useState(0)
@@ -106,9 +106,9 @@ export const StatusBar = ({
     return () => clearInterval(interval)
   }, [timerStartTime, shouldShowTimer, statusIndicatorState?.kind])
 
-  const sessionProgress = useSavant-FreeSessionProgress(savant-freeSession)
+  const sessionProgress = useSavantFreeSessionProgress(SavantFreeSession)
   const isUnlimited =
-    savant-freeSession?.status === 'active' && !savant-freeSession.rateLimit
+    SavantFreeSession?.status === 'active' && !SavantFreeSession.rateLimit
 
   const renderStatusIndicator = () => {
     switch (statusIndicatorState.kind) {
@@ -160,8 +160,8 @@ export const StatusBar = ({
           const isUrgent =
             sessionProgress.remainingMs < SAVANT_FREE_COUNTDOWN_VISIBLE_MS
           const modelName =
-            savant-freeSession?.status === 'active'
-              ? getSavant-FreeModel(savant-freeSession.model).displayName
+            SavantFreeSession?.status === 'active'
+              ? getSavantFreeModel(SavantFreeSession.model).displayName
               : null
           return (
             <span
@@ -176,7 +176,7 @@ export const StatusBar = ({
               {modelName ? `${modelName} Â· ` : ''}
               {isUnlimited
                 ? 'unlimited'
-                : formatSavant-FreeSessionRemaining(sessionProgress.remainingMs)}
+                : formatSavantFreeSessionRemaining(sessionProgress.remainingMs)}
             </span>
           )
         }
@@ -196,7 +196,7 @@ export const StatusBar = ({
   const elapsedTimeContent = renderElapsedTime()
 
   // Show gray background when there's status indicator, timer, or when the
-  // savant-free session fill is visible (otherwise the fill would float over
+  // SavantFree session fill is visible (otherwise the fill would float over
   // transparent space).
   const hasContent =
     statusIndicatorContent || elapsedTimeContent || sessionProgress !== null
@@ -260,7 +260,7 @@ export const StatusBar = ({
           )}
         {onEndSession &&
           statusIndicatorState.kind === 'idle' &&
-          savant-freeSession?.status === 'active' && (
+          SavantFreeSession?.status === 'active' && (
             <StatusActionButton onClick={onEndSession}>
               âœ• End session
             </StatusActionButton>
@@ -271,7 +271,7 @@ export const StatusBar = ({
           !isUnlimited && (
             <text style={{ wrapMode: 'none' }}>
               <span fg={theme.warning} attributes={TextAttributes.BOLD}>
-                {formatSavant-FreeSessionCountdown(sessionProgress.remainingMs)}
+                {formatSavantFreeSessionCountdown(sessionProgress.remainingMs)}
               </span>
             </text>
           )}

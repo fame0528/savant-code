@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Test script for the browser-use agent.
  *
  * Runs the agent on browser tasks one at a time, writing full event traces

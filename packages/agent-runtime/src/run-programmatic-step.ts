@@ -1,4 +1,4 @@
-﻿import { HandleStepsYieldValueSchema } from '@savant-code/common/types/agent-template'
+import { HandleStepsYieldValueSchema } from '@savant-code/common/types/agent-template'
 import { getErrorObject } from '@savant-code/common/util/error'
 import { assistantMessage } from '@savant-code/common/util/messages'
 import { cloneDeep } from 'lodash'
@@ -11,7 +11,7 @@ import { parseTextWithToolCalls } from './util/parse-tool-calls-from-text'
 import type { FileProcessingState } from './tools/handlers/tool/write-file'
 import type { ExecuteToolCallParams } from './tools/tool-executor'
 import type { ParsedSegment } from './util/parse-tool-calls-from-text'
-import type { Savant-CodeToolCall } from '@savant-code/common/tools/list'
+import type { SavantCodeToolCall } from '@savant-code/common/tools/list'
 import type {
   AgentTemplate,
   StepGenerator,
@@ -198,7 +198,7 @@ export async function runProgrammaticStep(
   const agentStepId = crypto.randomUUID()
 
   // Initialize state for tool execution
-  const toolCalls: Savant-CodeToolCall[] = []
+  const toolCalls: SavantCodeToolCall[] = []
   const toolResults: ToolMessage[] = []
   const fileProcessingState: FileProcessingState = {
     promisesByPath: {},

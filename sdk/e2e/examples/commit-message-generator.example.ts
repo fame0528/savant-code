@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Example: Commit Message Generator
  *
  * Generates commit messages from diffs.
@@ -38,7 +38,7 @@ async function main() {
   console.log('Generated commit message:\n')
 
   const result = await client.run({
-    agent: 'savant-code/base2@latest',
+    agent: 'SavantCode/base2@latest',
     prompt: `Generate a concise git commit message for this diff:\n\n${SAMPLE_DIFF}`,
     handleStreamChunk: (chunk) => {
       if (typeof chunk === 'string') {

@@ -1,4 +1,4 @@
-﻿import type { ChatTheme } from './theme-system'
+import type { ChatTheme } from './theme-system'
 import type { ToolName } from '@savant-code/sdk'
 import type { ReactNode } from 'react'
 

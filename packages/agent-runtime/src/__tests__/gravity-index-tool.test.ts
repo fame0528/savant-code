@@ -1,4 +1,4 @@
-﻿import { TEST_USER_ID } from '@savant-code/common/old-constants'
+import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import { promptSuccess } from '@savant-code/common/util/error'
@@ -137,7 +137,7 @@ describe('gravity_index tool', () => {
           query: 'transactional email for Next.js',
           external_session_id: 'test-session',
           metadata: expect.objectContaining({
-            surface: 'savant-code_cli',
+            surface: 'SavantCode_cli',
             tool_call_id: expect.any(String),
             agent_step_id: expect.any(String),
             fingerprint_id: 'test-fingerprint',
@@ -151,7 +151,7 @@ describe('gravity_index tool', () => {
     expect(spy.mock.calls[0]?.[0]?.input).not.toHaveProperty('external_user_id')
   })
 
-  test('tags base-chat traffic with the savant-free_chat surface', async () => {
+  test('tags base-chat traffic with the SavantFree_chat surface', async () => {
     const spy = spyOn(webApi, 'callGravityIndexAPI').mockResolvedValue({
       result: { search_id: 'search-1' },
     })
@@ -170,7 +170,7 @@ describe('gravity_index tool', () => {
         'base-chat': {
           ...gravityTestAgent,
           id: 'base-chat',
-          displayName: 'Savant-Free Chat',
+          displayName: 'SavantFree Chat',
         },
       },
     }
@@ -199,14 +199,14 @@ describe('gravity_index tool', () => {
         input: expect.objectContaining({
           external_user_id: 'test-fingerprint',
           metadata: expect.objectContaining({
-            surface: 'savant-free_chat',
+            surface: 'SavantFree_chat',
           }),
         }),
       }),
     )
   })
 
-  test('tags base2-free traffic with the savant-free_web surface and forwards external_user_id', async () => {
+  test('tags base2-free traffic with the SavantFree_web surface and forwards external_user_id', async () => {
     const spy = spyOn(webApi, 'callGravityIndexAPI').mockResolvedValue({
       result: { search_id: 'search-1' },
     })
@@ -252,12 +252,12 @@ describe('gravity_index tool', () => {
     expect(spy).toHaveBeenCalledWith(
       expect.objectContaining({
         input: expect.objectContaining({
-          // Savant-Free Web runs under a shared service account, so the handler
+          // SavantFree Web runs under a shared service account, so the handler
           // forwards the stable per-end-user signal (fingerprintId) for
           // attribution instead of letting it collapse onto the service account.
           external_user_id: 'test-fingerprint',
           metadata: expect.objectContaining({
-            surface: 'savant-free_web',
+            surface: 'SavantFree_web',
           }),
         }),
       }),

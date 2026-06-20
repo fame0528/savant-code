@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
 
 import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 

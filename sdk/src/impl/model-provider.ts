@@ -1,9 +1,9 @@
-﻿/**
+/**
  * Model provider abstraction for routing requests to the appropriate LLM provider.
  *
  * This module handles:
  * - ChatGPT OAuth: Direct requests to OpenAI API using user's OAuth token
- * - Default: Requests through Savant-Code backend (which routes to OpenRouter)
+ * - Default: Requests through SavantCode backend (which routes to OpenRouter)
  */
 
 import path from 'path'
@@ -41,7 +41,7 @@ let chatGptOAuthRateLimitedUntil: number | null = null
 
 /**
  * Mark ChatGPT OAuth as rate-limited. Subsequent requests will skip direct ChatGPT OAuth
- * and use Savant-Code backend until the reset time.
+ * and use SavantCode backend until the reset time.
  */
 export function markChatGptOAuthRateLimited(resetAt?: Date): void {
   const fiveMinutesFromNow = Date.now() + 5 * 60 * 1000
@@ -76,11 +76,11 @@ export function resetChatGptOAuthRateLimit(): void {
  * Parameters for requesting a model.
  */
 export interface ModelRequestParams {
-  /** Savant-Code API key for backend authentication */
+  /** SavantCode API key for backend authentication */
   apiKey: string
   /** Model ID (OpenRouter format, e.g., "anthropic/claude-sonnet-4") */
   model: string
-  /** If true, skip ChatGPT OAuth and use Savant-Code backend (for fallback after rate limit) */
+  /** If true, skip ChatGPT OAuth and use SavantCode backend (for fallback after rate limit) */
   skipChatGptOAuth?: boolean
   /** Cost mode (e.g. 'free') â€” affects fallback behavior for OAuth routes */
   costMode?: string
@@ -96,7 +96,7 @@ export interface ModelResult {
   isChatGptOAuth: boolean
 }
 
-// Usage accounting type for OpenRouter/Savant-Code backend responses
+// Usage accounting type for OpenRouter/SavantCode backend responses
 type OpenRouterUsageAccounting = {
   cost: number | null
   costDetails: {
@@ -108,7 +108,7 @@ type OpenRouterUsageAccounting = {
  * Get the appropriate model for a request.
  *
  * If ChatGPT OAuth credentials are available and the model is an OpenAI model,
- * returns an OpenAI direct model. Otherwise, returns the Savant-Code backend model.
+ * returns an OpenAI direct model. Otherwise, returns the SavantCode backend model.
  *
  * This function is async because it may need to refresh the OAuth token.
  */
@@ -126,7 +126,7 @@ export async function getModelForRequest(
     isChatGptOAuthModelAllowed(model)
   ) {
     // In free mode, rate-limited ChatGPT OAuth must not silently fall through to
-    // the Savant-Code backend â€” savant-free should only use the direct OpenAI route or fail.
+    // the SavantCode backend â€” SavantFree should only use the direct OpenAI route or fail.
     if (isChatGptOAuthRateLimited()) {
       if (isFreeMode(costMode)) {
         throw new Error(
@@ -155,9 +155,9 @@ export async function getModelForRequest(
     }
   }
 
-  // Default: use Savant-Code backend
+  // Default: use SavantCode backend
   return {
-    model: createSavant-CodeBackendModel(apiKey, model),
+    model: createSavantCodeBackendModel(apiKey, model),
     isChatGptOAuth: false,
   }
 }
@@ -192,10 +192,10 @@ function createOpenAIOAuthModel(
 }
 
 /**
- * Create a model that routes through the Savant-Code backend.
- * This is the existing behavior - requests go to Savant-Code backend which forwards to OpenRouter.
+ * Create a model that routes through the SavantCode backend.
+ * This is the existing behavior - requests go to SavantCode backend which forwards to OpenRouter.
  */
-function createSavant-CodeBackendModel(
+function createSavantCodeBackendModel(
   apiKey: string,
   model: string,
 ): LanguageModel {
@@ -209,18 +209,18 @@ function createSavant-CodeBackendModel(
   const openrouterApiKey = getByokOpenrouterApiKeyFromEnv()
 
   return new OpenAICompatibleChatLanguageModel(model, {
-    provider: 'savant-code',
+    provider: 'SavantCode',
     url: ({ path: endpoint }) =>
       new URL(path.join('/api/v1', endpoint), WEBSITE_URL).toString(),
     headers: () => ({
       Authorization: `Bearer ${apiKey}`,
-      'user-agent': `ai-sdk/openai-compatible/${VERSION}/savant-code`,
+      'user-agent': `ai-sdk/openai-compatible/${VERSION}/SavantCode`,
       ...(openrouterApiKey && { [BYOK_OPENROUTER_HEADER]: openrouterApiKey }),
     }),
     metadataExtractor: {
       extractMetadata: async ({ parsedBody }: { parsedBody: any }) => {
         if (openrouterApiKey !== undefined) {
-          return { savant-code: { usage: openrouterUsage } }
+          return { SavantCode: { usage: openrouterUsage } }
         }
 
         if (typeof parsedBody?.usage?.cost === 'number') {
@@ -233,7 +233,7 @@ function createSavant-CodeBackendModel(
           openrouterUsage.costDetails.upstreamInferenceCost =
             parsedBody.usage.cost_details.upstream_inference_cost
         }
-        return { savant-code: { usage: openrouterUsage } }
+        return { SavantCode: { usage: openrouterUsage } }
       },
       createStreamExtractor: () => ({
         processChunk: (parsedChunk: any) => {
@@ -253,7 +253,7 @@ function createSavant-CodeBackendModel(
           }
         },
         buildMetadata: () => {
-          return { savant-code: { usage: openrouterUsage } }
+          return { SavantCode: { usage: openrouterUsage } }
         },
       }),
     },

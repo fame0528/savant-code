@@ -1,4 +1,4 @@
-﻿import { modelMessageSchema } from 'ai'
+import { modelMessageSchema } from 'ai'
 import { cloneDeep, has, isEqual } from 'lodash'
 
 import type { Logger } from '../types/contracts/logger'
@@ -40,7 +40,7 @@ export function withCacheControl<
     wrapper.providerOptions = {}
   }
 
-  /* 'savant-code' provider name is not compatible with providerMetadata for
+  /* 'SavantCode' provider name is not compatible with providerMetadata for
    * messages, so we need to use 'openaiCompatible' instead.
    * https://github.com/vercel/ai/blob/8e4fdac31b4f8c6a8d07a606a8833e74adf99470/packages/openai-compatible/src/chat/convert-to-openai-compatible-chat-messages.ts#L9
    */

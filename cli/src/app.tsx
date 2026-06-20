@@ -1,17 +1,17 @@
-﻿import { isRetryableStatusCode, getErrorStatusCode } from '@savant-code/sdk'
+import { isRetryableStatusCode, getErrorStatusCode } from '@savant-code/sdk'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 
 import { Chat } from './chat'
 import { ChatHistoryScreen } from './components/chat-history-screen'
-import { Savant-FreeSupersededScreen } from './components/savant-free-superseded-screen'
+import { SavantFreeSupersededScreen } from './components/savant-free-superseded-screen'
 import { LoginModal } from './components/login-modal'
 import { ProjectPickerScreen } from './components/project-picker-screen'
 import { TerminalLink } from './components/terminal-link'
 import { WaitingRoomScreen } from './components/waiting-room-screen'
 import { useAuthQuery } from './hooks/use-auth-query'
 import { useAuthState } from './hooks/use-auth-state'
-import { useSavant-FreeSession } from './hooks/use-savant-free-session'
+import { useSavantFreeSession } from './hooks/use-savant-free-session'
 import { useLogo } from './hooks/use-logo'
 import { useSheenAnimation } from './hooks/use-sheen-animation'
 import { useTerminalDimensions } from './hooks/use-terminal-dimensions'
@@ -226,7 +226,7 @@ export const App = ({
         <text
           style={{ wrapMode: 'word', marginBottom: 1, fg: theme.foreground }}
         >
-          {IS_SAVANT_FREE ? 'Savant-Free' : 'Savant-Code'} will run commands on your behalf to help you build.
+          {IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'} will run commands on your behalf to help you build.
         </text>
         <text
           style={{ wrapMode: 'word', marginBottom: 1, fg: theme.foreground }}
@@ -263,7 +263,7 @@ export const App = ({
   // Render project picker FIRST when at home directory or outside a project.
   // This deliberately precedes the login/auth and waiting-room gates so the
   // user always gets to pick a working directory before anything else â€” auth
-  // failures or a banned/queued savant-free session would otherwise replace the
+  // failures or a banned/queued SavantFree session would otherwise replace the
   // picker mid-flash and look like being kicked out of the app.
   if (showProjectPicker) {
     return (
@@ -340,8 +340,8 @@ interface AuthedSurfaceProps {
 }
 
 /**
- * Rendered only after auth is confirmed. Owns the savant-free waiting-room gate
- * so `useSavant-FreeSession` runs exactly once per authed session (not before
+ * Rendered only after auth is confirmed. Owns the SavantFree waiting-room gate
+ * so `useSavantFreeSession` runs exactly once per authed session (not before
  * we have a token).
  */
 const AuthedSurface = ({
@@ -365,13 +365,13 @@ const AuthedSurface = ({
   onCancelChatHistory,
   onNewChat,
 }: AuthedSurfaceProps) => {
-  const { session, error: sessionError } = useSavant-FreeSession()
+  const { session, error: sessionError } = useSavantFreeSession()
 
   // Terminal state: a 409 from the gate means another CLI rotated our
   // instance id. Show a dedicated screen and stop polling â€” don't fall back
   // into the waiting room, which would look like normal queued progress.
   if (IS_SAVANT_FREE && session?.status === 'superseded') {
-    return <Savant-FreeSupersededScreen />
+    return <SavantFreeSupersededScreen />
   }
 
   // Route every non-admitted state through the pre-chat screen:
@@ -399,7 +399,7 @@ const AuthedSurface = ({
     return <WaitingRoomScreen session={session} error={sessionError} />
   }
 
-  // Chat history renders inside AuthedSurface so the savant-free session stays
+  // Chat history renders inside AuthedSurface so the SavantFree session stays
   // mounted while the user browses history. Unmounting this surface would
   // DELETE the session row and drop the user back into the waiting room on
   // return.
@@ -430,7 +430,7 @@ const AuthedSurface = ({
       initialMode={initialMode}
       gitRoot={gitRoot}
       onSwitchToGitRoot={onSwitchToGitRoot}
-      savant-freeSession={session}
+      SavantFreeSession={session}
     />
   )
 }

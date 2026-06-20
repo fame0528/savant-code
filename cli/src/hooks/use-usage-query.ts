@@ -1,4 +1,4 @@
-﻿import { env } from '@savant-code/common/env'
+import { env } from '@savant-code/common/env'
 import { useCallback } from 'react'
 
 import { invalidateActivityQuery, useActivityQuery } from './use-activity-query'

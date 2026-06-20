@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import { createAgentBlock } from '../message-block-helpers'
 import { createMessageUpdater } from '../message-updater'
@@ -197,7 +197,7 @@ describe('sdk-event-handlers', () => {
     const startEvent: SubagentStartEvent = {
       type: 'subagent_start',
       agentId: 'agent-real',
-      agentType: 'savant-code/file-picker@1.0.0',
+      agentType: 'SavantCode/file-picker@1.0.0',
       displayName: 'Agent',
       onlyChild: false,
       parentAgentId: undefined,

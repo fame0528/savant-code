@@ -1,4 +1,4 @@
-﻿import {
+import {
   activateSkill as sdkActivateSkill,
   loadSkillsMetadata as sdkLoadSkillsMetadata,
 } from '@savant-code/sdk'

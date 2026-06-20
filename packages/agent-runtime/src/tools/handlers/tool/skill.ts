@@ -1,4 +1,4 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 import { SKILLS_DIR_NAME, SKILL_FILE_NAME } from '@savant-code/common/constants/skills'
 import { SkillFrontmatterSchema, type SkillDefinition } from '@savant-code/common/types/skill'
 import fs from 'fs'
@@ -6,9 +6,9 @@ import path from 'path'
 import os from 'os'
 import matter from 'gray-matter'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { ProjectFileContext } from '@savant-code/common/util/file'
@@ -84,7 +84,7 @@ type ToolName = 'skill'
 
 export const handleSkill = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<ToolName>
+  toolCall: SavantCodeToolCall<ToolName>
   fileContext: ProjectFileContext
 }): Promise<{ output: SavantToolOutput<ToolName> }> => {
   const { previousToolCallFinished, toolCall, fileContext } = params
@@ -133,4 +133,4 @@ export const handleSkill = (async (params: {
   return {
     output: jsonToolResult(result),
   }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>

@@ -1,10 +1,10 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
 import { tmuxCapture, tmuxSend, tmuxSendKey, tmuxStart, tmuxStop } from './tmux-helpers'
 
-export class Savant-FreeSession {
+export class SavantFreeSession {
   public readonly name: string
   public readonly workDir: string
 
@@ -14,7 +14,7 @@ export class Savant-FreeSession {
   }
 
   /**
-   * Start a savant-free binary in a tmux session.
+   * Start a SavantFree binary in a tmux session.
    * Creates a temporary working directory to simulate a real user project.
    */
   static async start(
@@ -25,10 +25,10 @@ export class Savant-FreeSession {
       height?: number
       initialFiles?: Record<string, string>
     },
-  ): Promise<Savant-FreeSession> {
+  ): Promise<SavantFreeSession> {
     const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'savant-free-e2e-'))
 
-    // Create a minimal project so savant-free has something to work with
+    // Create a minimal project so SavantFree has something to work with
     fs.writeFileSync(
       path.join(tmpDir, 'README.md'),
       '# E2E Test Project\n',
@@ -55,7 +55,7 @@ export class Savant-FreeSession {
       height: options?.height ?? 30,
     })
 
-    return new Savant-FreeSession(sessionName, tmpDir)
+    return new SavantFreeSession(sessionName, tmpDir)
   }
 
   /** Write a file into the session's working directory. */
@@ -133,7 +133,7 @@ export class Savant-FreeSession {
     )
   }
 
-  /** Send text input to the savant-free CLI (presses Enter by default). */
+  /** Send text input to the SavantFree CLI (presses Enter by default). */
   async send(
     text: string,
     options?: { noEnter?: boolean; waitIdle?: number },

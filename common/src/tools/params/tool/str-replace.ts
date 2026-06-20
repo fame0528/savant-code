@@ -1,4 +1,4 @@
-﻿import z from 'zod/v4'
+import z from 'zod/v4'
 
 import {
   $getNativeToolCallExampleString,
@@ -84,7 +84,7 @@ ${$getNativeToolCallExampleString({
       },
       {
         oldString:
-          '\n\t\t// @savant-code delete this log line please\n\t\tconsole.log("Hello, world!");\n',
+          '\n\t\t// @SavantCode delete this log line please\n\t\tconsole.log("Hello, world!");\n',
         newString: '\n',
       },
       {

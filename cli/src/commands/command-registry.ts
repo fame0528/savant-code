@@ -1,4 +1,4 @@
-﻿import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
+import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
 import { safeOpen } from '../utils/open-url'
 
 import { handleAdsEnable, handleAdsDisable } from './ads'
@@ -8,7 +8,7 @@ import { handleInitializationFlowLocally } from './init'
 import { buildInterviewPrompt, buildPlanPrompt, buildReviewPromptFromArgs } from './prompt-builders'
 import { runBashCommand } from './router'
 import { handleUsageCommand } from './usage'
-import { returnToSavant-FreeLanding } from '../hooks/use-savant-free-session'
+import { returnToSavantFreeLanding } from '../hooks/use-savant-free-session'
 import { useThemeStore } from '../hooks/use-theme'
 import { WEBSITE_URL } from '../login/constants'
 import { useChatStore } from '../state/chat-store'
@@ -397,7 +397,7 @@ const ALL_COMMANDS: CommandDefinition[] = [
       clearInput(params)
     },
   }),
-  // Mode commands generated from AGENT_MODES (excluded in Savant-Free)
+  // Mode commands generated from AGENT_MODES (excluded in SavantFree)
   ...(IS_SAVANT_FREE ? [] : AGENT_MODES).map((mode) =>
     defineCommandWithArgs({
       name: `mode:${mode.toLowerCase()}`,
@@ -507,7 +507,7 @@ const ALL_COMMANDS: CommandDefinition[] = [
   defineCommandWithArgs({
     name: 'plan',
     handler: (params, args) => {
-      // In savant-free mode, require ChatGPT connection
+      // In SavantFree mode, require ChatGPT connection
       if (IS_SAVANT_FREE && !getChatGptOAuthStatus().connected) {
         params.setMessages((prev) => [
           ...prev,
@@ -546,7 +546,7 @@ const ALL_COMMANDS: CommandDefinition[] = [
   defineCommandWithArgs({
     name: 'review',
     handler: (params, args) => {
-      // In savant-free mode, require ChatGPT connection
+      // In SavantFree mode, require ChatGPT connection
       if (IS_SAVANT_FREE && !getChatGptOAuthStatus().connected) {
         params.setMessages((prev) => [
           ...prev,
@@ -611,7 +611,7 @@ const ALL_COMMANDS: CommandDefinition[] = [
       ])
       params.saveToHistory(params.inputValue.trim())
       clearInput(params)
-      returnToSavant-FreeLanding({ resetChat: true }).catch(() => {
+      returnToSavantFreeLanding({ resetChat: true }).catch(() => {
         // The hook surfaces poll errors via the session store; nothing to do
         // here beyond letting the chat history reflect the attempt.
       })

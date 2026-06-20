@@ -1,20 +1,20 @@
-﻿import type { Savant-FreeIpPrivacySignal } from '../types/savant-free-session'
+import type { SavantFreeIpPrivacySignal } from '../types/savant-free-session'
 
 export const SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNALS = [
   'vpn',
   'proxy',
   'tor',
   'res_proxy',
-] as const satisfies readonly Savant-FreeIpPrivacySignal[]
+] as const satisfies readonly SavantFreeIpPrivacySignal[]
 
-type Savant-FreeHardBlockedPrivacySignal =
+type SavantFreeHardBlockedPrivacySignal =
   (typeof SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNALS)[number]
 
 const SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNAL_SET =
-  new Set<Savant-FreeIpPrivacySignal>(SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNALS)
+  new Set<SavantFreeIpPrivacySignal>(SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNALS)
 
 const SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNAL_LABELS: Record<
-  Savant-FreeHardBlockedPrivacySignal,
+  SavantFreeHardBlockedPrivacySignal,
   string
 > = {
   vpn: 'VPN',
@@ -23,19 +23,19 @@ const SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNAL_LABELS: Record<
   tor: 'Tor',
 }
 
-export function isSavant-FreeHardBlockedPrivacySignal(
-  signal: Savant-FreeIpPrivacySignal,
-): signal is Savant-FreeHardBlockedPrivacySignal {
+export function isSavantFreeHardBlockedPrivacySignal(
+  signal: SavantFreeIpPrivacySignal,
+): signal is SavantFreeHardBlockedPrivacySignal {
   return SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNAL_SET.has(signal)
 }
 
-export function formatSavant-FreeHardBlockedPrivacySignals(
-  signals: readonly Savant-FreeIpPrivacySignal[] | null | undefined,
+export function formatSavantFreeHardBlockedPrivacySignals(
+  signals: readonly SavantFreeIpPrivacySignal[] | null | undefined,
 ): string {
   const labels = Array.from(
     new Set(
       (signals ?? []).flatMap((signal): string[] => {
-        if (!isSavant-FreeHardBlockedPrivacySignal(signal)) return []
+        if (!isSavantFreeHardBlockedPrivacySignal(signal)) return []
         return [SAVANT_FREE_HARD_BLOCKED_PRIVACY_SIGNAL_LABELS[signal]]
       }),
     ),
@@ -46,10 +46,10 @@ export function formatSavant-FreeHardBlockedPrivacySignals(
   return `${labels.slice(0, -1).join(', ')} or ${labels[labels.length - 1]}`
 }
 
-export function formatSavant-FreeHardBlockedMessage(
-  signals: readonly Savant-FreeIpPrivacySignal[] | null | undefined,
+export function formatSavantFreeHardBlockedMessage(
+  signals: readonly SavantFreeIpPrivacySignal[] | null | undefined,
 ): string {
-  return `Savant-Free cannot be used from ${formatSavant-FreeHardBlockedPrivacySignals(
+  return `SavantFree cannot be used from ${formatSavantFreeHardBlockedPrivacySignals(
     signals,
   )} traffic. Please disable it and try again.`
 }

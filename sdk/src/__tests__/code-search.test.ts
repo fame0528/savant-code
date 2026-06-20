@@ -1,4 +1,4 @@
-﻿import {
+import {
   clearMockedModules,
   mockModule,
 } from '@savant-code/common/testing/mock-modules'

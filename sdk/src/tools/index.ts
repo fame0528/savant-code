@@ -1,4 +1,4 @@
-﻿// Tool handlers for the Savant-Code SDK
+// Tool handlers for the SavantCode SDK
 import { changeFile } from './change-file'
 import { codeSearch } from './code-search'
 import { glob } from './glob'

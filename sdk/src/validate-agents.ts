@@ -1,4 +1,4 @@
-﻿import {
+import {
   validateAgents as validateAgentsCommon,
   type DynamicAgentValidationError,
 } from '@savant-code/common/templates/agent-validation'
@@ -24,9 +24,9 @@ export interface ValidateAgentsOptions {
   remote?: boolean
 
   /**
-   * The base URL of the Savant-Code website API.
+   * The base URL of the SavantCode website API.
    * Optional - defaults to NEXT_PUBLIC_SAVANT_CODE_APP_URL or environment-based URL.
-   * Example: 'https://savant-code.dev'
+   * Example: 'https://SavantCode.dev'
    */
   websiteUrl?: string
 }
@@ -49,7 +49,7 @@ export interface ValidateAgentsOptions {
  * // Remote validation
  * const result = await validateAgents(definitions, {
  *   remote: true,
- *   websiteUrl: 'https://savant-code.dev'
+ *   websiteUrl: 'https://SavantCode.dev'
  * })
  * ```
  */

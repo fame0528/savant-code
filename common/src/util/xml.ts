@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Generate a closing XML tag for a single tool name
  * @param toolName Single tool name to generate closing tag for
  * @returns Closing XML tag string
@@ -13,5 +13,5 @@ export function closeXml(toolName: string): string {
  * @returns Array of closing XML tag strings
  */
 export function getStopSequences(toolNames: readonly string[]): string[] {
-  return toolNames.map((toolName) => `</savant-code_tool_${toolName}>`)
+  return toolNames.map((toolName) => `</SavantCode_tool_${toolName}>`)
 }

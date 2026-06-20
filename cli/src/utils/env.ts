@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CLI environment helper for dependency injection.
  *
  * This module provides CLI-specific env helpers that extend the base

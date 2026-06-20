@@ -1,4 +1,4 @@
-﻿import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
+import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import { promptSuccess } from '@savant-code/common/util/error'
 import { beforeEach, describe, expect, it } from 'bun:test'
@@ -32,9 +32,9 @@ describe('XML tool result ordering', () => {
     const executionOrder: string[] = []
 
     // Stream with XML tool call embedded in text
-    const xmlToolCall = `<savant-code_tool_call>
+    const xmlToolCall = `<SavantCode_tool_call>
 {"cb_tool_name": "test_tool", "param1": "value1"}
-</savant-code_tool_call>`
+</SavantCode_tool_call>`
 
     const streamChunks: StreamChunk[] = [
       textChunk('Text before tool call\n'),
@@ -106,9 +106,9 @@ describe('XML tool result ordering', () => {
     const events: { type: string; toolName?: string; order: number }[] = []
     let eventCounter = 0
 
-    const xmlToolCall = `<savant-code_tool_call>
+    const xmlToolCall = `<SavantCode_tool_call>
 {"cb_tool_name": "read_files", "paths": ["test.ts"]}
-</savant-code_tool_call>`
+</SavantCode_tool_call>`
 
     const streamChunks: StreamChunk[] = [
       textChunk('Before\n'),
@@ -213,9 +213,9 @@ describe('XML tool result ordering', () => {
     // The fix: pass Promise.resolve() instead of previousToolCallFinished for XML mode,
     // so the tool can execute immediately without waiting for the stream to finish.
     
-    const xmlToolCall = `<savant-code_tool_call>
+    const xmlToolCall = `<SavantCode_tool_call>
 {"cb_tool_name": "test_tool", "param": "value"}
-</savant-code_tool_call>`
+</SavantCode_tool_call>`
 
     const streamChunks: StreamChunk[] = [
       textChunk('Before\n'),

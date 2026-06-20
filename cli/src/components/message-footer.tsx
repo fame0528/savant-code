@@ -1,4 +1,4 @@
-﻿import { SUBSCRIPTION_DISPLAY_NAME } from '@savant-code/common/constants/subscription-plans'
+import { SUBSCRIPTION_DISPLAY_NAME } from '@savant-code/common/constants/subscription-plans'
 import { IS_SAVANT_FREE } from '../utils/constants'
 import { pluralize } from '@savant-code/common/util/string'
 import { TextAttributes } from '@opentui/core'

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CI environment helper for dependency injection.
  *
  * This module provides a typed interface to CI-specific environment variables.

@@ -1,4 +1,4 @@
-﻿import { parseAgentId } from '../util/agent-id-parsing'
+import { parseAgentId } from '../util/agent-id-parsing'
 
 import { SAVANT_FREE_GEMINI_THINKER_AGENT_ID } from './savant-free-gemini-thinker'
 import {
@@ -21,7 +21,7 @@ import type { CostMode } from './model-config'
 export const FREE_COST_MODE = 'free' as const
 
 /**
- * Root-orchestrator agent IDs counted as "a savant-free session" for abuse
+ * Root-orchestrator agent IDs counted as "a SavantFree session" for abuse
  * detection and usage auditing. Subagents (file-picker, basher, etc.) are
  * excluded â€” they're spawned by the root, so counting them would inflate
  * every user's apparent activity.
@@ -59,7 +59,7 @@ export const SAVANT_FREE_REVIEWER_AGENT_ID_BY_MODEL: Record<string, string> = {
   [SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID]: 'code-reviewer-deepseek-flash',
 }
 
-export function getSavant-FreeRootAgentIdForModel(model: string): string {
+export function getSavantFreeRootAgentIdForModel(model: string): string {
   return SAVANT_FREE_ROOT_AGENT_ID_BY_MODEL[model] ?? 'base2-free'
 }
 
@@ -114,7 +114,7 @@ export const FREE_MODE_AGENT_MODELS: Record<string, Set<string>> = {
   ]),
   'code-reviewer-mimo-pro': new Set([SAVANT_FREE_MIMO_V25_PRO_MODEL_ID]),
   'code-reviewer-mimo': new Set([SAVANT_FREE_MIMO_V25_MODEL_ID]),
-  // Legacy savant-free clients spawned code-reviewer-lite under provider-specific
+  // Legacy SavantFree clients spawned code-reviewer-lite under provider-specific
   // free roots before those reviewer IDs existed.
   'code-reviewer-lite': new Set([
     SAVANT_FREE_MINIMAX_MODEL_ID,
@@ -160,21 +160,21 @@ export function isFreeMode(costMode: CostMode | string | undefined): boolean {
   return costMode === FREE_COST_MODE
 }
 
-export function isSavant-FreeRootAgent(fullAgentId: string): boolean {
+export function isSavantFreeRootAgent(fullAgentId: string): boolean {
   const { publisherId, agentId } = parseAgentId(fullAgentId)
   if (!agentId) return false
-  if (publisherId && publisherId !== 'savant-code') return false
+  if (publisherId && publisherId !== 'SavantCode') return false
   return SAVANT_FREE_ROOT_AGENT_ID_SET.has(agentId)
 }
 
-export function isSavant-FreeGeminiThinkerAgent(fullAgentId: string): boolean {
+export function isSavantFreeGeminiThinkerAgent(fullAgentId: string): boolean {
   const { publisherId, agentId } = parseAgentId(fullAgentId)
   if (!agentId) return false
-  if (publisherId && publisherId !== 'savant-code') return false
+  if (publisherId && publisherId !== 'SavantCode') return false
   return agentId === SAVANT_FREE_GEMINI_THINKER_AGENT_ID
 }
 
-export function shouldUseLocalTokenCountForSavant-FreeDeepseekFlash(params: {
+export function shouldUseLocalTokenCountForSavantFreeDeepseekFlash(params: {
   agentId: string | undefined
   model: string | undefined
 }): boolean {
@@ -184,7 +184,7 @@ export function shouldUseLocalTokenCountForSavant-FreeDeepseekFlash(params: {
   }
 
   const { publisherId, agentId } = parseAgentId(fullAgentId)
-  if (publisherId && publisherId !== 'savant-code') return false
+  if (publisherId && publisherId !== 'SavantCode') return false
   return agentId === 'base2-free-deepseek-flash'
 }
 
@@ -195,7 +195,7 @@ export function shouldUseLocalTokenCountForSavant-FreeDeepseekFlash(params: {
  * Returns true only if:
  * 1. The agent has a valid agent ID
  * 2. The agent is in the allowed free-mode agents list
- * 3. The agent is either internal or published by 'savant-code' (prevents spoofing)
+ * 3. The agent is either internal or published by 'SavantCode' (prevents spoofing)
  * 4. The model is in that agent's allowed model set
  */
 export function isFreeModeAllowedAgentModel(
@@ -207,8 +207,8 @@ export function isFreeModeAllowedAgentModel(
   // Must have a valid agent ID
   if (!agentId) return false
 
-  // Must be either internal (no publisher) or from savant-code
-  if (publisherId && publisherId !== 'savant-code') return false
+  // Must be either internal (no publisher) or from SavantCode
+  if (publisherId && publisherId !== 'SavantCode') return false
 
   // Get the allowed models for this agent
   const allowedModels = FREE_MODE_AGENT_MODELS[agentId]
@@ -243,7 +243,7 @@ export function isFreeModeAllowedAgentModel(
  * Handles all agent ID formats:
  * - 'file-picker'
  * - 'file-picker@1.0.0'
- * - 'savant-code/file-picker@0.0.2'
+ * - 'SavantCode/file-picker@0.0.2'
  */
 export function isFreeAgent(fullAgentId: string): boolean {
   const { publisherId, agentId } = parseAgentId(fullAgentId)
@@ -254,9 +254,9 @@ export function isFreeAgent(fullAgentId: string): boolean {
   // Must be in the free tier agents list
   if (!FREE_TIER_AGENTS.has(agentId)) return false
 
-  // Must be either internal (no publisher) or from savant-code
+  // Must be either internal (no publisher) or from SavantCode
   // This prevents publisher spoofing attacks
-  if (publisherId && publisherId !== 'savant-code') return false
+  if (publisherId && publisherId !== 'SavantCode') return false
 
   return true
 }

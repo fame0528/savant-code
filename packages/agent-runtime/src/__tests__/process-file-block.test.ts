@@ -1,4 +1,4 @@
-﻿import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
+import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import {
   clearMockedModules,
   mockModule,
@@ -99,7 +99,7 @@ describe('processFileBlockModule', () => {
 
       const newContent =
         'function hello() {\r\n' +
-        '  console.log("Hello, Savant-Code!");\r\n' +
+        '  console.log("Hello, SavantCode!");\r\n' +
         '  return "See you later!";\r\n' +
         '}\r\n'
 

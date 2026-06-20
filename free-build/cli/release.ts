@@ -1,13 +1,13 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 
 /**
- * Savant-Free CLI release script.
+ * SavantFree CLI release script.
  *
  * Triggers the savant-free-release.yml GitHub Actions workflow
- * to build, publish, and release the Savant-Free CLI to npm.
+ * to build, publish, and release the SavantFree CLI to npm.
  *
  * Usage:
- *   bun savant-free/cli/release.ts [patch|minor|major] [--ref <commit-sha>]
+ *   bun SavantFree/cli/release.ts [patch|minor|major] [--ref <commit-sha>]
  *
  * Requires:
  *   SAVANT_CODE_GITHUB_TOKEN environment variable
@@ -80,7 +80,7 @@ async function triggerWorkflow(versionType: string, checkoutRef: string) {
       -H "Accept: application/vnd.github.v3+json" \
       -H "Authorization: token ${process.env.GITHUB_TOKEN}" \
       -H "Content-Type: application/json" \
-      https://api.github.com/repos/savant-code/savant-free-private/actions/workflows/savant-free-release.yml/dispatches \
+      https://api.github.com/repos/SavantCode/savant-free-private/actions/workflows/savant-free-release.yml/dispatches \
       -d '${payload}'`
 
     const response = execSync(triggerCmd, { encoding: 'utf8' })
@@ -88,22 +88,22 @@ async function triggerWorkflow(versionType: string, checkoutRef: string) {
     if (response.includes('workflow_dispatch')) {
       log(`âš ï¸  Workflow dispatch failed: ${response}`)
       log(
-        'Please manually trigger the workflow at: https://github.com/savant-code/savant-free-private/actions/workflows/savant-free-release.yml',
+        'Please manually trigger the workflow at: https://github.com/SavantCode/savant-free-private/actions/workflows/savant-free-release.yml',
       )
     } else {
-      log('ðŸŽ‰ Savant-Free release workflow triggered!')
+      log('ðŸŽ‰ SavantFree release workflow triggered!')
     }
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err)
     log(`âš ï¸  Failed to trigger workflow automatically: ${message}`)
     log(
-      'You may need to trigger it manually at: https://github.com/savant-code/savant-free-private/actions/workflows/savant-free-release.yml',
+      'You may need to trigger it manually at: https://github.com/SavantCode/savant-free-private/actions/workflows/savant-free-release.yml',
     )
   }
 }
 
 async function main() {
-  log('ðŸš€ Initiating Savant-Free release...')
+  log('ðŸš€ Initiating SavantFree release...')
   log(`Date: ${formatTimestamp()}`)
 
   checkGitHubToken()
@@ -118,7 +118,7 @@ async function main() {
 
   log('')
   log(
-    'Monitor progress at: https://github.com/savant-code/savant-free-private/actions/workflows/savant-free-release.yml',
+    'Monitor progress at: https://github.com/SavantCode/savant-free-private/actions/workflows/savant-free-release.yml',
   )
 }
 

@@ -1,4 +1,4 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
 import { runTerminalCommand } from '@savant-code/sdk'
 
@@ -296,9 +296,9 @@ export async function routeUserPrompt(
   })
 
   // DAU signal: one un-sampled event per user-submitted prompt. The CLI's
-  // distinct id resolves to the canonical savant-code user id (anonymous id is
+  // distinct id resolves to the canonical SavantCode user id (anonymous id is
   // aliased to the real user id on login), matching the web and chat surfaces
-  // so combined DAU is a single unique-users query. Savant-Free-only: savant-code
+  // so combined DAU is a single unique-users query. savant-free-only: SavantCode
   // CLI usage is intentionally excluded.
   if (IS_SAVANT_FREE) {
     trackEvent(AnalyticsEvent.MESSAGE_SENT, {

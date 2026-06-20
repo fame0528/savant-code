@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Process environment helper for dependency injection.
  *
  * This module provides a typed interface to process.env values that aren't
@@ -74,7 +74,7 @@ export const getProcessEnv = (): ProcessEnv => ({
   OPEN_TUI_THEME: process.env.OPEN_TUI_THEME,
   OPENTUI_THEME: process.env.OPENTUI_THEME,
 
-  // Savant-Code CLI-specific
+  // SavantCode CLI-specific
   SAVANT_CODE_IS_BINARY: process.env.SAVANT_CODE_IS_BINARY,
   SAVANT_CODE_CLI_VERSION: process.env.SAVANT_CODE_CLI_VERSION,
   SAVANT_CODE_CLI_TARGET: process.env.SAVANT_CODE_CLI_TARGET,

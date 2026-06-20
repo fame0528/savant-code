@@ -1,4 +1,4 @@
-﻿import {
+import {
   describe,
   test,
   expect,
@@ -9,7 +9,7 @@
 } from 'bun:test'
 
 import { createMockApiClient } from '../../__tests__/helpers/mock-api-client'
-import * as Savant-CodeApiModule from '../../utils/savant-code-api'
+import * as SavantCodeApiModule from '../../utils/savant-code-api'
 import { fetchUserDetails } from '../use-user-details-query'
 
 import type { Logger } from '@savant-code/common/types/contracts/logger'
@@ -25,7 +25,7 @@ describe('fetchUserDetails', () => {
   const originalEnv = process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL
 
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL = 'https://test.savant-code.dev'
+    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL = 'https://test.SavantCode.dev'
   })
 
   afterEach(() => {
@@ -176,10 +176,10 @@ describe('fetchUserDetails', () => {
       const apiClient = createMockApiClient({ me: meMock })
 
       const setTokenSpy = spyOn(
-        Savant-CodeApiModule,
+        SavantCodeApiModule,
         'setApiClientAuthToken',
       )
-      spyOn(Savant-CodeApiModule, 'getApiClient').mockReturnValue(apiClient as ReturnType<typeof Savant-CodeApiModule.getApiClient>)
+      spyOn(SavantCodeApiModule, 'getApiClient').mockReturnValue(apiClient as ReturnType<typeof SavantCodeApiModule.getApiClient>)
 
       await expect(
         fetchUserDetails({

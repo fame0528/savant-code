@@ -1,4 +1,4 @@
-﻿import { extractImagePaths, processImageFile } from './image-handler'
+import { extractImagePaths, processImageFile } from './image-handler'
 import { logger } from './logger'
 
 import type { PendingImageAttachment } from '../types/store'

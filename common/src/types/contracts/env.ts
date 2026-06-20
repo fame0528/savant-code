@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Environment variable contract types for dependency injection.
  *
  * ARCHITECTURE:
@@ -80,7 +80,7 @@ export type BaseEnv = {
 // =============================================================================
 
 /**
- * Extended CI env with Savant-Code-specific CI vars.
+ * Extended CI env with savant-code-specific CI vars.
  * Used by agent-runtime and server code.
  */
 export type CiEnv = BaseCiEnv & {
@@ -128,7 +128,7 @@ export type ProcessEnv = BaseEnv & {
   OPEN_TUI_THEME?: string
   OPENTUI_THEME?: string
 
-  // Savant-Code CLI-specific (set during binary build)
+  // SavantCode CLI-specific (set during binary build)
   SAVANT_CODE_IS_BINARY?: string
   SAVANT_CODE_CLI_VERSION?: string
   SAVANT_CODE_CLI_TARGET?: string

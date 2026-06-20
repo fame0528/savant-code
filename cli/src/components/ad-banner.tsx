@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { safeOpen } from '../utils/open-url'
 import React, { useState, useMemo, useEffect } from 'react'
 
@@ -162,7 +162,7 @@ export const SingleAdBanner: React.FC<{
 }
 
 /**
- * Up to four ads shown in a row. Still used by the savant-free waiting room, which
+ * Up to four ads shown in a row. Still used by the SavantFree waiting room, which
  * intentionally fills the space with multiple ads.
  */
 export const ChoiceAdBanner: React.FC<ChoiceAdBannerProps> = ({

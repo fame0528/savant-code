@@ -1,4 +1,4 @@
-﻿import { spawn } from 'child_process'
+import { spawn } from 'child_process'
 import * as fs from 'fs'
 import * as os from 'os'
 import * as path from 'path'
@@ -108,7 +108,7 @@ To fix this, you have several options:
 
 2. Use WSL (Windows Subsystem for Linux):
    Run in PowerShell (Admin): wsl --install
-   Then run Savant-Code inside WSL.
+   Then run SavantCode inside WSL.
 
 3. Set a custom bash path:
    Set the SAVANT_CODE_GIT_BASH_PATH environment variable to your bash.exe location.

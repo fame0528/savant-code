@@ -1,4 +1,4 @@
-﻿import {
+import {
   addDaysToYmd,
   getUtcForZonedTime,
   getZonedParts,
@@ -7,13 +7,13 @@
 import { mimoModels, minimaxModels, moonshotModels } from './model-config'
 
 /**
- * Models a savant-free user can pick between in the waiting-room model selector.
+ * Models a SavantFree user can pick between in the waiting-room model selector.
  *
  * Each model has its own queue (server keys queue position by `model`), so the
  * list here is effectively the set of separate waiting lines. Order is the
  * order shown in the UI.
  */
-export interface Savant-FreeModelOption {
+export interface SavantFreeModelOption {
   /** Stable ID used in the wire protocol and DB. Matches the model id passed
    *  to the chat-completions endpoint. */
   id: string
@@ -39,13 +39,13 @@ export interface Savant-FreeModelOption {
 
 /** Server-facing fallback copy for APIs and provider errors that can't know
  *  the caller's local timezone. The CLI should render
- *  `getSavant-FreeDeploymentAvailabilityLabel()` instead. */
+ *  `getSavantFreeDeploymentAvailabilityLabel()` instead. */
 export const SAVANT_FREE_DEPLOYMENT_HOURS_LABEL = '9am ET-5pm PT every day'
 export const SAVANT_FREE_GEMINI_PRO_MODEL_ID = 'google/gemini-3.1-pro-preview'
 export const SAVANT_FREE_DEEPSEEK_V4_PRO_MODEL_ID = 'deepseek/deepseek-v4-pro'
 export const SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID = 'deepseek/deepseek-v4-flash'
 /** DeepSeek V4 Flash served by Fireworks instead of DeepSeek's direct API.
- *  Used only by savant-free.com/chat, where Fireworks' faster inference is worth
+ *  Used only by SavantFree.com/chat, where Fireworks' faster inference is worth
  *  a slightly less capable serving stack. Not in SUPPORTED_SAVANT_FREE_MODELS or
  *  the free-mode allowlists â€” the CLI and web builder keep DeepSeek direct. */
 export const SAVANT_FREE_DEEPSEEK_V4_FLASH_FIREWORKS_MODEL_ID =
@@ -60,12 +60,12 @@ export const SAVANT_FREE_MINIMAX_M3_MODEL_ID = minimaxModels.minimaxM3
 export const SAVANT_FREE_MIMO_V25_MODEL_ID = mimoModels.mimoV25
 export const SAVANT_FREE_MIMO_V25_PRO_MODEL_ID = mimoModels.mimoV25Pro
 /** UI-only rollout switch. Backend support and free-mode allowlists remain
- *  wired even when these models are hidden from the Savant-Free picker. */
+ *  wired even when these models are hidden from the SavantFree picker. */
 export const SAVANT_FREE_ENABLE_MIMO_MODELS_IN_UI = true
 /** UI-only rollout switch for the streak indicator in the waiting room. */
 export const SAVANT_FREE_ENABLE_STREAK_IN_UI = true
 /** Local/debug switch: force the localhost free-mode country bypass into
- *  limited access so the limited Savant-Free UX can be exercised without an env
+ *  limited access so the limited SavantFree UX can be exercised without an env
  *  var. */
 export const SAVANT_FREE_FORCE_LIMITED_MODE = false
 export const SAVANT_FREE_PREMIUM_SESSION_LIMIT = 5
@@ -88,7 +88,7 @@ interface LocalTimeFormatOptions {
   timeZone?: string
 }
 
-/** Full-access savant-free models that benefit from spawning the gemini-thinker
+/** Full-access SavantFree models that benefit from spawning the gemini-thinker
  *  subagent for deeper reasoning. Covers every full-access picker model except
  *  the two limited-tier ones (DeepSeek V4 Flash, MiMo 2.5); the legacy
  *  "Fastest" MiniMax M2.7 also skips it because the extra round-trip would
@@ -102,7 +102,7 @@ export const SAVANT_FREE_GEMINI_THINKER_PARENT_MODELS = new Set<string>([
   SAVANT_FREE_MINIMAX_M3_MODEL_ID,
 ])
 
-export function canSavant-FreeModelSpawnGeminiThinker(modelId: string): boolean {
+export function canSavantFreeModelSpawnGeminiThinker(modelId: string): boolean {
   return SAVANT_FREE_GEMINI_THINKER_PARENT_MODELS.has(modelId)
 }
 
@@ -120,7 +120,7 @@ const DEEPSEEK_V4_PRO_MODEL = {
   warning: SAVANT_FREE_DATA_COLLECTION_WARNING,
   premium: true,
   multimodal: false,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 const MIMO_V25_PRO_MODEL = {
   id: SAVANT_FREE_MIMO_V25_PRO_MODEL_ID,
@@ -129,7 +129,7 @@ const MIMO_V25_PRO_MODEL = {
   availability: 'always',
   premium: true,
   multimodal: true,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 const KIMI_MODEL = {
   id: SAVANT_FREE_KIMI_MODEL_ID,
@@ -138,7 +138,7 @@ const KIMI_MODEL = {
   availability: 'always',
   premium: true,
   multimodal: true,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 const MIMO_V25_MODEL = {
   id: SAVANT_FREE_MIMO_V25_MODEL_ID,
@@ -147,7 +147,7 @@ const MIMO_V25_MODEL = {
   availability: 'always',
   premium: false,
   multimodal: true,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 const DEEPSEEK_V4_FLASH_MODEL = {
   id: SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID,
@@ -157,7 +157,7 @@ const DEEPSEEK_V4_FLASH_MODEL = {
   warning: SAVANT_FREE_DATA_COLLECTION_WARNING,
   premium: false,
   multimodal: false,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 /** Legacy (not in SAVANT_FREE_MODELS): see SAVANT_FREE_MINIMAX_MODEL_ID. */
 const MINIMAX_MODEL = {
@@ -167,7 +167,7 @@ const MINIMAX_MODEL = {
   availability: 'always',
   premium: false,
   multimodal: false,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 const MINIMAX_M3_MODEL = {
   id: SAVANT_FREE_MINIMAX_M3_MODEL_ID,
@@ -179,7 +179,7 @@ const MINIMAX_M3_MODEL = {
   // so we don't store its traces either.
   premium: false,
   multimodal: true,
-} as const satisfies Savant-FreeModelOption
+} as const satisfies SavantFreeModelOption
 
 export const SUPPORTED_SAVANT_FREE_MODELS = [
   DEEPSEEK_V4_PRO_MODEL,
@@ -189,7 +189,7 @@ export const SUPPORTED_SAVANT_FREE_MODELS = [
   DEEPSEEK_V4_FLASH_MODEL,
   MIMO_V25_MODEL,
   MINIMAX_MODEL,
-] as const satisfies readonly Savant-FreeModelOption[]
+] as const satisfies readonly SavantFreeModelOption[]
 
 export const SAVANT_FREE_MODELS = [
   DEEPSEEK_V4_PRO_MODEL,
@@ -198,7 +198,7 @@ export const SAVANT_FREE_MODELS = [
   DEEPSEEK_V4_FLASH_MODEL,
   ...(SAVANT_FREE_ENABLE_MIMO_MODELS_IN_UI ? [MIMO_V25_MODEL] : []),
   MINIMAX_M3_MODEL,
-] as const satisfies readonly Savant-FreeModelOption[]
+] as const satisfies readonly SavantFreeModelOption[]
 
 export const SAVANT_FREE_PREMIUM_MODEL_IDS = [
   SAVANT_FREE_DEEPSEEK_V4_PRO_MODEL_ID,
@@ -222,31 +222,31 @@ export const SAVANT_FREE_MULTIMODAL_MODEL_IDS = [
  *  model (incl. MiniMax M3 on Fireworks) is NOT stored; paid, non-free-mode
  *  requests are unaffected and traced as usual. */
 export const SAVANT_FREE_TRACED_MODEL_IDS = SUPPORTED_SAVANT_FREE_MODELS.filter(
-  (model: Savant-FreeModelOption) =>
+  (model: SavantFreeModelOption) =>
     model.warning === SAVANT_FREE_DATA_COLLECTION_WARNING,
 ).map((model) => model.id)
 
-export type Savant-FreeModelId = (typeof SAVANT_FREE_MODELS)[number]['id']
-export type SupportedSavant-FreeModelId =
+export type SavantFreeModelId = (typeof SAVANT_FREE_MODELS)[number]['id']
+export type SupportedSavantFreeModelId =
   (typeof SUPPORTED_SAVANT_FREE_MODELS)[number]['id']
-export type Savant-FreePremiumModelId = (typeof SAVANT_FREE_PREMIUM_MODEL_IDS)[number]
+export type SavantFreePremiumModelId = (typeof SAVANT_FREE_PREMIUM_MODEL_IDS)[number]
 
-/** What new savant-free users see selected in the picker. MiniMax M3 is the
+/** What new SavantFree users see selected in the picker. MiniMax M3 is the
  *  strongest unlimited model (smartest & multimodal), so new users get good
  *  quality without burning the 5/day premium quota on routine messages.
  *  Callers that need a guaranteed-available id for resolution /
  *  auto-fallbacks should use FALLBACK_SAVANT_FREE_MODEL_ID instead. */
-export const DEFAULT_SAVANT_FREE_MODEL_ID: Savant-FreeModelId =
+export const DEFAULT_SAVANT_FREE_MODEL_ID: SavantFreeModelId =
   SAVANT_FREE_MINIMAX_M3_MODEL_ID
 
 /** Always-available fallback used when the requested model can't be served
  *  right now (unknown id, deployment hours closed, etc.). Kept distinct from
  *  DEFAULT_SAVANT_FREE_MODEL_ID so a new user's "preferred default" can be the
  *  smartest model without auto-flipping anyone to a closed serverless model. */
-export const FALLBACK_SAVANT_FREE_MODEL_ID: Savant-FreeModelId =
+export const FALLBACK_SAVANT_FREE_MODEL_ID: SavantFreeModelId =
   SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID
 
-export const LIMITED_SAVANT_FREE_MODEL_ID: Savant-FreeModelId =
+export const LIMITED_SAVANT_FREE_MODEL_ID: SavantFreeModelId =
   SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID
 export const LIMITED_SAVANT_FREE_MODEL_IDS = [
   SAVANT_FREE_DEEPSEEK_V4_FLASH_MODEL_ID,
@@ -256,19 +256,19 @@ export const LIMITED_SAVANT_FREE_MODELS = LIMITED_SAVANT_FREE_MODEL_IDS.map(
   (modelId) => SUPPORTED_SAVANT_FREE_MODELS.find((model) => model.id === modelId)!,
 )
 
-export type Savant-FreeAccessTier = 'full' | 'limited'
+export type SavantFreeAccessTier = 'full' | 'limited'
 
-/** Access tier carried in the Savant-Free Web Convex JWT. Extends the CLI tier
+/** Access tier carried in the SavantFree Web Convex JWT. Extends the CLI tier
  *  with 'blocked' (Tor / corroborated anonymous network): the app still
  *  loads, but every agent send is rejected server-side. */
-export type Savant-FreeWebAccessTier = Savant-FreeAccessTier | 'blocked'
+export type SavantFreeWebAccessTier = SavantFreeAccessTier | 'blocked'
 
-/** Savant-Free Web limited-tier session pool. Deliberately separate from the
+/** SavantFree Web limited-tier session pool. Deliberately separate from the
  *  CLI's Postgres-backed session pool â€” enforced entirely in Convex. */
 export const SAVANT_FREE_WEB_LIMITED_SESSION_LIMIT = 5
 export const SAVANT_FREE_WEB_LIMITED_SESSION_LENGTH_MS = 60 * 60 * 1000
 
-/** Models exempt from Savant-Free Web geo limits: geo-limited users can run
+/** Models exempt from SavantFree Web geo limits: geo-limited users can run
  *  these without consuming limited sessions. Matches the shared limited
  *  model set (DeepSeek V4 Flash, MiMo 2.5); every other model stays
  *  geo-gated. Web-only â€” the CLI's limited pool is unaffected. */
@@ -277,14 +277,14 @@ export const SAVANT_FREE_WEB_GEO_EXEMPT_MODEL_IDS = [
   SAVANT_FREE_MIMO_V25_MODEL_ID,
 ] as const
 
-export function isSavant-FreeWebGeoExemptModelId(
+export function isSavantFreeWebGeoExemptModelId(
   id: string | null | undefined,
 ): boolean {
   if (!id) return false
   return SAVANT_FREE_WEB_GEO_EXEMPT_MODEL_IDS.some((modelId) => modelId === id)
 }
 
-/** Models a limited-tier Savant-Free Web user may select: the geo-exempt models
+/** Models a limited-tier SavantFree Web user may select: the geo-exempt models
  *  (unlimited) plus the shared limited set (session-gated). */
 export const SAVANT_FREE_WEB_LIMITED_MODEL_IDS = [
   ...new Set<string>([
@@ -293,28 +293,28 @@ export const SAVANT_FREE_WEB_LIMITED_MODEL_IDS = [
   ]),
 ]
 
-export function isSavant-FreeWebModelAllowedForLimitedTier(
+export function isSavantFreeWebModelAllowedForLimitedTier(
   id: string | null | undefined,
 ): boolean {
   if (!id) return false
   return SAVANT_FREE_WEB_LIMITED_MODEL_IDS.some((modelId) => modelId === id)
 }
 
-/** Coerce a limited-tier Savant-Free Web selection (premium ids, stale
+/** Coerce a limited-tier SavantFree Web selection (premium ids, stale
  *  localStorage values) to an allowed model. Falls back to the limited
  *  default (DeepSeek V4 Flash), which is geo-exempt, so limited users land
  *  on unlimited usage. */
-export function resolveSavant-FreeWebModelForLimitedTier(
+export function resolveSavantFreeWebModelForLimitedTier(
   id: string | null | undefined,
 ): string {
-  return isSavant-FreeWebModelAllowedForLimitedTier(id)
+  return isSavantFreeWebModelAllowedForLimitedTier(id)
     ? (id as string)
     : LIMITED_SAVANT_FREE_MODEL_ID
 }
 
-export function getSavant-FreeModelsForAccessTier(
-  accessTier: Savant-FreeAccessTier | null | undefined,
-): readonly Savant-FreeModelOption[] {
+export function getSavantFreeModelsForAccessTier(
+  accessTier: SavantFreeAccessTier | null | undefined,
+): readonly SavantFreeModelOption[] {
   if (accessTier === 'limited') return LIMITED_SAVANT_FREE_MODELS
   return SAVANT_FREE_MODELS
 }
@@ -324,66 +324,66 @@ export function getSavant-FreeModelsForAccessTier(
  *  MiniMax M3 (the smart, unlimited, multimodal default); limited â†’ the
  *  always-available flash model. Both are unlimited, so the recommended pick
  *  never burns the daily premium quota. */
-export function getRecommendedSavant-FreeModelId(
-  accessTier: Savant-FreeAccessTier | null | undefined,
-): SupportedSavant-FreeModelId {
+export function getRecommendedSavantFreeModelId(
+  accessTier: SavantFreeAccessTier | null | undefined,
+): SupportedSavantFreeModelId {
   return accessTier === 'limited'
     ? LIMITED_SAVANT_FREE_MODEL_ID
     : DEFAULT_SAVANT_FREE_MODEL_ID
 }
 
-export function isSavant-FreeModelAllowedForAccessTier(
+export function isSavantFreeModelAllowedForAccessTier(
   model: string | null | undefined,
-  accessTier: Savant-FreeAccessTier | null | undefined,
+  accessTier: SavantFreeAccessTier | null | undefined,
 ): boolean {
   if (!model) return false
-  if (accessTier !== 'limited') return isSupportedSavant-FreeModelId(model)
+  if (accessTier !== 'limited') return isSupportedSavantFreeModelId(model)
   return LIMITED_SAVANT_FREE_MODEL_IDS.some((modelId) => modelId === model)
 }
 
-export function isSavant-FreeModelId(
+export function isSavantFreeModelId(
   id: string | null | undefined,
-): id is Savant-FreeModelId {
+): id is SavantFreeModelId {
   if (!id) return false
   return SAVANT_FREE_MODELS.some((m) => m.id === id)
 }
 
-export function resolveSavant-FreeModel(
+export function resolveSavantFreeModel(
   id: string | null | undefined,
-): Savant-FreeModelId {
-  return isSavant-FreeModelId(id) ? id : FALLBACK_SAVANT_FREE_MODEL_ID
+): SavantFreeModelId {
+  return isSavantFreeModelId(id) ? id : FALLBACK_SAVANT_FREE_MODEL_ID
 }
 
-export function resolveSavant-FreeModelForAccessTier(
+export function resolveSavantFreeModelForAccessTier(
   id: string | null | undefined,
-  accessTier: Savant-FreeAccessTier | null | undefined,
-): SupportedSavant-FreeModelId {
+  accessTier: SavantFreeAccessTier | null | undefined,
+): SupportedSavantFreeModelId {
   if (accessTier === 'limited') {
-    return isSavant-FreeModelAllowedForAccessTier(id, accessTier)
-      ? (id as SupportedSavant-FreeModelId)
+    return isSavantFreeModelAllowedForAccessTier(id, accessTier)
+      ? (id as SupportedSavantFreeModelId)
       : LIMITED_SAVANT_FREE_MODEL_ID
   }
-  const resolved = resolveSupportedSavant-FreeModel(id)
-  return isSavant-FreeModelAllowedForAccessTier(resolved, accessTier)
+  const resolved = resolveSupportedSavantFreeModel(id)
+  return isSavantFreeModelAllowedForAccessTier(resolved, accessTier)
     ? resolved
     : FALLBACK_SAVANT_FREE_MODEL_ID
 }
 
-export function isSupportedSavant-FreeModelId(
+export function isSupportedSavantFreeModelId(
   id: string | null | undefined,
-): id is SupportedSavant-FreeModelId {
+): id is SupportedSavantFreeModelId {
   if (!id) return false
   return SUPPORTED_SAVANT_FREE_MODELS.some((m) => m.id === id)
 }
 
-export function isSavant-FreePremiumModelId(
+export function isSavantFreePremiumModelId(
   id: string | null | undefined,
-): id is Savant-FreePremiumModelId {
+): id is SavantFreePremiumModelId {
   if (!id) return false
   return SAVANT_FREE_PREMIUM_MODEL_IDS.some((modelId) => modelId === id)
 }
 
-export function isSavant-FreeMultimodalModelId(
+export function isSavantFreeMultimodalModelId(
   id: string | null | undefined,
 ): boolean {
   if (!id) return false
@@ -392,27 +392,27 @@ export function isSavant-FreeMultimodalModelId(
 
 /** Whether we store our own chat-completion traces for this free-mode model.
  *  See SAVANT_FREE_TRACED_MODEL_IDS. */
-export function isSavant-FreeTracedModelId(
+export function isSavantFreeTracedModelId(
   id: string | null | undefined,
 ): boolean {
   if (!id) return false
   return SAVANT_FREE_TRACED_MODEL_IDS.some((modelId) => modelId === id)
 }
 
-export function resolveSupportedSavant-FreeModel(
+export function resolveSupportedSavantFreeModel(
   id: string | null | undefined,
-): SupportedSavant-FreeModelId {
-  return isSupportedSavant-FreeModelId(id) ? id : FALLBACK_SAVANT_FREE_MODEL_ID
+): SupportedSavantFreeModelId {
+  return isSupportedSavantFreeModelId(id) ? id : FALLBACK_SAVANT_FREE_MODEL_ID
 }
 
-export function getSavant-FreeModel(id: string): Savant-FreeModelOption {
+export function getSavantFreeModel(id: string): SavantFreeModelOption {
   return (
     SUPPORTED_SAVANT_FREE_MODELS.find((m) => m.id === id) ??
     SAVANT_FREE_MODELS.find((m) => m.id === FALLBACK_SAVANT_FREE_MODEL_ID)!
   )
 }
 
-function getNextSavant-FreeDeploymentStart(now: Date): Date {
+function getNextSavantFreeDeploymentStart(now: Date): Date {
   const easternNow = getZonedParts(now, SAVANT_FREE_EASTERN_TIMEZONE)
   const isBeforeTodayOpen = easternNow.hour < 9
 
@@ -426,7 +426,7 @@ function getNextSavant-FreeDeploymentStart(now: Date): Date {
   )
 }
 
-function getCurrentSavant-FreeDeploymentEnd(now: Date): Date {
+function getCurrentSavantFreeDeploymentEnd(now: Date): Date {
   const pacificNow = getZonedParts(now, SAVANT_FREE_PACIFIC_TIMEZONE)
   return getUtcForZonedTime(pacificNow, SAVANT_FREE_PACIFIC_TIMEZONE, 17, 0)
 }
@@ -459,20 +459,20 @@ function formatLocalTime(
   }).format(date)
 }
 
-export function getSavant-FreeDeploymentAvailabilityLabel(
+export function getSavantFreeDeploymentAvailabilityLabel(
   now: Date = new Date(),
   options: LocalTimeFormatOptions = {},
 ): string {
-  if (isSavant-FreeDeploymentHours(now)) {
-    const closesAt = getCurrentSavant-FreeDeploymentEnd(now)
+  if (isSavantFreeDeploymentHours(now)) {
+    const closesAt = getCurrentSavantFreeDeploymentEnd(now)
     return `until ${formatLocalTime(closesAt, now, options)}`
   }
 
-  const opensAt = getNextSavant-FreeDeploymentStart(now)
+  const opensAt = getNextSavantFreeDeploymentStart(now)
   return `opens ${formatLocalTime(opensAt, now, options)}`
 }
 
-export function isSavant-FreeDeploymentHours(now: Date = new Date()): boolean {
+export function isSavantFreeDeploymentHours(now: Date = new Date()): boolean {
   const eastern = getZonedParts(now, SAVANT_FREE_EASTERN_TIMEZONE)
   const pacific = getZonedParts(now, SAVANT_FREE_PACIFIC_TIMEZONE)
   return (
@@ -481,21 +481,21 @@ export function isSavant-FreeDeploymentHours(now: Date = new Date()): boolean {
   )
 }
 
-export function isSavant-FreeModelAvailable(
+export function isSavantFreeModelAvailable(
   id: string,
   now: Date = new Date(),
 ): boolean {
   const model = SUPPORTED_SAVANT_FREE_MODELS.find((m) => m.id === id)
   if (!model) return false
-  return model.availability === 'always' || isSavant-FreeDeploymentHours(now)
+  return model.availability === 'always' || isSavantFreeDeploymentHours(now)
 }
 
-export function resolveAvailableSavant-FreeModel(
+export function resolveAvailableSavantFreeModel(
   id: string | null | undefined,
   now: Date = new Date(),
-): Savant-FreeModelId {
-  const resolved = resolveSavant-FreeModel(id)
-  return isSavant-FreeModelAvailable(resolved, now)
+): SavantFreeModelId {
+  const resolved = resolveSavantFreeModel(id)
+  return isSavantFreeModelAvailable(resolved, now)
     ? resolved
     : FALLBACK_SAVANT_FREE_MODEL_ID
 }

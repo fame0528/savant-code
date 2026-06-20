@@ -1,4 +1,4 @@
-﻿import { API_KEY_ENV_VAR } from '@savant-code/common/old-constants'
+import { API_KEY_ENV_VAR } from '@savant-code/common/old-constants'
 import { AskUserBridge } from '@savant-code/common/utils/ask-user-bridge'
 import { SavantClient } from '@savant-code/sdk'
 

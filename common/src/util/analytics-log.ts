@@ -1,4 +1,4 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 
 // Build PostHog payloads from log data in a single, shared place
 export type AnalyticsLogData = {

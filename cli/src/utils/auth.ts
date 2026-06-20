@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
@@ -36,7 +36,7 @@ export const getConfigDir = (): string => {
   return path.join(
     os.homedir(),
     '.config',
-    'savant-code' +
+    'SavantCode' +
       // on a development stack?
       (env.NEXT_PUBLIC_SC_ENVIRONMENT !== 'prod'
         ? `-${env.NEXT_PUBLIC_SC_ENVIRONMENT}`

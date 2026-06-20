@@ -1,1 +1,1 @@
-﻿export const publisher = 'savant-code'
+export const publisher = 'SavantCode'

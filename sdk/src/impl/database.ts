@@ -1,4 +1,4 @@
-﻿import { validateSingleAgent } from '@savant-code/common/templates/agent-validation'
+import { validateSingleAgent } from '@savant-code/common/templates/agent-validation'
 import { DynamicAgentTemplateSchema } from '@savant-code/common/types/dynamic-agent-template'
 import { getErrorObject } from '@savant-code/common/util/error'
 import { truncateString } from '@savant-code/common/util/string'

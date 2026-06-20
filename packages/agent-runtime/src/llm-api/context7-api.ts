@@ -1,4 +1,4 @@
-﻿import { withTimeout } from '@savant-code/common/util/promise'
+import { withTimeout } from '@savant-code/common/util/promise'
 
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 import type { ParamsOf } from '@savant-code/common/types/function-params'
@@ -198,7 +198,7 @@ export async function fetchContext7LibraryDocumentation(
       fetch(url, {
         headers: {
           Authorization: `Bearer ${process.env['CONTEXT7_API_KEY']}`,
-          'X-Context7-Source': 'savant-code',
+          'X-Context7-Source': 'SavantCode',
         },
       }),
       FETCH_TIMEOUT_MS,

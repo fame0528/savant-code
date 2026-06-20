@@ -1,4 +1,4 @@
-﻿import { spawn } from 'child_process'
+import { spawn } from 'child_process'
 import path from 'path'
 
 import { describe, test, expect, beforeAll } from 'bun:test'

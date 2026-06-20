@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
@@ -184,17 +184,17 @@ function discoverSkillsMetadataFromDirectory(
  *
  * Order (later overrides earlier):
  * - ~/.claude/skills/ (global Claude-compatible)
- * - ~/.agents/skills/ (global Savant-Code)
+ * - ~/.agents/skills/ (global SavantCode)
  * - {cwd}/.claude/skills/ (project Claude-compatible)
- * - {cwd}/.agents/skills/ (project Savant-Code)
+ * - {cwd}/.agents/skills/ (project SavantCode)
  */
 function getDefaultSkillsDirs(cwd: string): string[] {
   const home = os.homedir()
   return [
-    // Global directories (Claude-compatible first, then Savant-Code)
+    // Global directories (Claude-compatible first, then SavantCode)
     path.join(home, '.claude', SKILLS_DIR_NAME),
     path.join(home, '.agents', SKILLS_DIR_NAME),
-    // Project directories (Claude-compatible first, then Savant-Code)
+    // Project directories (Claude-compatible first, then SavantCode)
     path.join(cwd, '.claude', SKILLS_DIR_NAME),
     path.join(cwd, '.agents', SKILLS_DIR_NAME),
   ]

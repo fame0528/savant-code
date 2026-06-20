@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Retry Configuration Constants
  *
  * This module defines constants for retry behavior and exponential backoff.

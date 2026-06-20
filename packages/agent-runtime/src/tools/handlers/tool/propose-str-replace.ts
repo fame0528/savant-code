@@ -1,12 +1,12 @@
-﻿import {
+import {
   getProposedContent,
   setProposedContent,
 } from './proposed-content-store'
 import { processStrReplace } from '../../../process-str-replace'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { RequestOptionalFileFn } from '@savant-code/common/types/contracts/client'
@@ -17,7 +17,7 @@ import type { AgentState } from '@savant-code/common/types/session-state'
 export const handleProposeStrReplace = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<'propose_str_replace'>
+    toolCall: SavantCodeToolCall<'propose_str_replace'>
 
     logger: Logger
     agentState: AgentState
@@ -105,4 +105,4 @@ export const handleProposeStrReplace = (async (
       },
     ],
   }
-}) satisfies Savant-CodeToolHandlerFunction<'propose_str_replace'>
+}) satisfies SavantCodeToolHandlerFunction<'propose_str_replace'>

@@ -1,4 +1,4 @@
-﻿import {
+import {
   startToolTag,
   endToolTag,
   toolNameParam,
@@ -18,18 +18,18 @@ export type ParsedTextSegment = {
 export type ParsedSegment = ParsedToolCallFromText | ParsedTextSegment
 
 /**
- * Parses text containing tool calls in the <savant-code_tool_call> XML format,
+ * Parses text containing tool calls in the <SavantCode_tool_call> XML format,
  * returning interleaved text and tool call segments in order.
  *
  * Example input:
  * ```
  * Some text before
- * <savant-code_tool_call>
+ * <SavantCode_tool_call>
  * {
  *   "cb_tool_name": "read_files",
  *   "paths": ["file.ts"]
  * }
- * </savant-code_tool_call>
+ * </SavantCode_tool_call>
  * Some text after
  * ```
  *
@@ -39,7 +39,7 @@ export type ParsedSegment = ParsedToolCallFromText | ParsedTextSegment
 export function parseTextWithToolCalls(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = []
 
-  // Match <savant-code_tool_call>...</savant-code_tool_call> blocks
+  // Match <SavantCode_tool_call>...</SavantCode_tool_call> blocks
   const toolExtractionPattern = new RegExp(
     `${escapeRegex(startToolTag)}([\\s\\S]*?)${escapeRegex(endToolTag)}`,
     'gs',
@@ -98,7 +98,7 @@ export function parseTextWithToolCalls(text: string): ParsedSegment[] {
 }
 
 /**
- * Parses tool calls from text in the <savant-code_tool_call> XML format.
+ * Parses tool calls from text in the <SavantCode_tool_call> XML format.
  * This is a convenience function that returns only tool calls (no text segments).
  *
  * @param text - The text containing tool calls in XML format

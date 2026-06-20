@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Unit Tests: EventCollector
  *
  * Tests the EventCollector utility class in isolation without any API calls.

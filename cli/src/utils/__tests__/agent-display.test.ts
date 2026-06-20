@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import {
   getAgentDisplayPrompt,
@@ -47,7 +47,7 @@ describe('getAgentDisplayPrompt', () => {
 
   test('normalizes scoped and versioned basher agent ids', () => {
     const block = createAgentBlock({
-      agentType: 'savant-code/basher@1.0.0',
+      agentType: 'SavantCode/basher@1.0.0',
       params: {
         what_to_summarize: 'Summarize command output',
       },

@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from 'bun:test'
+import { describe, test, expect } from 'bun:test'
 
 import { SLASH_COMMANDS } from '../../data/slash-commands'
 import { findCommand, COMMAND_REGISTRY } from '../command-registry'
@@ -286,14 +286,14 @@ describe('command-registry', () => {
       }
     })
 
-    test('connect command is not available in savant-code (savant-free-only)', () => {
+    test('connect command is not available in SavantCode (savant-free-only)', () => {
       const hasConnectSlashCommand = SLASH_COMMANDS.some(
         (cmd) => cmd.id === 'connect',
       )
       expect(hasConnectSlashCommand).toBe(false)
     })
 
-    test('connect:chatgpt command is not available in savant-code (savant-free-only)', () => {
+    test('connect:chatgpt command is not available in SavantCode (savant-free-only)', () => {
       const command = findCommand('connect:chatgpt')
       expect(command).toBeUndefined()
     })

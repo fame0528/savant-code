@@ -1,4 +1,4 @@
-﻿import * as os from 'os'
+import * as os from 'os'
 import path from 'path'
 
 import { getSystemInfo } from '@savant-code/common/util/system-info'
@@ -34,7 +34,7 @@ import type {
   AgentOutput,
   SessionState,
 } from '@savant-code/common/types/session-state'
-import type { Savant-CodeSpawn } from '@savant-code/common/types/spawn'
+import type { SavantCodeSpawn } from '@savant-code/common/types/spawn'
 import type {
   CustomToolDefinitions,
   FileTreeNode,
@@ -76,7 +76,7 @@ export type InitialSessionStateOptions = {
   customToolDefinitions?: CustomToolDefinition[]
   maxAgentSteps?: number
   fs?: SavantFileSystem
-  spawn?: Savant-CodeSpawn
+  spawn?: SavantCodeSpawn
   logger?: Logger
 }
 
@@ -233,7 +233,7 @@ function getFileSize(stats: Awaited<ReturnType<SavantFileSystem['stat']>>) {
  * Helper to convert ChildProcess to Promise with stdout/stderr
  */
 function childProcessToPromise(
-  proc: ReturnType<Savant-CodeSpawn>,
+  proc: ReturnType<SavantCodeSpawn>,
 ): Promise<{ stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
     let stdout = ''
@@ -264,7 +264,7 @@ function childProcessToPromise(
  */
 async function getGitChanges(params: {
   cwd: string
-  spawn: Savant-CodeSpawn
+  spawn: SavantCodeSpawn
   logger: Logger
 }): Promise<{
   status: string
@@ -503,7 +503,7 @@ export async function initialSessionState(
   }
   if (!spawn) {
     const { spawn: nodeSpawn } = require('child_process')
-    spawn = nodeSpawn as Savant-CodeSpawn
+    spawn = nodeSpawn as SavantCodeSpawn
   }
   if (!logger) {
     logger = {

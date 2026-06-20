@@ -1,4 +1,4 @@
-﻿import { handleAddMessage } from './tool/add-message'
+import { handleAddMessage } from './tool/add-message'
 import { handleAddSubgoal } from './tool/add-subgoal'
 import { handleApplyPatch } from './tool/apply-patch'
 import { handleAskUser } from './tool/ask-user'
@@ -40,7 +40,7 @@ import { handleWebSearch } from './tool/web-search'
 import { handleWriteFile } from './tool/write-file'
 import { handleWriteTodos } from './tool/write-todos'
 
-import type { Savant-CodeToolHandlerFunction } from './handler-function-type'
+import type { SavantCodeToolHandlerFunction } from './handler-function-type'
 import type { ToolName } from '@savant-code/common/tools/constants'
 
 /**
@@ -48,12 +48,12 @@ import type { ToolName } from '@savant-code/common/tools/constants'
  * - Will be called immediately once it is parsed out of the stream.
  * - Takes as argument
  *   - The previous tool call (to await)
- *   - The Savant-CodeToolCall for the current tool
+ *   - The SavantCodeToolCall for the current tool
  *   - Any additional arguments for the tool
  * - Returns a promise that will be awaited
  */
-export const savant-codeToolHandlers: {
-  [K in ToolName]: Savant-CodeToolHandlerFunction<K>
+export const SavantCodeToolHandlers: {
+  [K in ToolName]: SavantCodeToolHandlerFunction<K>
 } = {
   add_message: handleAddMessage,
   add_subgoal: handleAddSubgoal,

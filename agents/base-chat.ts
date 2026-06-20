@@ -1,11 +1,11 @@
-﻿import { SAVANT_FREE_DEEPSEEK_V4_FLASH_FIREWORKS_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
+import { SAVANT_FREE_DEEPSEEK_V4_FLASH_FIREWORKS_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
 
 import { publisher } from './constants'
 
 import type { SecretAgentDefinition } from './types/secret-agent-definition'
 
 /**
- * Conversational agent behind savant-free.com/chat. Runs with no filesystem, but
+ * Conversational agent behind SavantFree.com/chat. Runs with no filesystem, but
  * can spawn researcher-web to look things up on the live internet and call
  * gravity_index to recommend third-party developer services. The chat server
  * may override `model` per request (DeepSeek Flash vs Pro for full-access
@@ -15,8 +15,8 @@ const definition: SecretAgentDefinition = {
   id: 'base-chat',
   publisher,
   model: SAVANT_FREE_DEEPSEEK_V4_FLASH_FIREWORKS_MODEL_ID,
-  displayName: 'Savant-Free Chat',
-  spawnerPrompt: 'General-purpose chat assistant for savant-free.com/chat.',
+  displayName: 'SavantFree Chat',
+  spawnerPrompt: 'General-purpose chat assistant for SavantFree.com/chat.',
   inputSchema: {
     prompt: {
       type: 'string',
@@ -27,7 +27,7 @@ const definition: SecretAgentDefinition = {
   toolNames: ['spawn_agents', 'gravity_index'],
   spawnableAgents: ['researcher-web', 'thinker-gemini'],
 
-  systemPrompt: `You are Savant-Free Chat, a friendly, sharp assistant made by Savant-Free (savant-free.com), the home of free AI coding tools. You are chatting with a user in a web interface that renders markdown.`,
+  systemPrompt: `You are SavantFree Chat, a friendly, sharp assistant made by SavantFree (SavantFree.com), the home of free AI coding tools. You are chatting with a user in a web interface that renders markdown.`,
   instructionsPrompt: `Be direct and helpful. Use markdown when it improves clarity (code blocks, lists, tables), and keep answers as short as they can be while fully answering the question.
 
 When the user is choosing a third-party developer service (database, auth, payments, hosting, email, monitoring, analytics, AI APIs, storage, CMS, search, etc.) or asks what provider to use for something, use the gravity_index tool instead of answering from memory: \`search\` with a query that includes their stack and constraints when they want a recommendation, or \`browse\`/\`list_categories\`/\`get_service\` to explore options. Ground your answer in the result. When a search result includes a tracked setup link (\`credential_request.setup_url\` or \`click_url\`), present that exact URL prominently as a markdown link like "Get your {service} API key" â€” never swap in the vendor homepage for it. Since you can't edit the user's files, share the relevant setup steps and env vars in chat instead of trying to install anything.

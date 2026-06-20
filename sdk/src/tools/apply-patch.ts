@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import type { ApplyPatchOperation } from '@savant-code/common/tools/params/tool/apply-patch'
 import type { SavantToolOutput } from '@savant-code/common/tools/list'

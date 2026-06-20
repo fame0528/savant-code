@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 /**
  * Prebuild script that scans the agents/ directory and generates a TypeScript
  * module with all agent definitions embedded as static data.
@@ -106,7 +106,7 @@ import type { LocalAgentInfo } from '../utils/local-agent-registry'
 
 /**
  * All bundled agent definitions keyed by their ID.
- * These are the default Savant-Code agents that ship with the CLI binary.
+ * These are the default SavantCode agents that ship with the CLI binary.
  */
 export const bundledAgents: Record<string, any> = ${JSON.stringify(agents, null, 2)};
 

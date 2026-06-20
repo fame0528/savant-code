@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Union type of all available tool names
  */
 export type ToolName =
@@ -275,7 +275,7 @@ export interface ReadUrlParams {
 }
 
 /**
- * Render a small interactive UI widget in the Savant-Code CLI. Currently supports a button that opens a link.
+ * Render a small interactive UI widget in the SavantCode CLI. Currently supports a button that opens a link.
  */
 export interface RenderUiParams {
   /** The UI widget to render. */

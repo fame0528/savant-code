@@ -1,4 +1,4 @@
-﻿import { SUBSCRIPTION_TIERS } from '@savant-code/common/constants/subscription-plans'
+import { SUBSCRIPTION_TIERS } from '@savant-code/common/constants/subscription-plans'
 import { IS_SAVANT_FREE } from '../utils/constants'
 import { safeOpen } from '../utils/open-url'
 import React from 'react'

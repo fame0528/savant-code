@@ -1,4 +1,4 @@
-﻿import { FILE_READ_STATUS } from '@savant-code/common/old-constants'
+import { FILE_READ_STATUS } from '@savant-code/common/old-constants'
 import * as projectFileTree from '@savant-code/common/project-file-tree'
 import { createNodeError } from '@savant-code/common/testing/errors'
 import {

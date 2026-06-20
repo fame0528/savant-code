@@ -1,4 +1,4 @@
-﻿import { buildArray } from '@savant-code/common/util/array'
+import { buildArray } from '@savant-code/common/util/array'
 import { COMPOSIO_META_TOOL_NAMES } from '@savant-code/common/constants/composio'
 import {
   SAVANT_FREE_GEMINI_THINKER_AGENT_ID,
@@ -8,7 +8,7 @@ import {
 } from '@savant-code/common/constants/savant-free-gemini-thinker'
 import { SAVANT_FREE_REVIEWER_AGENT_ID_BY_MODEL } from '@savant-code/common/constants/free-agents'
 import {
-  canSavant-FreeModelSpawnGeminiThinker,
+  canSavantFreeModelSpawnGeminiThinker,
   SAVANT_FREE_KIMI_MODEL_ID,
   SAVANT_FREE_MINIMAX_MODEL_ID,
   SAVANT_FREE_MINIMAX_M3_MODEL_ID,
@@ -49,7 +49,7 @@ export function createBase2(
   const isSonnet = false
   // Lite mode runs MiniMax M3 (routed through the Fireworks AI API). The
   // unqualified base2-free agent still uses MiniMax for legacy callers; new
-  // Savant-Free clients select explicit free variants from the model picker.
+  // SavantFree clients select explicit free variants from the model picker.
   const model =
     modelOverride ??
     (mode === 'lite'
@@ -57,10 +57,10 @@ export function createBase2(
       : mode === 'free'
         ? SAVANT_FREE_MINIMAX_MODEL_ID
         : 'anthropic/claude-opus-4.8')
-  // Smart savant-free model variants (Kimi, DeepSeek) can offload deeper
+  // Smart SavantFree model variants (Kimi, DeepSeek) can offload deeper
   // reasoning. Fast MiniMax omits the extra round trip by construction.
   const hasFreeGeminiThinker =
-    isFree && canSavant-FreeModelSpawnGeminiThinker(model)
+    isFree && canSavantFreeModelSpawnGeminiThinker(model)
   const freeCodeReviewerAgentId =
     SAVANT_FREE_REVIEWER_AGENT_ID_BY_MODEL[model] ?? 'code-reviewer-lite'
   const contextPrunerMaxContextLength =
@@ -139,7 +139,7 @@ export function createBase2(
       'context-pruner',
     ),
 
-    systemPrompt: `You are Savant, a strategic assistant that orchestrates complex coding tasks through specialized sub-agents. You are the AI agent behind the product, Savant-Code, a CLI tool where users can chat with you to code with AI.
+    systemPrompt: `You are Savant, a strategic assistant that orchestrates complex coding tasks through specialized sub-agents. You are the AI agent behind the product, SavantCode, a CLI tool where users can chat with you to code with AI.
 
 Current date: ${PLACEHOLDER.CURRENT_DATE}.
 
@@ -199,7 +199,7 @@ Use the spawn_agents tool to spawn specialized agents to help you complete the u
   ${buildArray(
     '- Spawn context-gathering agents (file pickers, code searchers, and web/docs researchers) before making edits. Use the list_directory and glob tools directly for searching and exploring the codebase.',
     isFree &&
-      'Do not spawn the thinker-gpt agent, unless the user asks. Not everyone has connected their ChatGPT subscription to Savant-Code to allow for it.',
+      'Do not spawn the thinker-gpt agent, unless the user asks. Not everyone has connected their ChatGPT subscription to SavantCode to allow for it.',
     hasFreeGeminiThinker && SAVANT_FREE_GEMINI_THINKER_SYSTEM_INSTRUCTION,
     isDefault &&
       '- Spawn the editor agent to implement the changes after you have gathered all the context you need.',
@@ -219,7 +219,7 @@ Use the spawn_agents tool to spawn specialized agents to help you complete the u
 - **No need to include context:** When prompting an agent, realize that many agents can already see the entire conversation history, so you can be brief in prompting them without needing to include context.
 - **Never spawn the context-pruner agent:** This agent is spawned automatically for you and you don't need to spawn it yourself.
 
-# Savant-Code Meta-information
+# SavantCode Meta-information
 
 You are running on the ${model} model.
 
@@ -229,7 +229,7 @@ Every prompt sent consumes the user's credits, which is calculated based on the 
 
 The user can use the "/usage" command to see how many credits they have used and have left, so you can tell them to check their usage this way.
 
-For other questions, you can direct them to savant-code.dev, or especially savant-code.dev/docs for detailed information about the product.
+For other questions, you can direct them to SavantCode.dev, or especially SavantCode.dev/docs for detailed information about the product.
 
 # Other response guidelines
 

@@ -1,10 +1,10 @@
-﻿import { getErrorObject } from '@savant-code/common/util/error'
+import { getErrorObject } from '@savant-code/common/util/error'
 
 import {
-  markSavant-FreeSessionCountryBlocked,
-  markSavant-FreeSessionEnded,
-  markSavant-FreeSessionSuperseded,
-  refreshSavant-FreeSession,
+  markSavantFreeSessionCountryBlocked,
+  markSavantFreeSessionEnded,
+  markSavantFreeSessionSuperseded,
+  refreshSavantFreeSession,
 } from '../use-savant-free-session'
 import { getProjectRoot } from '../../project-files'
 import { useChatStore } from '../../state/chat-store'
@@ -14,8 +14,8 @@ import { markRunningAgentsAsCancelled } from '../../utils/block-operations'
 import {
   getCountryBlockFromFreeModeError,
   getFreeModeUnavailableErrorMessage,
-  getSavant-FreeGateErrorKind,
-  getSavant-FreeRateLimitErrorMessage,
+  getSavantFreeGateErrorKind,
+  getSavantFreeRateLimitErrorMessage,
   isOutOfCreditsError,
   isFreeModeUnavailableError,
   OUT_OF_CREDITS_MESSAGE,
@@ -401,7 +401,7 @@ export const handleRunCompletion = (params: {
     if (isFreeModeUnavailableError(output)) {
       updater.setError(getFreeModeUnavailableErrorMessage(output))
       if (IS_SAVANT_FREE) {
-        markSavant-FreeSessionCountryBlocked(
+        markSavantFreeSessionCountryBlocked(
           getCountryBlockFromFreeModeError(output) ?? {
             countryCode: 'UNKNOWN',
           },
@@ -411,18 +411,18 @@ export const handleRunCompletion = (params: {
       return
     }
 
-    const gateKind = getSavant-FreeGateErrorKind(output)
+    const gateKind = getSavantFreeGateErrorKind(output)
     if (gateKind) {
-      handleSavant-FreeGateError(gateKind, updater)
+      handleSavantFreeGateError(gateKind, updater)
       finalizeAfterError()
       return
     }
 
-    const savant-freeRateLimitMessage = IS_SAVANT_FREE
-      ? getSavant-FreeRateLimitErrorMessage(output)
+    const SavantFreeRateLimitMessage = IS_SAVANT_FREE
+      ? getSavantFreeRateLimitErrorMessage(output)
       : null
-    if (savant-freeRateLimitMessage) {
-      updater.setError(savant-freeRateLimitMessage)
+    if (SavantFreeRateLimitMessage) {
+      updater.setError(SavantFreeRateLimitMessage)
       finalizeAfterError()
       return
     }
@@ -512,7 +512,7 @@ export const handleRunError = (params: {
   if (isFreeModeUnavailableError(error)) {
     updater.setError(getFreeModeUnavailableErrorMessage(error))
     if (IS_SAVANT_FREE) {
-      markSavant-FreeSessionCountryBlocked(
+      markSavantFreeSessionCountryBlocked(
         getCountryBlockFromFreeModeError(error) ?? {
           countryCode: 'UNKNOWN',
         },
@@ -521,17 +521,17 @@ export const handleRunError = (params: {
     return
   }
 
-  const gateKind = getSavant-FreeGateErrorKind(error)
+  const gateKind = getSavantFreeGateErrorKind(error)
   if (gateKind) {
-    handleSavant-FreeGateError(gateKind, updater)
+    handleSavantFreeGateError(gateKind, updater)
     return
   }
 
-  const savant-freeRateLimitMessage = IS_SAVANT_FREE
-    ? getSavant-FreeRateLimitErrorMessage(error)
+  const SavantFreeRateLimitMessage = IS_SAVANT_FREE
+    ? getSavantFreeRateLimitErrorMessage(error)
     : null
-  if (savant-freeRateLimitMessage) {
-    updater.setError(savant-freeRateLimitMessage)
+  if (SavantFreeRateLimitMessage) {
+    updater.setError(SavantFreeRateLimitMessage)
     return
   }
 
@@ -545,8 +545,8 @@ export const handleRunError = (params: {
  * the request because our seat is no longer valid; update local state so the
  * UI reflects reality and we stop sending requests until we re-admit.
  */
-function handleSavant-FreeGateError(
-  kind: ReturnType<typeof getSavant-FreeGateErrorKind>,
+function handleSavantFreeGateError(
+  kind: ReturnType<typeof getSavantFreeGateErrorKind>,
   updater: BatchedMessageUpdater,
 ) {
   switch (kind) {
@@ -563,7 +563,7 @@ function handleSavant-FreeGateError(
       // mounted so any in-flight agent work can finish under the server-side
       // grace period, and the session-ended banner prompts the user to press
       // Enter when they're ready to rejoin.
-      markSavant-FreeSessionEnded()
+      markSavantFreeSessionEnded()
       return
     case 'waiting_room_queued':
       updater.setError(
@@ -571,15 +571,15 @@ function handleSavant-FreeGateError(
       )
       // Re-sync without resetting chat â€” this is a "we'll wait", not a
       // "let's start fresh".
-      refreshSavant-FreeSession().catch(() => {})
+      refreshSavantFreeSession().catch(() => {})
       return
     case 'session_superseded':
       updater.setError(
-        'Another savant-free CLI took over this account. Close the other instance, then restart.',
+        'Another SavantFree CLI took over this account. Close the other instance, then restart.',
       )
       // Terminal state: stop polling and flip UI to a "please restart" screen
       // so we don't silently fight the other instance for the seat.
-      markSavant-FreeSessionSuperseded()
+      markSavantFreeSessionSuperseded()
       return
     default:
       return

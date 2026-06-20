@@ -1,4 +1,4 @@
-﻿import { FILE_READ_STATUS } from '@savant-code/common/old-constants'
+import { FILE_READ_STATUS } from '@savant-code/common/old-constants'
 import { isFileIgnored } from '@savant-code/common/project-file-tree'
 
 import { resolveFilePathWithinProject } from './path-utils'

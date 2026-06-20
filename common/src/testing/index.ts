@@ -1,5 +1,5 @@
-﻿/**
- * Consolidated testing utilities for Savant-Code.
+/**
+ * Consolidated testing utilities for SavantCode.
  *
  * This module re-exports all testing utilities from a single entry point,
  * making it easy to import everything you need for testing.

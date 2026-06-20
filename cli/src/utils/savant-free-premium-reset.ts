@@ -1,10 +1,10 @@
-﻿import { SAVANT_FREE_PREMIUM_SESSION_RESET_TIMEZONE } from '@savant-code/common/constants/savant-free-models'
+import { SAVANT_FREE_PREMIUM_SESSION_RESET_TIMEZONE } from '@savant-code/common/constants/savant-free-models'
 import { getZonedDayBounds } from '@savant-code/common/util/zoned-time'
 
-import type { Savant-FreeSessionRateLimitByModel } from '@savant-code/common/types/savant-free-session'
+import type { SavantFreeSessionRateLimitByModel } from '@savant-code/common/types/savant-free-session'
 
-export function getSavant-FreePremiumResetAt(params: {
-  rateLimitsByModel?: Savant-FreeSessionRateLimitByModel
+export function getSavantFreePremiumResetAt(params: {
+  rateLimitsByModel?: SavantFreeSessionRateLimitByModel
   nowMs: number
 }): Date {
   const { rateLimitsByModel, nowMs } = params
@@ -26,7 +26,7 @@ export function getSavant-FreePremiumResetAt(params: {
   ).resetsAt
 }
 
-export function formatSavant-FreePremiumResetCountdown(
+export function formatSavantFreePremiumResetCountdown(
   resetAt: Date,
   nowMs: number,
 ): string {

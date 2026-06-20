@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from 'bun:test'
+import { describe, test, expect } from 'bun:test'
 
 import editor, { createCodeEditor } from '../editor/editor'
 
@@ -146,9 +146,9 @@ describe('editor agent', () => {
       expect(editor.instructionsPrompt).toContain('content')
     })
 
-    test('contains savant-code_tool_call format', () => {
-      expect(editor.instructionsPrompt).toContain('<savant-code_tool_call>')
-      expect(editor.instructionsPrompt).toContain('</savant-code_tool_call>')
+    test('contains SavantCode_tool_call format', () => {
+      expect(editor.instructionsPrompt).toContain('<SavantCode_tool_call>')
+      expect(editor.instructionsPrompt).toContain('</SavantCode_tool_call>')
     })
 
     test('instructs not to call set_output', () => {

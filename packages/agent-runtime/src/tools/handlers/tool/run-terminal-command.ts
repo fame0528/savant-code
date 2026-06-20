@@ -1,7 +1,7 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
   ClientToolCall,
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 
@@ -12,7 +12,7 @@ export const handleRunTerminalCommand = (async ({
   requestClientToolCall,
 }: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<ToolName>
+  toolCall: SavantCodeToolCall<ToolName>
   requestClientToolCall: (
     toolCall: ClientToolCall<ToolName>,
   ) => Promise<SavantToolOutput<ToolName>>
@@ -30,4 +30,4 @@ export const handleRunTerminalCommand = (async ({
   }
   await previousToolCallFinished
   return { output: await requestClientToolCall(clientToolCall) }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>

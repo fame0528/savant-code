@@ -1,23 +1,23 @@
-﻿import React from 'react'
+import React from 'react'
 
-import { useSavant-FreeSessionProgress } from '../hooks/use-savant-free-session-progress'
+import { useSavantFreeSessionProgress } from '../hooks/use-savant-free-session-progress'
 import { useNow } from '../hooks/use-now'
 import { useTheme } from '../hooks/use-theme'
-import { formatSavant-FreePremiumResetCountdown } from '../utils/savant-free-premium-reset'
+import { formatSavantFreePremiumResetCountdown } from '../utils/savant-free-premium-reset'
 import { formatSessionUnits } from '../utils/format-session-units'
 
-import type { Savant-FreeSessionResponse } from '../types/savant-free-session'
+import type { SavantFreeSessionResponse } from '../types/savant-free-session'
 
-interface Savant-FreeActiveSessionSummaryProps {
-  session: Savant-FreeSessionResponse | null
+interface SavantFreeActiveSessionSummaryProps {
+  session: SavantFreeSessionResponse | null
 }
 
-export const Savant-FreeActiveSessionSummary: React.FC<
-  Savant-FreeActiveSessionSummaryProps
+export const SavantFreeActiveSessionSummary: React.FC<
+  SavantFreeActiveSessionSummaryProps
 > = ({ session }) => {
   const theme = useTheme()
   const now = useNow(60_000, session?.status === 'active')
-  const progress = useSavant-FreeSessionProgress(session)
+  const progress = useSavantFreeSessionProgress(session)
   const quota = session?.status === 'active' ? session.rateLimit : undefined
 
   if (session?.status !== 'active' || !progress) {
@@ -28,7 +28,7 @@ export const Savant-FreeActiveSessionSummary: React.FC<
     return null
   }
 
-  const resetCountdown = formatSavant-FreePremiumResetCountdown(
+  const resetCountdown = formatSavantFreePremiumResetCountdown(
     new Date(quota.resetAt),
     now
   )

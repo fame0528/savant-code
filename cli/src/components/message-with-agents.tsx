@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { memo, useCallback, useMemo, type ReactNode } from 'react'
 import React from 'react'
 import { useShallow } from 'zustand/react/shallow'

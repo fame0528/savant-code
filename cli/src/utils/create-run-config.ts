@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import { MAX_AGENT_STEPS_DEFAULT } from '@savant-code/common/constants/agents'
 
@@ -26,7 +26,7 @@ export type CreateRunConfigParams = {
   eventHandlerState: EventHandlerState
   signal: AbortSignal
   costMode?: 'free' | 'lite' | 'normal' | 'max' | 'experimental' | 'ask'
-  extraSavant-CodeMetadata?: Record<string, string>
+  extraSavantCodeMetadata?: Record<string, string>
 }
 
 const SENSITIVE_EXTENSIONS = new Set([
@@ -103,7 +103,7 @@ export const createRunConfig = (params: CreateRunConfigParams) => {
     agentDefinitions,
     eventHandlerState,
     costMode,
-    extraSavant-CodeMetadata,
+    extraSavantCodeMetadata,
   } = params
 
   return {
@@ -118,7 +118,7 @@ export const createRunConfig = (params: CreateRunConfigParams) => {
     handleEvent: createEventHandler(eventHandlerState),
     signal: params.signal,
     costMode,
-    extraSavant-CodeMetadata,
+    extraSavantCodeMetadata,
     fileFilter: ((filePath: string) => {
       if (isSensitiveFile(filePath)) return { status: 'blocked' }
       if (isEnvTemplateFile(filePath)) return { status: 'allow-example' }

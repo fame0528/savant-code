@@ -1,4 +1,4 @@
-﻿import {
+import {
   printFileTree,
   printFileTreeWithTokens,
 } from '@savant-code/common/util/file'

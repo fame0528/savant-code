@@ -1,4 +1,4 @@
-﻿import { publisher } from '../constants'
+import { publisher } from '../constants'
 
 import type { AgentDefinition } from '../types/agent-definition'
 
@@ -55,7 +55,7 @@ Important: You can not make any other tool calls besides editing files. You cann
 
 Write out what changes you would make using the tool call format below. Use this exact format for each file change:
 
-<savant-code_tool_call>
+<SavantCode_tool_call>
 {
   "cb_tool_name": "str_replace",
   "path": "path/to/file",
@@ -70,18 +70,18 @@ Write out what changes you would make using the tool call format below. Use this
     },
   ]
 }
-</savant-code_tool_call>
+</SavantCode_tool_call>
 
 OR for new files or major rewrites:
 
-<savant-code_tool_call>
+<SavantCode_tool_call>
 {
   "cb_tool_name": "write_file",
   "path": "path/to/file",
   "instructions": "What the change does",
   "content": "Complete file content"
 }
-</savant-code_tool_call>
+</SavantCode_tool_call>
 
 ${
   EDITOR_VARIANTS_WITH_THINK_TAGS.has(model)
@@ -95,21 +95,21 @@ You can also use <think> tags interspersed between tool calls to think about the
 [ Long think about the best way to implement the changes ]
 </think>
 
-<savant-code_tool_call>
+<SavantCode_tool_call>
 [ First tool call to implement the feature ]
-</savant-code_tool_call>
+</SavantCode_tool_call>
 
-<savant-code_tool_call>
+<SavantCode_tool_call>
 [ Second tool call to implement the feature ]
-</savant-code_tool_call>
+</SavantCode_tool_call>
 
 <think>
 [ Thoughts about a tricky part of the implementation ]
 </think>
 
-<savant-code_tool_call>
+<SavantCode_tool_call>
 [ Third tool call to implement the feature ]
-</savant-code_tool_call>
+</SavantCode_tool_call>
 
 </example>`
     : ''

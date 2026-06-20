@@ -1,4 +1,4 @@
-﻿import {
+import {
   createTestAgentRuntimeParams,
   testFileContext,
 } from '@savant-code/common/testing/fixtures/agent-runtime'

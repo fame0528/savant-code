@@ -1,4 +1,4 @@
-﻿import { readFileSync, statSync } from 'fs'
+import { readFileSync, statSync } from 'fs'
 import { homedir } from 'os'
 import path from 'path'
 

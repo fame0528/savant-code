@@ -1,10 +1,10 @@
-﻿import type { FileProcessingState } from './tool/write-file'
+import type { FileProcessingState } from './tool/write-file'
 import type { ToolName } from '@savant-code/common/tools/constants'
 import type {
   ClientToolCall,
   ClientToolName,
-  Savant-CodeToolCall,
-  Savant-CodeToolMessage,
+  SavantCodeToolCall,
+  SavantCodeToolMessage,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
@@ -24,10 +24,10 @@ type PresentOrAbsent<K extends PropertyKey, V> =
   | { [P in K]: V }
   | { [P in K]: never }
 
-export type Savant-CodeToolHandlerFunction<T extends ToolName = ToolName> = (
+export type SavantCodeToolHandlerFunction<T extends ToolName = ToolName> = (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<T>
+    toolCall: SavantCodeToolCall<T>
 
     agentContext: Record<string, Subgoal>
     agentState: AgentState
@@ -64,6 +64,6 @@ export type Savant-CodeToolHandlerFunction<T extends ToolName = ToolName> = (
     AgentRuntimeDeps &
     AgentRuntimeScopedDeps,
 ) => Promise<{
-  output: Savant-CodeToolMessage<T>['content']
+  output: SavantCodeToolMessage<T>['content']
   creditsUsed?: number
 }>

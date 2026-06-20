@@ -1,4 +1,4 @@
-﻿import { IS_SAVANT_FREE } from './constants'
+import { IS_SAVANT_FREE } from './constants'
 
 // Input mode types and configurations
 // To add a new mode:
@@ -173,7 +173,7 @@ export const INPUT_MODE_CONFIGS: Record<InputMode, InputModeConfig> = {
   },
 }
 
-// In Savant-Free, never show the agent mode toggle
+// In SavantFree, never show the agent mode toggle
 if (IS_SAVANT_FREE) {
   for (const key of Object.keys(INPUT_MODE_CONFIGS) as InputMode[]) {
     INPUT_MODE_CONFIGS[key].showAgentModeToggle = false

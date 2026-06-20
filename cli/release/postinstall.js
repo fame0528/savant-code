@@ -9,7 +9,7 @@ const binaryPath = path.join(
   os.homedir(),
   '.config',
   'manicode',
-  process.platform === 'win32' ? 'codebuff.exe' : 'codebuff'
+  process.platform === 'win32' ? 'codebuff.exe' : 'savant-code'
 );
 
 try {

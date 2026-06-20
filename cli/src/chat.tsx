@@ -1,4 +1,4 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import type { FeedbackCategory } from '@savant-code/common/constants/feedback'
 import { safeOpen } from './utils/open-url'
 import {
@@ -15,7 +15,7 @@ import { getAdsEnabled } from './commands/ads'
 import { routeUserPrompt, addBashMessageToHistory } from './commands/router'
 import { SingleAdBanner } from './components/ad-banner'
 import { ChatInputBar } from './components/chat-input-bar'
-import { Savant-FreeActiveSessionSummary } from './components/savant-free-active-session-summary'
+import { SavantFreeActiveSessionSummary } from './components/savant-free-active-session-summary'
 import { LoadPreviousButton } from './components/load-previous-button'
 import { ReviewScreen } from './components/review-screen'
 import { MessageWithAgents } from './components/message-with-agents'
@@ -62,7 +62,7 @@ import { reportActivity } from './utils/activity-tracker'
 import { trackEvent } from './utils/analytics'
 import { showClipboardMessage } from './utils/clipboard'
 import { readClipboardImage } from './utils/clipboard-image'
-import { returnToSavant-FreeLanding } from './hooks/use-savant-free-session'
+import { returnToSavantFreeLanding } from './hooks/use-savant-free-session'
 import { END_SESSION_MESSAGE, IS_SAVANT_FREE } from './utils/constants'
 import { getSystemMessage } from './utils/message-history'
 import { getInputModeConfig } from './utils/input-modes'
@@ -95,7 +95,7 @@ import { computeInputLayoutMetrics } from './utils/text-layout'
 import type { CommandResult } from './commands/command-registry'
 import type { MultilineInputHandle } from './components/multiline-input'
 import type { MatchedSlashCommand } from './hooks/use-suggestion-engine'
-import type { Savant-FreeSessionResponse } from './types/savant-free-session'
+import type { SavantFreeSessionResponse } from './types/savant-free-session'
 import type { User } from './utils/auth'
 import type { AgentMode } from './utils/constants'
 import type { FileTreeNode } from '@savant-code/common/util/file'
@@ -118,7 +118,7 @@ export const Chat = ({
   initialMode,
   gitRoot,
   onSwitchToGitRoot,
-  savant-freeSession,
+  SavantFreeSession,
 }: {
   headerContent: React.ReactNode
   initialPrompt: string | null
@@ -134,12 +134,12 @@ export const Chat = ({
   initialMode?: AgentMode
   gitRoot?: string | null
   onSwitchToGitRoot?: () => void
-  savant-freeSession: Savant-FreeSessionResponse | null
+  SavantFreeSession: SavantFreeSessionResponse | null
 }) => {
   const [forceFileOnlyMentions, setForceFileOnlyMentions] = useState(false)
 
   // First-time onboarding: show clickable starter prompts until the user
-  // submits their first prompt ever (persisted in settings). Savant-Free only.
+  // submits their first prompt ever (persisted in settings). SavantFree only.
   const [showSuggestedPrompts, setShowSuggestedPrompts] = useState(
     () => IS_SAVANT_FREE && !hasSubmittedFirstPrompt(),
   )
@@ -615,10 +615,10 @@ export const Chat = ({
         })
     }
 
-    globalThis.addEventListener('savant-code:send-followup', handleFollowupClick)
+    globalThis.addEventListener('SavantCode:send-followup', handleFollowupClick)
     return () => {
       globalThis.removeEventListener(
-        'savant-code:send-followup',
+        'SavantCode:send-followup',
         handleFollowupClick,
       )
     }
@@ -1437,16 +1437,16 @@ export const Chat = ({
     return ` ${segments.join('   ')} `
   }, [queuePreviewTitle, pausedQueueText])
 
-  const hasActiveSavant-FreeSession =
-    IS_SAVANT_FREE && savant-freeSession?.status === 'active'
-  const isSavant-FreeSessionOver =
-    IS_SAVANT_FREE && savant-freeSession?.status === 'ended'
+  const hasActiveSavantFreeSession =
+    IS_SAVANT_FREE && SavantFreeSession?.status === 'active'
+  const isSavantFreeSessionOver =
+    IS_SAVANT_FREE && SavantFreeSession?.status === 'ended'
   const shouldShowStatusLine =
     !feedbackMode &&
     (hasStatusIndicatorContent ||
       shouldShowQueuePreview ||
       !isAtBottom ||
-      hasActiveSavant-FreeSession)
+      hasActiveSavantFreeSession)
 
   // Track mouse movement for ad activity (throttled)
   const lastMouseActivityRef = useRef<number>(0)
@@ -1511,7 +1511,7 @@ export const Chat = ({
 
         {headerContent}
         {IS_SAVANT_FREE && (
-          <Savant-FreeActiveSessionSummary session={savant-freeSession} />
+          <SavantFreeActiveSessionSummary session={SavantFreeSession} />
         )}
         {hiddenMessageCount > 0 && (
           <LoadPreviousButton
@@ -1545,7 +1545,7 @@ export const Chat = ({
           backgroundColor: 'transparent',
         }}
       >
-        {showOnboardingPrompts && !reviewMode && !isSavant-FreeSessionOver && (
+        {showOnboardingPrompts && !reviewMode && !isSavantFreeSessionOver && (
           <SuggestedPrompts
             onSelect={handleSelectSuggestedPrompt}
             maxItems={isCompactHeight ? 2 : undefined}
@@ -1564,9 +1564,9 @@ export const Chat = ({
                 ...prev,
                 getSystemMessage(END_SESSION_MESSAGE),
               ])
-              returnToSavant-FreeLanding({ resetChat: true }).catch(() => {})
+              returnToSavantFreeLanding({ resetChat: true }).catch(() => {})
             }}
-            savant-freeSession={savant-freeSession}
+            SavantFreeSession={SavantFreeSession}
           />
         )}
 
@@ -1589,7 +1589,7 @@ export const Chat = ({
             onCustom={handleReviewCustom}
             onCancel={handleCloseReviewScreen}
           />
-        ) : isSavant-FreeSessionOver && !askUserState ? (
+        ) : isSavantFreeSessionOver && !askUserState ? (
           <SessionEndedBanner
             isStreaming={isStreaming || isWaitingForResponse}
           />

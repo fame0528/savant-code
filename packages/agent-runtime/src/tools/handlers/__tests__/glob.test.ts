@@ -1,9 +1,9 @@
-﻿import { describe, it, expect, mock } from 'bun:test'
+import { describe, it, expect, mock } from 'bun:test'
 
 import { handleGlob } from '../tool/glob'
 
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 
@@ -33,7 +33,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-1',
       input: {
@@ -75,7 +75,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-2',
       input: {
@@ -121,7 +121,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-3',
       input: {
@@ -155,7 +155,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-4',
       input: {
@@ -194,7 +194,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-5',
       input: {
@@ -226,7 +226,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-6',
       input: {
@@ -271,7 +271,7 @@ describe('handleGlob', () => {
       },
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-7',
       input: {
@@ -308,7 +308,7 @@ describe('handleGlob', () => {
       ],
     )
 
-    const toolCall: Savant-CodeToolCall<'glob'> = {
+    const toolCall: SavantCodeToolCall<'glob'> = {
       toolName: 'glob',
       toolCallId: 'tc-8',
       input: {

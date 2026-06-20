@@ -1,4 +1,4 @@
-﻿import type { AgentTemplateTypes } from '../types/session-state'
+import type { AgentTemplateTypes } from '../types/session-state'
 
 // Define agent personas with their shared characteristics
 export const AGENT_PERSONAS = {
@@ -44,7 +44,7 @@ export const AGENT_PERSONAS = {
   } as const,
   'agent-builder': {
     displayName: 'Bob the Agent Builder',
-    purpose: 'Creates new agent templates for the savant-code multi-agent system',
+    purpose: 'Creates new agent templates for the SavantCode multi-agent system',
     hidden: false,
   } as const,
 } as const satisfies Partial<
@@ -60,7 +60,7 @@ export const AGENT_IDS = Object.keys(
 ) as (keyof typeof AGENT_PERSONAS)[]
 
 // Agent ID prefix constant
-export const AGENT_ID_PREFIX = 'savant-code/'
+export const AGENT_ID_PREFIX = 'SavantCode/'
 
 // Agent names for client-side reference
 export const AGENT_NAMES = Object.fromEntries(

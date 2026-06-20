@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import { callMainPrompt } from '@savant-code/agent-runtime/main-prompt'
 import {
@@ -60,7 +60,7 @@ import type {
 import type { PrintModeEvent } from '@savant-code/common/types/print-mode'
 import type { SessionState } from '@savant-code/common/types/session-state'
 import type { Source } from '@savant-code/common/types/source'
-import type { Savant-CodeSpawn } from '@savant-code/common/types/spawn'
+import type { SavantCodeSpawn } from '@savant-code/common/types/spawn'
 
 /**
  * Wraps content for user messages, ensuring text is wrapped in <user_message> tags.
@@ -89,10 +89,10 @@ function isRunPauseError(error: unknown) {
   return (
     !!error &&
     typeof error === 'object' &&
-    (('savant-codeRunPaused' in error &&
-      (error as { savant-codeRunPaused?: unknown }).savant-codeRunPaused === true) ||
+    (('SavantCodeRunPaused' in error &&
+      (error as { SavantCodeRunPaused?: unknown }).SavantCodeRunPaused === true) ||
       ('name' in error &&
-        (error as { name?: unknown }).name === 'Savant-CodeRunPausedError'))
+        (error as { name?: unknown }).name === 'SavantCodeRunPausedError'))
   )
 }
 
@@ -133,7 +133,7 @@ export type SavantClientOptions = {
   customToolDefinitions?: CustomToolDefinition[]
 
   fsSource?: Source<SavantFileSystem>
-  spawnSource?: Source<Savant-CodeSpawn>
+  spawnSource?: Source<SavantCodeSpawn>
   logger?: Logger
   /** Optional debug trace of agent message histories. Called with the full
    *  history at each agent step boundary; implementations should append each
@@ -164,10 +164,10 @@ export type RunOptions = {
   extraToolResults?: ToolMessage[]
   signal?: AbortSignal
   costMode?: string
-  /** Extra key/values merged into each LLM request's `savant-code_metadata`.
+  /** Extra key/values merged into each LLM request's `SavantCode_metadata`.
    *  Used by hosts (e.g. the CLI) to forward client-scoped identifiers like
-   *  `savant-free_instance_id` that server-side gates read from the request body. */
-  extraSavant-CodeMetadata?: Record<string, string>
+   *  `SavantFree_instance_id` that server-side gates read from the request body. */
+  extraSavantCodeMetadata?: Record<string, string>
 }
 
 const createAbortError = (signal?: AbortSignal) => {
@@ -237,16 +237,16 @@ async function runOnce({
   extraToolResults,
   signal,
   costMode,
-  extraSavant-CodeMetadata,
+  extraSavantCodeMetadata,
 }: RunExecutionOptions): Promise<RunState> {
   const fsSourceValue = typeof fsSource === 'function' ? fsSource() : fsSource
   const fs = await fsSourceValue
-  let spawn: Savant-CodeSpawn
+  let spawn: SavantCodeSpawn
   if (spawnSource) {
     const spawnSourceValue = await spawnSource
-    spawn = spawnSourceValue as Savant-CodeSpawn
+    spawn = spawnSourceValue as SavantCodeSpawn
   } else {
-    spawn = require('child_process').spawn as Savant-CodeSpawn
+    spawn = require('child_process').spawn as SavantCodeSpawn
   }
   const preparedContent = wrapContentForUserMessage(content)
   let activeCustomToolDefinitions = customToolDefinitions ?? []
@@ -562,8 +562,8 @@ async function runOnce({
     repoId: undefined,
     clientSessionId: promptId,
     userId,
-    extraSavant-CodeMetadata: {
-      ...(extraSavant-CodeMetadata ?? {}),
+    extraSavantCodeMetadata: {
+      ...(extraSavantCodeMetadata ?? {}),
       trace_session_id: traceSessionId,
     },
     signal: signal ?? new AbortController().signal,
@@ -907,7 +907,7 @@ async function handlePromptResponse({
       const message = [
         'Received invalid prompt response from server:',
         JSON.stringify(parsedOutput.error.issues),
-        'If this issues persists, please contact support@savant-code.dev',
+        'If this issues persists, please contact support@SavantCode.dev',
       ].join('\n')
       onError({ message })
       resolve({

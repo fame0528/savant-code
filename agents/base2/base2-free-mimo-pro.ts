@@ -1,4 +1,4 @@
-﻿import { SAVANT_FREE_MIMO_V25_PRO_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
+import { SAVANT_FREE_MIMO_V25_PRO_MODEL_ID } from '@savant-code/common/constants/savant-free-models'
 
 import { createBase2 } from './base2'
 

@@ -1,8 +1,8 @@
-﻿import { describe, test, expect, beforeEach, mock } from 'bun:test'
+import { describe, test, expect, beforeEach, mock } from 'bun:test'
 
 import { fetchAndUpdateUsage } from '../fetch-usage'
 
-import type { Savant-CodeApiClient } from '../savant-code-api'
+import type { SavantCodeApiClient } from '../savant-code-api'
 import type { FetchAndUpdateUsageParams } from '../fetch-usage'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 
@@ -10,50 +10,50 @@ describe('fetchAndUpdateUsage (deprecated)', () => {
   let setInputModeMock: ReturnType<typeof mock>
   let getAuthTokenMock: ReturnType<typeof mock>
   let loggerMock: Logger
-  let apiClientMock: Savant-CodeApiClient
+  let apiClientMock: SavantCodeApiClient
 
   // Note: fetch-usage now uses apiClient.usage() instead of apiClient.post()
   const createMockApiClient = (
     usageMock: ReturnType<typeof mock>,
-  ): Savant-CodeApiClient => ({
+  ): SavantCodeApiClient => ({
     get: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['get'],
+    ) as SavantCodeApiClient['get'],
     post: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['post'],
+    ) as SavantCodeApiClient['post'],
     put: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['put'],
+    ) as SavantCodeApiClient['put'],
     patch: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['patch'],
+    ) as SavantCodeApiClient['patch'],
     delete: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['delete'],
+    ) as SavantCodeApiClient['delete'],
     request: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['request'],
+    ) as SavantCodeApiClient['request'],
     me: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['me'],
-    usage: usageMock as Savant-CodeApiClient['usage'],
+    ) as SavantCodeApiClient['me'],
+    usage: usageMock as SavantCodeApiClient['usage'],
     loginCode: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['loginCode'],
+    ) as SavantCodeApiClient['loginCode'],
     loginStatus: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['loginStatus'],
+    ) as SavantCodeApiClient['loginStatus'],
     publish: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['publish'],
+    ) as SavantCodeApiClient['publish'],
     logout: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['logout'],
+    ) as SavantCodeApiClient['logout'],
     feedback: mock(() =>
       Promise.resolve({ ok: true, status: 200, data: {} }),
-    ) as Savant-CodeApiClient['feedback'],
-    baseUrl: 'https://test.savant-code.dev',
+    ) as SavantCodeApiClient['feedback'],
+    baseUrl: 'https://test.SavantCode.dev',
     authToken: 'test-auth-token',
   })
 

@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
@@ -10,7 +10,7 @@ import {
 
 import type { MCPConfig } from '@savant-code/common/types/mcp'
 
-import { getSelectedSavant-FreeModel } from '../state/savant-free-model-store'
+import { getSelectedSavantFreeModel } from '../state/savant-free-model-store'
 import { getProjectRoot } from '../project-files'
 import { IS_SAVANT_FREE, type AgentMode } from './constants'
 import { getAgentIdForMode } from './savant-free-agent-selection'
@@ -29,7 +29,7 @@ export interface LocalAgentInfo {
   id: string
   displayName: string
   filePath: string
-  /** True if this is a bundled Savant-Code agent (not user-created) */
+  /** True if this is a bundled SavantCode agent (not user-created) */
   isBundled?: boolean
 }
 
@@ -244,16 +244,16 @@ const cachedAgentsByMode: Map<string, LocalAgentInfo[]> = new Map()
 export const loadLocalAgents = (
   currentAgentMode?: AgentMode,
 ): LocalAgentInfo[] => {
-  const selectedSavant-FreeModel = IS_SAVANT_FREE ? getSelectedSavant-FreeModel() : null
-  const cacheKey = selectedSavant-FreeModel
-    ? `${currentAgentMode ?? 'all'}:${selectedSavant-FreeModel}`
+  const selectedSavantFreeModel = IS_SAVANT_FREE ? getSelectedSavantFreeModel() : null
+  const cacheKey = selectedSavantFreeModel
+    ? `${currentAgentMode ?? 'all'}:${selectedSavantFreeModel}`
     : (currentAgentMode ?? 'all')
   const cached = cachedAgentsByMode.get(cacheKey)
   if (cached) {
     return cached
   }
 
-  // Get bundled agents - these are the default Savant-Code agents
+  // Get bundled agents - these are the default SavantCode agents
   // compiled into the CLI binary at build time
   const bundledAgentsInfo = getBundledAgentsAsLocalInfo()
   const bundledAgents = getBundledAgents()
@@ -320,7 +320,7 @@ export const loadLocalAgents = (
  * their custom agents without needing to modify the base agent definition.
  */
 export const loadAgentDefinitions = (): AgentDefinition[] => {
-  // Start with bundled agents - these are the default Savant-Code agents
+  // Start with bundled agents - these are the default SavantCode agents
   const bundledAgents = getBundledAgents()
   const definitions: AgentDefinition[] = Object.values(bundledAgents).map(
     (def) => ({ ...def }),

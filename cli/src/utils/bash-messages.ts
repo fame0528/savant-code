@@ -1,4 +1,4 @@
-﻿import { formatTimestamp } from './helpers'
+import { formatTimestamp } from './helpers'
 
 import type { PendingBashMessage } from '../types/store'
 import type { ChatMessage, ContentBlock } from '../types/chat'

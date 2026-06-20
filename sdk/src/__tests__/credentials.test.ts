@@ -1,4 +1,4 @@
-﻿import { describe, expect, test, mock, afterEach } from 'bun:test'
+import { describe, expect, test, mock, afterEach } from 'bun:test'
 import fs from 'fs'
 import path from 'node:path'
 import os from 'os'
@@ -35,14 +35,14 @@ describe('credentials', () => {
     test('returns path without suffix for prod environment', () => {
       const prodEnv = { NEXT_PUBLIC_SC_ENVIRONMENT: 'prod' }
       const dir = getConfigDir(prodEnv as any)
-      expect(dir).toContain('savant-code')
+      expect(dir).toContain('SavantCode')
       expect(dir).not.toContain('savant-code-prod')
     })
 
     test('returns path without suffix when environment is undefined', () => {
       const emptyEnv = {}
       const dir = getConfigDir(emptyEnv as any)
-      expect(dir).toContain('savant-code')
+      expect(dir).toContain('SavantCode')
       expect(dir).not.toContain('savant-code-')
     })
   })

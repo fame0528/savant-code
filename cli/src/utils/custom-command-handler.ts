@@ -1,4 +1,4 @@
-import { defineCommandWithArgs } from './command-registry'
+import { defineCommandWithArgs } from '../commands/command-registry'
 import { logger } from './logger'
 import { capturePendingAttachments } from './pending-attachments'
 import { getSystemMessage, getUserMessage } from './message-history'

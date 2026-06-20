@@ -1,4 +1,4 @@
-﻿import { models } from '@savant-code/common/old-constants'
+import { models } from '@savant-code/common/old-constants'
 import { promptSuccess } from '@savant-code/common/util/error'
 import { spyOn } from 'bun:test'
 import z from 'zod/v4'
@@ -20,7 +20,7 @@ export const E2E_MOCK_API_KEY = 'savant-code-e2e-mock'
 
 const MOCK_USER = {
   id: 'e2e-user',
-  email: 'e2e-user@savant-code.test',
+  email: 'e2e-user@SavantCode.test',
   discord_id: null,
   referral_code: null,
   stripe_customer_id: null,

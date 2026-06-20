@@ -1,4 +1,4 @@
-﻿import { assertUrlAllowed, type HostLookup } from './ssrf'
+import { assertUrlAllowed, type HostLookup } from './ssrf'
 
 import type { SavantToolOutput } from '../../../common/src/tools/list'
 
@@ -8,7 +8,7 @@ const FETCH_TIMEOUT_MS = 20_000
 const MAX_REDIRECTS = 5
 const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308])
 const USER_AGENT =
-  'Mozilla/5.0 (compatible; SavantResearchBot/1.0; +https://savant-code.dev)'
+  'Mozilla/5.0 (compatible; SavantResearchBot/1.0; +https://SavantCode.dev)'
 
 type ReadUrlOutput = SavantToolOutput<'read_url'>
 type FetchLike = (

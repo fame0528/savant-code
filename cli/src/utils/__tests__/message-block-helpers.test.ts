@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import {
   getAgentBaseName,
@@ -28,7 +28,7 @@ import type {
 
 describe('getAgentBaseName', () => {
   test('extracts base name from scoped versioned name', () => {
-    expect(getAgentBaseName('savant-code/file-picker@0.0.2')).toBe('file-picker')
+    expect(getAgentBaseName('SavantCode/file-picker@0.0.2')).toBe('file-picker')
   })
 
   test('extracts base name from simple versioned name', () => {
@@ -44,7 +44,7 @@ describe('getAgentBaseName', () => {
   })
 
   test('handles scoped name without version', () => {
-    expect(getAgentBaseName('savant-code/file-picker')).toBe('file-picker')
+    expect(getAgentBaseName('SavantCode/file-picker')).toBe('file-picker')
   })
 
   test('handles empty string', () => {

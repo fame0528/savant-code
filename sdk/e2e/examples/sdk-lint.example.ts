@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Example: SDK Lint
  *
  * An AI-powered linter that finds issues in code.
@@ -42,7 +42,7 @@ async function main() {
   console.log('Lint results:\n')
 
   const result = await client.run({
-    agent: 'savant-code/base2@latest',
+    agent: 'SavantCode/base2@latest',
     prompt: `Act as a linter. Find issues in this code and provide specific feedback:\n\n${CODE_TO_LINT}`,
     handleStreamChunk: (chunk) => {
       if (typeof chunk === 'string') {

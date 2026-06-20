@@ -1,12 +1,12 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 import { removeUndefinedProps } from '@savant-code/common/util/object'
 import z from 'zod/v4'
 
 import { getAgentTemplate } from '../../../templates/agent-registry'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type {
@@ -16,7 +16,7 @@ import type {
 import type { FetchAgentFromDatabaseFn } from '@savant-code/common/types/contracts/database'
 
 export const handleLookupAgentInfo = (async (params: {
-  toolCall: Savant-CodeToolCall<'lookup_agent_info'>
+  toolCall: SavantCodeToolCall<'lookup_agent_info'>
   previousToolCallFinished: Promise<void>
 
   apiKey: string
@@ -80,7 +80,7 @@ export const handleLookupAgentInfo = (async (params: {
       },
     }),
   }
-}) satisfies Savant-CodeToolHandlerFunction<'lookup_agent_info'>
+}) satisfies SavantCodeToolHandlerFunction<'lookup_agent_info'>
 
 const toJSONSchema = (schema: z.ZodSchema) => {
   try {

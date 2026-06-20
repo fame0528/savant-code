@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { describe, expect, test } from 'bun:test'
 import React from 'react'
 
@@ -209,7 +209,7 @@ describe('markdown renderer', () => {
   test('renders code fence followed by text with quotes correctly', () => {
     const markdown = `\`\`\`bash
 # Start using it
-savant-code "add a new feature to handle user authentication"
+SavantCode "add a new feature to handle user authentication"
 \`\`\``
     const output = renderMarkdown(markdown)
     const nodes = flattenNodes(output)
@@ -228,7 +228,7 @@ savant-code "add a new feature to handle user authentication"
     // Should contain the complete command text
     expect(textContent).toContain('# Start using it')
     expect(textContent).toContain(
-      'savant-code "add a new feature to handle user authentication"',
+      'SavantCode "add a new feature to handle user authentication"',
     )
 
     // Should NOT have quotes concatenated with backticks
@@ -237,7 +237,7 @@ savant-code "add a new feature to handle user authentication"
   })
 
   test('renders inline code followed by quotes correctly', () => {
-    const markdown = 'Use `savant-code "fix bug"` to fix bugs.'
+    const markdown = 'Use `SavantCode "fix bug"` to fix bugs.'
     const output = renderMarkdown(markdown)
     const nodes = flattenNodes(output)
 
@@ -246,12 +246,12 @@ savant-code "add a new feature to handle user authentication"
     const inlineCode = nodes[1] as El
     expect(inlineCode.props.fg).toBe('#86efac')
     const inlineContent = flattenChildren(inlineCode.props.children).join('')
-    expect(inlineContent).toContain('savant-code "fix bug"')
+    expect(inlineContent).toContain('SavantCode "fix bug"')
 
     expect(nodes[2]).toBe(' to fix bugs.')
 
     // Verify quotes are inside the inline code, not concatenated after
-    expect(inlineContent).toMatch(/savant-code\s+"fix bug"/)
+    expect(inlineContent).toMatch(/SavantCode\s+"fix bug"/)
   })
 
   test('renders multiple code blocks with text between them', () => {
@@ -292,7 +292,7 @@ console.log("world")
 
   test('renders code fence with command and quotes on same line', () => {
     const markdown = `\`\`\`bash
-savant-code "implement feature" --verbose
+SavantCode "implement feature" --verbose
 \`\`\``
     const output = renderMarkdown(markdown)
     const nodes = flattenNodes(output)
@@ -308,7 +308,7 @@ savant-code "implement feature" --verbose
       .join('')
 
     // Should preserve the complete command with quotes
-    expect(textContent).toContain('savant-code "implement feature" --verbose')
+    expect(textContent).toContain('SavantCode "implement feature" --verbose')
     expect(textContent).not.toContain('```"')
   })
 

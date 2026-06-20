@@ -1,7 +1,7 @@
-﻿import type { Savant-FreeAccessTier } from '../constants/savant-free-models'
+import type { SavantFreeAccessTier } from '../constants/savant-free-models'
 
 /**
- * Wire-level shapes returned by `/api/v1/savant-free/session`. Source of truth
+ * Wire-level shapes returned by `/api/v1/SavantFree/session`. Source of truth
  * for the CLI (which deserializes these) and the server (which serializes
  * them) â€” keep both in sync by importing this module from either side.
  *
@@ -11,12 +11,12 @@
 /**
  * Usage counter surfaced to the CLI so the waiting-room UI can render
  * "N of M sessions used" alongside queue/active state. Present when the
- * joined model consumes Savant-Free sessions. `recentCount` is the
+ * joined model consumes SavantFree sessions. `recentCount` is the
  * rounded session units since the last midnight Pacific reset at the time
  * the response was produced â€” see also the standalone `rate_limited` status
  * for the reject path.
  */
-export interface Savant-FreeSessionRateLimit {
+export interface SavantFreeSessionRateLimit {
   model: string
   limit: number
   period: 'pacific_day'
@@ -28,26 +28,26 @@ export interface Savant-FreeSessionRateLimit {
   recentCount: number
 }
 
-export type Savant-FreeSessionRateLimitByModel = Record<
+export type SavantFreeSessionRateLimitByModel = Record<
   string,
-  Savant-FreeSessionRateLimit
+  SavantFreeSessionRateLimit
 >
 
 /** Pull the per-model shared session-quota snapshot off whichever statuses
  *  carry it (queued, active, ended, none). Returns undefined for terminal /
  *  pre-join states that have no quota field. The parameter is intentionally
- *  loose so the CLI can pass its `Savant-FreeSessionResponse` (which adds the
+ *  loose so the CLI can pass its `SavantFreeSessionResponse` (which adds the
  *  client-only `takeover_prompt` variant) without a discriminated-union
  *  ceremony at every call site. */
 export const getRateLimitsByModel = (
   session: { status: string } | null | undefined,
-): Savant-FreeSessionRateLimitByModel | undefined =>
+): SavantFreeSessionRateLimitByModel | undefined =>
   session && 'rateLimitsByModel' in session
-    ? (session as { rateLimitsByModel?: Savant-FreeSessionRateLimitByModel })
+    ? (session as { rateLimitsByModel?: SavantFreeSessionRateLimitByModel })
         .rateLimitsByModel
     : undefined
 
-export type Savant-FreeCountryBlockReason =
+export type SavantFreeCountryBlockReason =
   | 'country_not_allowed'
   | 'anonymized_or_unknown_country'
   | 'anonymous_network'
@@ -55,7 +55,7 @@ export type Savant-FreeCountryBlockReason =
   | 'unresolved_client_ip'
   | 'ip_privacy_lookup_failed'
 
-export type Savant-FreeIpPrivacySignal =
+export type SavantFreeIpPrivacySignal =
   | 'anonymous'
   | 'vpn'
   | 'proxy'
@@ -65,19 +65,19 @@ export type Savant-FreeIpPrivacySignal =
   | 'hosting'
   | 'service'
 
-export type Savant-FreeSpurStatus =
+export type SavantFreeSpurStatus =
   | 'not_checked'
   | 'clean'
   | 'suspicious'
   | 'failed'
 
-export type Savant-FreeScamalyticsStatus =
+export type SavantFreeScamalyticsStatus =
   | 'not_checked'
   | 'clean'
   | 'suspicious'
   | 'failed'
 
-export type Savant-FreePrivacyDecision =
+export type SavantFreePrivacyDecision =
   | 'allowed_clean'
   | 'ipinfo_suspicious_spur_clean'
   | 'corroborated_block'
@@ -88,7 +88,7 @@ export type Savant-FreePrivacyDecision =
   | 'ipinfo_failed_limited'
   | 'limited_other'
 
-export type Savant-FreePrivacyProviderDecision =
+export type SavantFreePrivacyProviderDecision =
   | 'not_checked'
   | 'cloudflare_tor'
   | 'ipinfo_clean'
@@ -100,15 +100,15 @@ export type Savant-FreePrivacyProviderDecision =
   | 'corroborated_soft'
   | 'corroborated_hard'
 
-export interface Savant-FreeLimitedModeReason {
+export interface SavantFreeLimitedModeReason {
   /** Present for limited access so the model picker can explain why the
    *  reduced model set is shown without re-running geo/IP logic locally. */
   countryCode?: string | null
-  countryBlockReason?: Savant-FreeCountryBlockReason | null
-  ipPrivacySignals?: Savant-FreeIpPrivacySignal[] | null
+  countryBlockReason?: SavantFreeCountryBlockReason | null
+  ipPrivacySignals?: SavantFreeIpPrivacySignal[] | null
 }
 
-export type Savant-FreeSessionServerResponse =
+export type SavantFreeSessionServerResponse =
   | {
       /** Waiting room is globally off; free-mode requests flow through
        *  unchanged. Client should treat this as "admitted forever". */
@@ -119,7 +119,7 @@ export type Savant-FreeSessionServerResponse =
        *  when `getSessionState` notices the user has been swept past the
        *  grace window. */
       status: 'none'
-      accessTier?: Savant-FreeAccessTier
+      accessTier?: SavantFreeAccessTier
       message?: string
       /** Snapshot of every model's queue depth at GET time. The picker no
        *  longer renders this (queues effectively never form at current
@@ -130,11 +130,11 @@ export type Savant-FreeSessionServerResponse =
       /** Current quota snapshots for free models, keyed by model id. Lets
        *  the picker show today's session usage before the user commits
        *  to a queue. */
-      rateLimitsByModel?: Savant-FreeSessionRateLimitByModel
-    } & Savant-FreeLimitedModeReason)
+      rateLimitsByModel?: SavantFreeSessionRateLimitByModel
+    } & SavantFreeLimitedModeReason)
   | ({
       status: 'queued'
-      accessTier: Savant-FreeAccessTier
+      accessTier: SavantFreeAccessTier
       instanceId: string
       /** Model the user is queued for. Each model has its own queue. */
       model: string
@@ -149,12 +149,12 @@ export type Savant-FreeSessionServerResponse =
       estimatedWaitMs: number
       queuedAt: string
       /** Shared free-session quota for this model. */
-      rateLimit?: Savant-FreeSessionRateLimit
-      rateLimitsByModel?: Savant-FreeSessionRateLimitByModel
-    } & Savant-FreeLimitedModeReason)
+      rateLimit?: SavantFreeSessionRateLimit
+      rateLimitsByModel?: SavantFreeSessionRateLimitByModel
+    } & SavantFreeLimitedModeReason)
   | ({
       status: 'active'
-      accessTier: Savant-FreeAccessTier
+      accessTier: SavantFreeAccessTier
       instanceId: string
       /** Model the active session is bound to â€” cannot change mid-session. */
       model: string
@@ -162,9 +162,9 @@ export type Savant-FreeSessionServerResponse =
       expiresAt: string
       remainingMs: number
       /** Shared free-session quota for this model. */
-      rateLimit?: Savant-FreeSessionRateLimit
-      rateLimitsByModel?: Savant-FreeSessionRateLimitByModel
-    } & Savant-FreeLimitedModeReason)
+      rateLimit?: SavantFreeSessionRateLimit
+      rateLimitsByModel?: SavantFreeSessionRateLimitByModel
+    } & SavantFreeLimitedModeReason)
   | ({
       /** Session is over. While `instanceId` is present we're inside the
        *  server-side grace window â€” chat requests still go through so the
@@ -176,7 +176,7 @@ export type Savant-FreeSessionServerResponse =
        *  client may also synthesize a no-grace `{ status: 'ended' }` when a
        *  poll reveals the row was swept. Both render the same UI. */
       status: 'ended'
-      accessTier?: Savant-FreeAccessTier
+      accessTier?: SavantFreeAccessTier
       instanceId?: string
       admittedAt?: string
       expiresAt?: string
@@ -185,8 +185,8 @@ export type Savant-FreeSessionServerResponse =
       /** Snapshot of the user's free-session quota at the moment the
        *  session ended. Lets the post-session banner show "N of M sessions
        *  used today" without an extra round-trip. */
-      rateLimitsByModel?: Savant-FreeSessionRateLimitByModel
-    } & Savant-FreeLimitedModeReason)
+      rateLimitsByModel?: SavantFreeSessionRateLimitByModel
+    } & SavantFreeLimitedModeReason)
   | {
       /** Another CLI on the same account rotated our instance id. Polling
        *  stops and the UI shows a "close the other CLI" screen. The server
@@ -205,8 +205,8 @@ export type Savant-FreeSessionServerResponse =
       status: 'country_blocked'
       message?: string
       countryCode: string
-      countryBlockReason?: Savant-FreeCountryBlockReason
-      ipPrivacySignals?: Savant-FreeIpPrivacySignal[]
+      countryBlockReason?: SavantFreeCountryBlockReason
+      ipPrivacySignals?: SavantFreeIpPrivacySignal[]
     }
   | {
       /** User has an active session bound to a different model. Returned
@@ -215,14 +215,14 @@ export type Savant-FreeSessionServerResponse =
        *  your active DeepSeek session to switch?" â†’ on confirm, DELETE then
        *  re-POST with the new model. */
       status: 'model_locked'
-      accessTier?: Savant-FreeAccessTier
+      accessTier?: SavantFreeAccessTier
       currentModel: string
       requestedModel: string
     }
   | {
       /** Requested model is valid but not selectable right now. */
       status: 'model_unavailable'
-      accessTier?: Savant-FreeAccessTier
+      accessTier?: SavantFreeAccessTier
       requestedModel: string
       availableHours: string
     }
@@ -240,8 +240,8 @@ export type Savant-FreeSessionServerResponse =
        *  reset. Terminal for the CLI's current poll session; the user can exit
        *  and come back later. */
       status: 'rate_limited'
-      accessTier?: Savant-FreeAccessTier
-      /** The savant-free model the user tried to join. */
+      accessTier?: SavantFreeAccessTier
+      /** The SavantFree model the user tried to join. */
       model: string
       /** Max session units permitted per Pacific day (e.g. 5). */
       limit: number

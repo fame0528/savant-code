@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { defineToolComponent } from './types'

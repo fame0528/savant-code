@@ -1,4 +1,4 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import {
   requestRelevantFiles,
@@ -9,9 +9,9 @@ import { getSearchSystemPrompt } from '../../../system-prompt/search-system-prom
 import { renderReadFilesResult } from '../../../util/render-read-files-result'
 import { countTokens, countTokensJson } from '../../../util/token-counter'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { RequestFilesFn } from '@savant-code/common/types/contracts/client'
@@ -30,7 +30,7 @@ const COLLECT_FULL_FILE_CONTEXT = false
 export const handleFindFiles = (async (
   params: {
     previousToolCallFinished: Promise<any>
-    toolCall: Savant-CodeToolCall<'find_files'>
+    toolCall: SavantCodeToolCall<'find_files'>
     logger: Logger
 
     agentState: AgentState
@@ -128,7 +128,7 @@ export const handleFindFiles = (async (
       }),
     }
   }
-}) satisfies Savant-CodeToolHandlerFunction<'find_files'>
+}) satisfies SavantCodeToolHandlerFunction<'find_files'>
 
 async function uploadExpandedFileContextForTraining(
   params: {

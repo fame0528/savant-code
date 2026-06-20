@@ -1,5 +1,5 @@
-﻿import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
-import { shouldUseLocalTokenCountForSavant-FreeDeepseekFlash } from '@savant-code/common/constants/free-agents'
+import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
+import { shouldUseLocalTokenCountForSavantFreeDeepseekFlash } from '@savant-code/common/constants/free-agents'
 import {
   supportsAssistantPrefill,
   supportsCacheControl,
@@ -927,7 +927,7 @@ export async function loopAgentSteps(
         countTokensJson(toolsForTokenCount)
 
       if (
-        shouldUseLocalTokenCountForSavant-FreeDeepseekFlash({
+        shouldUseLocalTokenCountForSavantFreeDeepseekFlash({
           agentId: agentTemplate.id,
           model: agentTemplate.model,
         })

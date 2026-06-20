@@ -1,16 +1,16 @@
-﻿/**
- * Agent-driven E2E test for Savant-Free.
+/**
+ * Agent-driven E2E test for SavantFree.
  *
- * Uses the Savant-Code SDK to run a testing agent that interacts with the
- * Savant-Free CLI binary via tmux custom tools. Requires SAVANT_CODE_API_KEY.
+ * Uses the SavantCode SDK to run a testing agent that interacts with the
+ * SavantFree CLI binary via tmux custom tools. Requires SAVANT_CODE_API_KEY.
  *
  * Set SAVANT_CODE_API_KEY to run this test, otherwise it will be skipped.
  */
 
 import { afterEach, describe, expect, test } from 'bun:test'
 
-import { savant-freeTesterAgent } from '../agent/savant-free-tester'
-import { createSavant-FreeTmuxTools, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeTesterAgent } from '../agent/savant-free-tester'
+import { createSavantFreeTmuxTools, requireSavantFreeBinary } from '../utils'
 
 import type { SavantClient as SavantClientType } from '@savant-code/sdk'
 
@@ -20,7 +20,7 @@ function getApiKey(): string | null {
   return process.env.SAVANT_CODE_API_KEY ?? null
 }
 
-describe('Savant-Free: Agent-driven E2E', () => {
+describe('SavantFree: Agent-driven E2E', () => {
   let cleanup: (() => Promise<void>) | null = null
 
   afterEach(async () => {
@@ -31,7 +31,7 @@ describe('Savant-Free: Agent-driven E2E', () => {
   })
 
   test(
-    'agent can start savant-free and verify startup behavior',
+    'agent can start SavantFree and verify startup behavior',
     async () => {
       const apiKey = getApiKey()
       if (!apiKey) {
@@ -42,8 +42,8 @@ describe('Savant-Free: Agent-driven E2E', () => {
         return
       }
 
-      const binary = requireSavant-FreeBinary()
-      const tmuxTools = createSavant-FreeTmuxTools(binary)
+      const binary = requireSavantFreeBinary()
+      const tmuxTools = createSavantFreeTmuxTools(binary)
       cleanup = tmuxTools.cleanup
 
       // Dynamically import SDK to avoid build-time dependency issues
@@ -56,14 +56,14 @@ describe('Savant-Free: Agent-driven E2E', () => {
       const events: Array<{ type: string; [key: string]: unknown }> = []
 
       const result = await client.run({
-        agent: savant-freeTesterAgent.id,
+        agent: SavantFreeTesterAgent.id,
         prompt:
-          'Start Savant-Free using the start_savant-free tool. Then capture the output ' +
-          'with capture_savant-free_output (waitSeconds: 3). Verify that:\n' +
+          'Start SavantFree using the start_SavantFree tool. Then capture the output ' +
+          'with capture_SavantFree_output (waitSeconds: 3). Verify that:\n' +
           '1. The CLI started without errors (no FATAL, panic, or crash messages)\n' +
           '2. The output has visible content (not a blank screen)\n' +
-          'Finally, call stop_savant-free to clean up. Report your findings.',
-        agentDefinitions: [savant-freeTesterAgent],
+          'Finally, call stop_SavantFree to clean up. Report your findings.',
+        agentDefinitions: [SavantFreeTesterAgent],
         customToolDefinitions: tmuxTools.tools,
         handleEvent: (event) => {
           events.push(event)
@@ -73,11 +73,11 @@ describe('Savant-Free: Agent-driven E2E', () => {
       expect(result.output.type).not.toBe('error')
 
       // Verify the agent exercised the startup path. The afterEach cleanup
-      // handles stopping Savant-Free deterministically if the agent finishes early.
+      // handles stopping SavantFree deterministically if the agent finishes early.
       const toolCalls = events.filter((e) => e.type === 'tool_call')
       const toolNames = toolCalls.map((e) => e.toolName)
-      expect(toolNames).toContain('start_savant-free')
-      expect(toolNames).toContain('capture_savant-free_output')
+      expect(toolNames).toContain('start_SavantFree')
+      expect(toolNames).toContain('capture_SavantFree_output')
     },
     AGENT_TEST_TIMEOUT,
   )
@@ -91,8 +91,8 @@ describe('Savant-Free: Agent-driven E2E', () => {
         return
       }
 
-      const binary = requireSavant-FreeBinary()
-      const tmuxTools = createSavant-FreeTmuxTools(binary)
+      const binary = requireSavantFreeBinary()
+      const tmuxTools = createSavantFreeTmuxTools(binary)
       cleanup = tmuxTools.cleanup
 
       const { SavantClient } = (await import(
@@ -102,14 +102,14 @@ describe('Savant-Free: Agent-driven E2E', () => {
       const client: SavantClientType = new SavantClient({ apiKey })
 
       const result = await client.run({
-        agent: savant-freeTesterAgent.id,
+        agent: SavantFreeTesterAgent.id,
         prompt:
-          'Start Savant-Free, wait for it to load (capture with waitSeconds: 5), ' +
-          'then send the "/help" command using send_to_savant-free. ' +
+          'Start SavantFree, wait for it to load (capture with waitSeconds: 5), ' +
+          'then send the "/help" command using send_to_SavantFree. ' +
           'Capture the output after 2 seconds. ' +
           'Verify the help content is displayed. ' +
-          'Stop Savant-Free when done and report your findings.',
-        agentDefinitions: [savant-freeTesterAgent],
+          'Stop SavantFree when done and report your findings.',
+        agentDefinitions: [SavantFreeTesterAgent],
         customToolDefinitions: tmuxTools.tools,
         handleEvent: () => {},
       })

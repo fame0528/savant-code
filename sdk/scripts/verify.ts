@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 /**
  * Comprehensive SDK verification script.
  * Runs all build, typecheck, and compatibility tests in one command.
@@ -49,7 +49,7 @@ function run(command: string, options: ExecSyncOptions = {}) {
 }
 
 function removeOldSdk(projectPath: string) {
-  const sdkPath = join(projectPath, 'node_modules', '@savant-code', 'sdk')
+  const sdkPath = join(projectPath, 'node_modules', '@SavantCode', 'sdk')
   if (existsSync(sdkPath)) {
     step(`Removing old SDK at ${sdkPath}`)
     rmSync(sdkPath, { recursive: true, force: true })

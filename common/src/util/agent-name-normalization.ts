@@ -1,4 +1,4 @@
-﻿export const DEFAULT_ORG_PREFIX = 'savant-code/'
+export const DEFAULT_ORG_PREFIX = 'SavantCode/'
 
 /**
  * Resolves an agent ID by trying multiple strategies:

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CLI-specific environment variable types.
  *
  * Extends base types from common with CLI-specific vars for:
@@ -67,7 +67,7 @@ export type CliEnv = BaseEnv & {
   OPEN_TUI_THEME?: string
   OPENTUI_THEME?: string
 
-  // Savant-Code CLI-specific (set during binary build)
+  // SavantCode CLI-specific (set during binary build)
   SAVANT_CODE_IS_BINARY?: string
   SAVANT_CODE_CLI_VERSION?: string
   SAVANT_CODE_CLI_TARGET?: string

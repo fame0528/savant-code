@@ -1,11 +1,11 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { useCallback, useEffect, useState } from 'react'
 
 import { defineToolComponent } from './types'
 import { useTerminalDimensions } from '../../hooks/use-terminal-dimensions'
 import { useTheme } from '../../hooks/use-theme'
 import { getLatestFollowupToolCallId, useChatStore } from '../../state/chat-store'
-import { useSavant-FreeSessionStore } from '../../state/savant-free-session-store'
+import { useSavantFreeSessionStore } from '../../state/savant-free-session-store'
 import { IS_SAVANT_FREE } from '../../utils/constants'
 import { Button } from '../button'
 
@@ -225,7 +225,7 @@ const SuggestFollowupsItem = ({
 }: SuggestFollowupsItemProps) => {
   const theme = useTheme()
   const inputFocused = useChatStore((state) => state.inputFocused)
-  const isSavant-FreeSessionOver = useSavant-FreeSessionStore(
+  const isSavantFreeSessionOver = useSavantFreeSessionStore(
     (state) => IS_SAVANT_FREE && state.session?.status === 'ended',
   )
   const setSuggestedFollowups = useChatStore(
@@ -310,7 +310,7 @@ const SuggestFollowupsItem = ({
             isHovered={hoveredIndex === index}
             onSendFollowup={onSendFollowup}
             onHover={setHoveredIndex}
-            disabled={!inputFocused || isSavant-FreeSessionOver}
+            disabled={!inputFocused || isSavantFreeSessionOver}
             labelColumnWidth={labelColumnWidth}
           />
         ))}
@@ -350,7 +350,7 @@ export const SuggestFollowupsComponent = defineToolComponent({
     const handleSendFollowup = (prompt: string, index: number) => {
       // This gets called from the FollowupCard component
       // The actual logic is handled via the global followup handler
-      const event = new CustomEvent('savant-code:send-followup', {
+      const event = new CustomEvent('SavantCode:send-followup', {
         detail: { prompt, index, toolCallId },
       })
       globalThis.dispatchEvent(event)

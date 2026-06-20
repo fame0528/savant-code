@@ -1,4 +1,4 @@
-﻿import { describe, test, expect, mock } from 'bun:test'
+import { describe, test, expect, mock } from 'bun:test'
 
 import { createMockLogger } from '@savant-code/common/testing/mock-types'
 import {
@@ -51,7 +51,7 @@ describe('First-Time Login Flow (helpers)', () => {
           user: {
             id: 'new-user-123',
             name: 'New User',
-            email: 'new@savant-code.dev',
+            email: 'new@SavantCode.dev',
             authToken: 'token-123',
           },
         },

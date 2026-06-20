@@ -1,4 +1,4 @@
-﻿import {
+import {
   flattenTree,
   getProjectFileTree,
 } from '@savant-code/common/project-file-tree'

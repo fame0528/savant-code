@@ -1,4 +1,4 @@
-﻿import { getErrorObject } from '@savant-code/common/util/error'
+import { getErrorObject } from '@savant-code/common/util/error'
 import { cloneDeep } from 'lodash'
 
 import type { SavantToolOutput } from '@savant-code/common/tools/list'

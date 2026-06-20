@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Typed crypto mock factory for testing.
  *
  * Provides type-safe mocks for crypto functions, particularly randomUUID.

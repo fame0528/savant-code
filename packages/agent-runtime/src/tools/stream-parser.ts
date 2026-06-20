@@ -1,4 +1,4 @@
-﻿import { toolNames } from '@savant-code/common/tools/constants'
+import { toolNames } from '@savant-code/common/tools/constants'
 import { buildArray } from '@savant-code/common/util/array'
 import { AbortError } from '@savant-code/common/util/error'
 import {
@@ -20,7 +20,7 @@ import type { CustomToolCall, ExecuteToolCallParams } from './tool-executor'
 import type { AgentTemplate } from '../templates/types'
 import type { FileProcessingState } from './handlers/tool/write-file'
 import type { ToolName } from '@savant-code/common/tools/constants'
-import type { Savant-CodeToolCall } from '@savant-code/common/tools/list'
+import type { SavantCodeToolCall } from '@savant-code/common/tools/list'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 import type {
@@ -88,8 +88,8 @@ export async function processStream(
   // === MUTABLE STATE ===
   const toolResults: ToolMessage[] = []
   const toolResultsToAddToMessageHistory: ToolMessage[] = []
-  const toolCalls: (Savant-CodeToolCall | CustomToolCall)[] = []
-  const toolCallsToAddToMessageHistory: (Savant-CodeToolCall | CustomToolCall)[] = []
+  const toolCalls: (SavantCodeToolCall | CustomToolCall)[] = []
+  const toolCallsToAddToMessageHistory: (SavantCodeToolCall | CustomToolCall)[] = []
   const assistantMessages: Message[] = []
   let hadToolCallError = false
   const errorMessages: Message[] = []

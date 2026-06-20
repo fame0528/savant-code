@@ -1,7 +1,7 @@
-﻿/**
- * E2E test that verifies Savant-Free can run terminal commands.
+/**
+ * E2E test that verifies SavantFree can run terminal commands.
  *
- * Starts Savant-Free in tmux, sends a prompt asking it to run a shell command,
+ * Starts SavantFree in tmux, sends a prompt asking it to run a shell command,
  * and verifies the command was executed by checking its side effects.
  *
  * Requires SAVANT_CODE_API_KEY â€” skipped if not set.
@@ -9,7 +9,7 @@
 
 import { afterEach, describe, expect, test } from 'bun:test'
 
-import { Savant-FreeSession, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeSession, requireSavantFreeBinary } from '../utils'
 
 const TEST_TIMEOUT = 1_000_000
 
@@ -17,8 +17,8 @@ function getApiKey(): string | null {
   return process.env.SAVANT_CODE_API_KEY ?? null
 }
 
-describe.skip('Savant-Free: Terminal Command', () => {
-  let session: Savant-FreeSession | null = null
+describe.skip('SavantFree: Terminal Command', () => {
+  let session: SavantFreeSession | null = null
 
   afterEach(async () => {
     if (session) {
@@ -38,13 +38,13 @@ describe.skip('Savant-Free: Terminal Command', () => {
         return
       }
 
-      const binary = requireSavant-FreeBinary()
-      session = await Savant-FreeSession.start(binary, { waitSeconds: 5 })
+      const binary = requireSavantFreeBinary()
+      session = await SavantFreeSession.start(binary, { waitSeconds: 5 })
 
       // Wait for the CLI to be fully ready before sending input
       await session.waitForReady()
 
-      // Ask savant-free to run a shell command whose output can only come from
+      // Ask SavantFree to run a shell command whose output can only come from
       // actual terminal execution (not file-writing tools)
       await session.send(
         'Execute a shell command in the terminal to write the current Unix timestamp in seconds to timestamp.txt',

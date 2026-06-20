@@ -1,4 +1,4 @@
-﻿import type { CiEnv } from './types/contracts/env'
+import type { CiEnv } from './types/contracts/env'
 
 /**
  * Test-only helpers for CI env snapshots.

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Typed database mock factory for testing.
  *
  * Provides type-safe mocks for Drizzle database operations used throughout the codebase.

@@ -1,4 +1,4 @@
-﻿import { memo, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 
 import { ContentWithMarkdown } from './content-with-markdown'
 import { useTheme } from '../../hooks/use-theme'

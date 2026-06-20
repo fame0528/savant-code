@@ -1,4 +1,4 @@
-﻿import { trackEvent } from '@savant-code/common/analytics'
+import { trackEvent } from '@savant-code/common/analytics'
 import { AnalyticsEvent } from '@savant-code/common/constants/analytics-events'
 import { AgentTemplateTypes } from '@savant-code/common/types/session-state'
 

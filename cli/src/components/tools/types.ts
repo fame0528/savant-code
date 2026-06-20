@@ -1,4 +1,4 @@
-﻿import type { ContentBlock } from '../../types/chat'
+import type { ContentBlock } from '../../types/chat'
 import type { ChatTheme } from '../../types/theme-system'
 import type { ToolName } from '@savant-code/sdk'
 import type { ReactNode } from 'react'

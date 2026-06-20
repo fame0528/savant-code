@@ -1,4 +1,4 @@
-﻿import { createRequire } from 'module'
+import { createRequire } from 'module'
 
 import { Argument, Command } from 'commander'
 
@@ -41,20 +41,20 @@ export function loadPackageVersion(): string {
 
 export function parseArgs({
   argv = process.argv,
-  isSavant-Free = IS_SAVANT_FREE,
+  isSavantFree = IS_SAVANT_FREE,
   version = loadPackageVersion(),
 }: {
   argv?: string[]
-  isSavant-Free?: boolean
+  isSavantFree?: boolean
   version?: string
 } = {}): ParsedArgs {
   const program = new Command()
 
-  if (isSavant-Free) {
-    // Savant-Free: simplified CLI - no prompt args, no agent override, no clear-logs
+  if (isSavantFree) {
+    // SavantFree: simplified CLI - no prompt args, no agent override, no clear-logs
     program
-      .name('savant-free')
-      .description('Savant-Free - Free AI coding assistant')
+      .name('SavantFree')
+      .description('SavantFree - Free AI coding assistant')
       .version(version, '-v, --version', 'Print the CLI version')
       .option(
         '--continue [conversation-id]',
@@ -69,10 +69,10 @@ export function parseArgs({
       )
       .helpOption('-h, --help', 'Show this help message')
   } else {
-    // Savant-Code: full CLI with all options
+    // SavantCode: full CLI with all options
     program
-      .name('savant-code')
-      .description('Savant-Code CLI - AI-powered coding assistant')
+      .name('SavantCode')
+      .description('SavantCode CLI - AI-powered coding assistant')
       .version(version, '-v, --version', 'Print the CLI version')
       .option(
         '--agent <agent-id>',
@@ -115,9 +115,9 @@ export function parseArgs({
   const continueFlag = options.continue
 
   // Determine initial mode from flags (last flag wins if multiple specified)
-  // Savant-Free always uses LITE mode
+  // SavantFree always uses LITE mode
   let initialMode: AgentMode | undefined
-  if (isSavant-Free) {
+  if (isSavantFree) {
     initialMode = 'LITE'
   } else {
     if (options.free || options.lite) initialMode = 'LITE'
@@ -126,7 +126,7 @@ export function parseArgs({
   }
 
   return {
-    initialPrompt: !isSavant-Free && args.length > 0 ? args.join(' ') : null,
+    initialPrompt: !isSavantFree && args.length > 0 ? args.join(' ') : null,
     command: args[0],
     agent: options.agent,
     clearLogs: options.clearLogs || false,
@@ -152,7 +152,7 @@ function resolveOutputFormat(explicit?: string): OutputFormat {
   if (explicit === 'stream-json') return 'stream-json'
   if (explicit === 'tui') return 'tui'
   // Auto-detect: if stdout is not a TTY, default to stream-json so
-  // pipelines (`savant-code ... | jq`, redirects to file) work out of
+  // pipelines (`SavantCode ... | jq`, redirects to file) work out of
   // the box without explicit flags.
   if (!process.stdout.isTTY) return 'stream-json'
   return 'tui'

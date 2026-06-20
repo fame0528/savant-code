@@ -1,13 +1,13 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
   ClientToolCall,
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 
 export const handleCodeSearch = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'code_search'>
+  toolCall: SavantCodeToolCall<'code_search'>
   requestClientToolCall: (
     toolCall: ClientToolCall<'code_search'>,
   ) => Promise<SavantToolOutput<'code_search'>>
@@ -18,4 +18,4 @@ export const handleCodeSearch = (async (params: {
 
   await previousToolCallFinished
   return { output: await requestClientToolCall(toolCall) }
-}) satisfies Savant-CodeToolHandlerFunction<'code_search'>
+}) satisfies SavantCodeToolHandlerFunction<'code_search'>

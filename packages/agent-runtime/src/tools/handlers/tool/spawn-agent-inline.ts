@@ -1,4 +1,4 @@
-﻿import { mapValues } from 'lodash'
+import { mapValues } from 'lodash'
 
 import {
   validateAndGetAgentTemplate,
@@ -8,9 +8,9 @@ import {
   extractSubagentContextParams,
 } from './spawn-agent-utils'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
@@ -25,7 +25,7 @@ type ToolName = 'spawn_agent_inline'
 export const handleSpawnAgentInline = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<ToolName>
+    toolCall: SavantCodeToolCall<ToolName>
 
     agentState: AgentState
     agentTemplate: AgentTemplate
@@ -139,4 +139,4 @@ export const handleSpawnAgentInline = (async (
   parentAgentState.messageHistory = result.agentState.messageHistory
 
   return { output: [{ type: 'json', value: { message: 'Agent spawned.' } }] }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>

@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { getSavantClient } from '../utils/savant-code-client'
 import { logger } from '../utils/logger'
@@ -34,7 +34,7 @@ export function getNextInterval(consecutiveSuccesses: number): number {
 }
 
 /**
- * Hook to monitor connection status to the Savant-Code backend.
+ * Hook to monitor connection status to the SavantCode backend.
  * Uses adaptive exponential backoff to reduce polling frequency when connection is stable.
  *
  * When the connection transitions from disconnected to connected, the optional

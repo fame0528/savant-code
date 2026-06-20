@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import path from 'node:path'
 import os from 'os'
 
@@ -24,7 +24,7 @@ const chatGptOAuthSchema = z.object({
 
 /**
  * Unified schema for the credentials file.
- * Contains both Savant-Code user credentials and ChatGPT OAuth credentials.
+ * Contains both SavantCode user credentials and ChatGPT OAuth credentials.
  */
 const credentialsFileSchema = z.object({
   default: userSchema.optional(),
@@ -56,7 +56,7 @@ export const getConfigDir = (clientEnv: ClientEnv = env): string => {
     clientEnv.NEXT_PUBLIC_SC_ENVIRONMENT !== 'prod'
       ? `-${clientEnv.NEXT_PUBLIC_SC_ENVIRONMENT}`
       : ''
-  return path.join(os.homedir(), '.config', `savant-code${envSuffix}`)
+  return path.join(os.homedir(), '.config', `SavantCode${envSuffix}`)
 }
 
 /**
@@ -110,7 +110,7 @@ export const getChatGptOAuthCredentials = (
     }
   }
 
-  // 2. Savant-Code's own stored credentials
+  // 2. SavantCode's own stored credentials
   const credentialsPath = getCredentialsPath(clientEnv)
   if (fs.existsSync(credentialsPath)) {
     try {

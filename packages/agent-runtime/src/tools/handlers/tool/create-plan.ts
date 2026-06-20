@@ -1,17 +1,17 @@
-﻿import { postStreamProcessing } from './write-file'
+import { postStreamProcessing } from './write-file'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type { FileProcessingState } from './write-file'
 import type {
   ClientToolCall,
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
 
 export const handleCreatePlan = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'create_plan'>
+  toolCall: SavantCodeToolCall<'create_plan'>
 
   fileProcessingState: FileProcessingState
   logger: Logger
@@ -60,4 +60,4 @@ export const handleCreatePlan = (async (params: {
       requestClientToolCall,
     ),
   }
-}) satisfies Savant-CodeToolHandlerFunction<'create_plan'>
+}) satisfies SavantCodeToolHandlerFunction<'create_plan'>

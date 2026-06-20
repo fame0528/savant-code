@@ -1,4 +1,4 @@
-﻿import { promptSuccess } from '@savant-code/common/util/error'
+import { promptSuccess } from '@savant-code/common/util/error'
 import { generateCompactId } from '@savant-code/common/util/string'
 
 import type { StreamChunk } from '@savant-code/common/types/contracts/llm'

@@ -1,11 +1,11 @@
-﻿import { afterEach, describe, expect, test } from 'bun:test'
+import { afterEach, describe, expect, test } from 'bun:test'
 
-import { Savant-FreeSession, requireSavant-FreeBinary } from '../utils'
+import { SavantFreeSession, requireSavantFreeBinary } from '../utils'
 
 const STARTUP_TIMEOUT = 60_000
 
-describe('Savant-Free: Startup', () => {
-  let session: Savant-FreeSession | null = null
+describe('SavantFree: Startup', () => {
+  let session: SavantFreeSession | null = null
 
   afterEach(async () => {
     if (session) {
@@ -17,10 +17,10 @@ describe('Savant-Free: Startup', () => {
   test(
     'binary renders its boot screen',
     async () => {
-      const binary = requireSavant-FreeBinary()
-      session = await Savant-FreeSession.start(binary)
+      const binary = requireSavantFreeBinary()
+      session = await SavantFreeSession.start(binary)
 
-      // The 3rd row of the SAVANT-FREE ASCII logo: the crossbars of F and R
+      // The 3rd row of the SavantFree ASCII logo: the crossbars of F and R
       // adjacent. Picked because the logo renders for *every* valid boot
       // state â€” model picker, waiting room, country-blocked (which is what
       // CI runners hit, since GitHub Actions egress is flagged as anonymized
@@ -45,8 +45,8 @@ describe('Savant-Free: Startup', () => {
   test(
     'responds to Ctrl+C gracefully',
     async () => {
-      const binary = requireSavant-FreeBinary()
-      session = await Savant-FreeSession.start(binary)
+      const binary = requireSavantFreeBinary()
+      session = await SavantFreeSession.start(binary)
       await session.waitForReady()
 
       await session.sendKey('C-c')

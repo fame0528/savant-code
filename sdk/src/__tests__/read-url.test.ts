@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
 
 import { clientToolCallSchema } from '@savant-code/common/tools/list'
 
@@ -166,14 +166,14 @@ describe('readUrl', () => {
   })
 
   it('returns pretty-printed JSON for JSON responses', async () => {
-    const result = await successValue('{"name":"Savant-Code","answer":42}', {
+    const result = await successValue('{"name":"SavantCode","answer":42}', {
       contentType: 'application/json',
     })
 
     expect('errorMessage' in result).toBe(false)
     if ('errorMessage' in result) return
 
-    expect(result.text).toContain('"name": "Savant-Code"')
+    expect(result.text).toContain('"name": "SavantCode"')
     expect(result.text).toContain('"answer": 42')
   })
 

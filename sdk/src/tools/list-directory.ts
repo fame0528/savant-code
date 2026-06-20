@@ -1,4 +1,4 @@
-﻿import * as path from 'path'
+import * as path from 'path'
 
 import type { SavantToolOutput } from '@savant-code/common/tools/list'
 import type { SavantFileSystem } from '@savant-code/common/types/filesystem'

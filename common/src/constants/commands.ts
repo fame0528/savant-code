@@ -10,12 +10,12 @@
 
 /**
  * Directory names where custom commands are searched.
- * Project overrides global; `.savant-code` is the legacy alias kept for
+ * Project overrides global; `.SavantCode` is the legacy alias kept for
  * backwards compatibility with the prior codename.
  */
 export const CUSTOM_COMMANDS_DIRS = [
   '.savant/commands',
-  '.savant-code/commands',
+  '.SavantCode/commands',
 ] as const
 
 /**

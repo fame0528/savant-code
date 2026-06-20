@@ -1,4 +1,4 @@
-﻿import * as validationModule from '@savant-code/common/templates/agent-validation'
+import * as validationModule from '@savant-code/common/templates/agent-validation'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { getStubProjectFileContext } from '@savant-code/common/util/file'
 import {

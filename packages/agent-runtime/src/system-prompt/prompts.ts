@@ -1,4 +1,4 @@
-﻿import {
+import {
   flattenTree,
   getLastReadFilePaths,
 } from '@savant-code/common/project-file-tree'

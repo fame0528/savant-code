@@ -1,4 +1,4 @@
-﻿import { TEST_USER_ID } from '@savant-code/common/old-constants'
+import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import {
@@ -20,7 +20,7 @@ import { mockFileContext } from './test-utils'
 import * as runAgentStep from '../run-agent-step'
 import { handleSpawnAgents } from '../tools/handlers/tool/spawn-agents'
 
-import type { Savant-CodeToolCall } from '@savant-code/common/tools/list'
+import type { SavantCodeToolCall } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
 import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 
@@ -107,7 +107,7 @@ describe('Spawn Agents Message History', () => {
   const createSpawnToolCall = (
     agentType: string,
     prompt = 'test prompt',
-  ): Savant-CodeToolCall<'spawn_agents'> => ({
+  ): SavantCodeToolCall<'spawn_agents'> => ({
     toolName: 'spawn_agents' as const,
     toolCallId: 'test-tool-call-id',
     input: {

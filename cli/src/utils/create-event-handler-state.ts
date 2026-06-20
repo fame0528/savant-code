@@ -1,4 +1,4 @@
-﻿import type { AgentMode } from './constants'
+import type { AgentMode } from './constants'
 import type { MessageUpdater } from './message-updater'
 import type {
   EventHandlerState,

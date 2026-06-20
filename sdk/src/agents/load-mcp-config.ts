@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import fsPromises from 'fs/promises'
 import os from 'os'
 import path from 'path'

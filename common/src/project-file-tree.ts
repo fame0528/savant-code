@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import * as ignore from 'ignore'
 import { sortBy } from 'lodash'

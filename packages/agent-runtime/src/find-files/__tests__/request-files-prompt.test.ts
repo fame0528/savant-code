@@ -1,4 +1,4 @@
-﻿import { finetunedVertexModels } from '@savant-code/common/old-constants'
+import { finetunedVertexModels } from '@savant-code/common/old-constants'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { promptSuccess } from '@savant-code/common/util/error'
 import { userMessage } from '@savant-code/common/util/messages'

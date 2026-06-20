@@ -1,4 +1,4 @@
-﻿import { convertJsonSchemaToZod } from 'zod-from-json-schema'
+import { convertJsonSchemaToZod } from 'zod-from-json-schema'
 
 import {
   DynamicAgentDefinitionSchema,

@@ -1,4 +1,4 @@
-﻿import { describe, expect, it, test } from 'bun:test'
+import { describe, expect, it, test } from 'bun:test'
 import { cloneDeep } from 'lodash'
 
 import {

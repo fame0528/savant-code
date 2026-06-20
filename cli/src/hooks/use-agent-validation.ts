@@ -1,4 +1,4 @@
-﻿import { validateAgents } from '@savant-code/sdk'
+import { validateAgents } from '@savant-code/sdk'
 import { useCallback, useState } from 'react'
 
 import { loadAgentDefinitions } from '../utils/local-agent-registry'

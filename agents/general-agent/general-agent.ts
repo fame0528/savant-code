@@ -1,4 +1,4 @@
-﻿import { buildArray } from '@savant-code/common/util/array'
+import { buildArray } from '@savant-code/common/util/array'
 
 import { publisher } from '../constants'
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * E2E Test: Subagent Streaming
  *
  * Tests nested subagent event streaming and parent/child relationships.
@@ -27,7 +27,7 @@ describe('Streaming: Subagent Streaming', () => {
 
       // Use an agent that spawns subagents (like base which can spawn file-picker, etc.)
       await client.run({
-        agent: 'savant-code/base@latest',
+        agent: 'SavantCode/base@latest',
         prompt: 'Search for files containing "test" in this project',
         handleEvent: collector.handleEvent,
         handleStreamChunk: collector.handleStreamChunk,
@@ -62,7 +62,7 @@ describe('Streaming: Subagent Streaming', () => {
       const collector = new EventCollector()
 
       await client.run({
-        agent: 'savant-code/base@latest',
+        agent: 'SavantCode/base@latest',
         prompt: 'List files in the current directory',
         handleEvent: collector.handleEvent,
         handleStreamChunk: collector.handleStreamChunk,
@@ -98,7 +98,7 @@ describe('Streaming: Subagent Streaming', () => {
       const collector = new EventCollector()
 
       await client.run({
-        agent: 'savant-code/base@latest',
+        agent: 'SavantCode/base@latest',
         prompt: 'What files are in the sdk folder?',
         handleEvent: collector.handleEvent,
         handleStreamChunk: collector.handleStreamChunk,
@@ -133,7 +133,7 @@ describe('Streaming: Subagent Streaming', () => {
       const collector = new EventCollector()
 
       await client.run({
-        agent: 'savant-code/base@latest',
+        agent: 'SavantCode/base@latest',
         prompt: 'Find TypeScript files',
         handleEvent: collector.handleEvent,
         cwd: process.cwd(),

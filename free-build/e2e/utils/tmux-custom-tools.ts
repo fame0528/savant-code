@@ -1,10 +1,10 @@
-﻿import { z } from 'zod/v4'
+import { z } from 'zod/v4'
 
-import { Savant-FreeSession } from './savant-free-session'
+import { SavantFreeSession } from './savant-free-session'
 
 import type { ZodType } from 'zod/v4'
 
-interface Savant-FreeToolDefinition {
+interface SavantFreeToolDefinition {
   toolName: string
   description: string
   inputSchema: ZodType
@@ -16,28 +16,28 @@ interface Savant-FreeToolDefinition {
 type ToolOutput = { type: 'json'; value: Record<string, unknown> }[]
 
 /**
- * Creates custom tool definitions that allow a Savant-Code SDK agent
- * to interact with a Savant-Free CLI binary via tmux.
+ * Creates custom tool definitions that allow a SavantCode SDK agent
+ * to interact with a SavantFree CLI binary via tmux.
  *
  * Returns the tools array and a cleanup function to call in afterEach.
  *
  * Usage:
  * ```ts
- * const { tools, cleanup } = createSavant-FreeTmuxTools(binaryPath)
+ * const { tools, cleanup } = createSavantFreeTmuxTools(binaryPath)
  * // ... pass tools to client.run({ customToolDefinitions: tools })
  * // ... in afterEach: await cleanup()
  * ```
  */
-export function createSavant-FreeTmuxTools(binaryPath: string): {
-  tools: Savant-FreeToolDefinition[]
+export function createSavantFreeTmuxTools(binaryPath: string): {
+  tools: SavantFreeToolDefinition[]
   cleanup: () => Promise<void>
 } {
-  let session: Savant-FreeSession | null = null
+  let session: SavantFreeSession | null = null
 
-  const startTool: Savant-FreeToolDefinition = {
-    toolName: 'start_savant-free',
+  const startTool: SavantFreeToolDefinition = {
+    toolName: 'start_SavantFree',
     description:
-      'Start the Savant-Free CLI binary in a tmux terminal session. Call this first before interacting with Savant-Free.',
+      'Start the SavantFree CLI binary in a tmux terminal session. Call this first before interacting with SavantFree.',
     inputSchema: z.object({}),
     endsAgentStep: true,
     exampleInputs: [{}],
@@ -53,7 +53,7 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
           },
         ]
       }
-      session = await Savant-FreeSession.start(binaryPath)
+      session = await SavantFreeSession.start(binaryPath)
       await session.waitForReady()
       const initialOutput = await session.capture()
       return [
@@ -69,12 +69,12 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
     },
   }
 
-  const sendInputTool: Savant-FreeToolDefinition = {
-    toolName: 'send_to_savant-free',
+  const sendInputTool: SavantFreeToolDefinition = {
+    toolName: 'send_to_SavantFree',
     description:
-      'Send text input to the running Savant-Free CLI. The text is sent as if typed by the user and Enter is pressed.',
+      'Send text input to the running SavantFree CLI. The text is sent as if typed by the user and Enter is pressed.',
     inputSchema: z.object({
-      text: z.string().describe('Text to send to Savant-Free'),
+      text: z.string().describe('Text to send to SavantFree'),
     }),
     endsAgentStep: false,
     exampleInputs: [{ text: '/help' }],
@@ -84,7 +84,7 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
         return [
           {
             type: 'json',
-            value: { error: 'No session running. Call start_savant-free first.' },
+            value: { error: 'No session running. Call start_SavantFree first.' },
           },
         ]
       }
@@ -93,10 +93,10 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
     },
   }
 
-  const captureOutputTool: Savant-FreeToolDefinition = {
-    toolName: 'capture_savant-free_output',
+  const captureOutputTool: SavantFreeToolDefinition = {
+    toolName: 'capture_SavantFree_output',
     description:
-      'Capture the current terminal output from the running Savant-Free CLI session. ' +
+      'Capture the current terminal output from the running SavantFree CLI session. ' +
       'Use waitSeconds to wait before capturing (useful after sending a command).',
     inputSchema: z.object({
       waitSeconds: z
@@ -112,7 +112,7 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
         return [
           {
             type: 'json',
-            value: { error: 'No session running. Call start_savant-free first.' },
+            value: { error: 'No session running. Call start_SavantFree first.' },
           },
         ]
       }
@@ -121,10 +121,10 @@ export function createSavant-FreeTmuxTools(binaryPath: string): {
     },
   }
 
-  const stopTool: Savant-FreeToolDefinition = {
-    toolName: 'stop_savant-free',
+  const stopTool: SavantFreeToolDefinition = {
+    toolName: 'stop_SavantFree',
     description:
-      'Stop the running Savant-Free CLI session and clean up resources. Always call this when done testing.',
+      'Stop the running SavantFree CLI session and clean up resources. Always call this when done testing.',
     inputSchema: z.object({}),
     endsAgentStep: true,
     exampleInputs: [{}],

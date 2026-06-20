@@ -1,19 +1,19 @@
-﻿import type { ToolName } from '@savant-code/sdk'
+import type { ToolName } from '@savant-code/sdk'
 
 import { getCliEnv } from './env'
 
 /**
- * Savant-Free build-time flag. When true, the CLI is built as Savant-Free (free-only variant).
+ * SavantFree build-time flag. When true, the CLI is built as SavantFree (free-only variant).
  * Injected via --define at compile time; enables dead-code elimination by the bundler.
  */
 export const IS_SAVANT_FREE = getCliEnv().SAVANT_FREE_MODE === 'true'
 
-/** Message shown when the user ends a savant-free session early. */
+/** Message shown when the user ends a SavantFree session early. */
 export const END_SESSION_MESSAGE =
   'Ending session and returning to the model pickerâ€¦'
 
 // Agent IDs that should not be rendered in the CLI UI
-export const HIDDEN_AGENT_IDS = ['savant-code/context-pruner'] as const
+export const HIDDEN_AGENT_IDS = ['SavantCode/context-pruner'] as const
 
 // Tool names that should be collapsed by default when rendered
 // Uses ToolName type to ensure only valid tool names are added
@@ -127,9 +127,9 @@ export const MAIN_AGENT_ID = 'main-agent'
  * Mapping from agent mode to agent ID.
  * Single source of truth for all agent modes (order = cycling order).
  *
- * Savant-Free resolves LITE through the selected savant-free model at send time;
+ * SavantFree resolves LITE through the selected SavantFree model at send time;
  * this fallback stays on base2-free for non-runtime callers. Regular
- * Savant-Code maps LITE to base2-lite which charges credits normally.
+ * SavantCode maps LITE to base2-lite which charges credits normally.
  */
 export const AGENT_MODE_TO_ID = {
   DEFAULT: 'base2',
@@ -144,8 +144,8 @@ export const AGENT_MODES = Object.keys(AGENT_MODE_TO_ID) as AgentMode[]
 /**
  * Maps CLI agent mode to cost mode for billing.
  *
- * Savant-Free's LITE maps to 'free' cost mode (waiting room, rate limits, 0 credits
- * for allowlisted agent+model combos). Regular Savant-Code's LITE maps to 'lite' â€”
+ * SavantFree's LITE maps to 'free' cost mode (waiting room, rate limits, 0 credits
+ * for allowlisted agent+model combos). Regular SavantCode's LITE maps to 'lite' â€”
  * a normal paid mode (charges credits, no waiting room, no country restrictions).
  */
 export const AGENT_MODE_TO_COST_MODE = {

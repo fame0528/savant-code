@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @deprecated Use `@savant-code/common/testing/fixtures/agent-runtime` instead.
  */
 

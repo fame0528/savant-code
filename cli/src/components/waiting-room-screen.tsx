@@ -1,27 +1,27 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { useKeyboard, useRenderer } from '@opentui/react'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Button } from './button'
 import { ChoiceAdBanner, AD_CARD_HEIGHT } from './ad-banner'
-import { Savant-FreeModelSelector } from './savant-free-model-selector'
+import { SavantFreeModelSelector } from './savant-free-model-selector'
 import { ShimmerText } from './shimmer-text'
 import {
-  refreshSavant-FreeLandingMetadata,
-  takeOverSavant-FreeSession,
+  refreshSavantFreeLandingMetadata,
+  takeOverSavantFreeSession,
 } from '../hooks/use-savant-free-session'
-import { useSavant-FreeCtrlCExit } from '../hooks/use-savant-free-ctrl-c-exit'
-import { useSavant-FreeStreakQuery } from '../hooks/use-savant-free-streak-query'
+import { useSavantFreeCtrlCExit } from '../hooks/use-savant-free-ctrl-c-exit'
+import { useSavantFreeStreakQuery } from '../hooks/use-savant-free-streak-query'
 import { useGravityAd } from '../hooks/use-gravity-ad'
 import { useLogo } from '../hooks/use-logo'
 import { useNow } from '../hooks/use-now'
 import { useSheenAnimation } from '../hooks/use-sheen-animation'
 import { useTerminalDimensions } from '../hooks/use-terminal-dimensions'
 import { useTheme } from '../hooks/use-theme'
-import { exitSavant-FreeCleanly } from '../utils/savant-free-exit'
+import { exitSavantFreeCleanly } from '../utils/savant-free-exit'
 import {
-  formatSavant-FreePremiumResetCountdown,
-  getSavant-FreePremiumResetAt,
+  formatSavantFreePremiumResetCountdown,
+  getSavantFreePremiumResetAt,
 } from '../utils/savant-free-premium-reset'
 import { formatSessionUnits } from '../utils/format-session-units'
 import { isPlainEnterKey } from '../utils/terminal-enter-detection'
@@ -32,15 +32,15 @@ import {
   SAVANT_FREE_PREMIUM_SESSION_LIMIT,
 } from '@savant-code/common/constants/savant-free-models'
 import { getRateLimitsByModel } from '@savant-code/common/types/savant-free-session'
-import { formatSavant-FreeHardBlockedPrivacySignals } from '@savant-code/common/util/savant-free-privacy'
+import { formatSavantFreeHardBlockedPrivacySignals } from '@savant-code/common/util/savant-free-privacy'
 import { pluralize } from '@savant-code/common/util/string'
 
-import type { Savant-FreeSessionResponse } from '../types/savant-free-session'
-import type { Savant-FreeIpPrivacySignal } from '@savant-code/common/types/savant-free-session'
+import type { SavantFreeSessionResponse } from '../types/savant-free-session'
+import type { SavantFreeIpPrivacySignal } from '@savant-code/common/types/savant-free-session'
 import type { KeyEvent } from '@opentui/core'
 
 interface WaitingRoomScreenProps {
-  session: Savant-FreeSessionResponse | null
+  session: SavantFreeSessionResponse | null
   error: string | null
 }
 
@@ -81,7 +81,7 @@ const formatRetryAfter = (ms: number): string => {
   return rem === 0 ? `${hours}h` : `${hours}h ${rem}m`
 }
 
-const PRIVACY_SIGNAL_LABELS: Partial<Record<Savant-FreeIpPrivacySignal, string>> =
+const PRIVACY_SIGNAL_LABELS: Partial<Record<SavantFreeIpPrivacySignal, string>> =
 {
   anonymous: 'anonymized network',
   proxy: 'proxy',
@@ -94,7 +94,7 @@ const PRIVACY_SIGNAL_LABELS: Partial<Record<Savant-FreeIpPrivacySignal, string>>
 }
 
 const formatPrivacySignalList = (
-  signals: Savant-FreeIpPrivacySignal[] | undefined,
+  signals: SavantFreeIpPrivacySignal[] | undefined,
 ): string => {
   const labels = Array.from(
     new Set(
@@ -133,7 +133,7 @@ const formatCountryName = (countryCode: string): string => {
 // is the one the user can act on, so it leads with the action. Rendered
 // directly under the model list â€” that's where "why these models?" gets asked.
 const getLimitedModeNotice = (
-  session: Savant-FreeSessionResponse | null,
+  session: SavantFreeSessionResponse | null,
 ): string | null => {
   if (!session || !('countryBlockReason' in session)) {
     return "Some models aren't available on this connection"
@@ -174,7 +174,7 @@ const TakeoverPrompt: React.FC = () => {
   const handleTakeover = useCallback(() => {
     if (pending) return
     setPending(true)
-    takeOverSavant-FreeSession().finally(() => setPending(false))
+    takeOverSavantFreeSession().finally(() => setPending(false))
   }, [pending])
 
   useKeyboard(
@@ -190,7 +190,7 @@ const TakeoverPrompt: React.FC = () => {
 
         if (isExit) {
           key.preventDefault?.()
-          exitSavant-FreeCleanly()
+          exitSavantFreeCleanly()
           return
         }
 
@@ -199,7 +199,7 @@ const TakeoverPrompt: React.FC = () => {
           if (focusedIndex === 0) {
             handleTakeover()
           } else {
-            exitSavant-FreeCleanly()
+            exitSavantFreeCleanly()
           }
           return
         }
@@ -233,11 +233,11 @@ const TakeoverPrompt: React.FC = () => {
       }}
     >
       <text style={{ fg: theme.foreground }} attributes={TextAttributes.BOLD}>
-        Savant-Free is already running
+        SavantFree is already running
       </text>
 
       <text style={{ fg: theme.muted }}>
-        Only one savant-free instance is allowed at a time.
+        Only one SavantFree instance is allowed at a time.
       </text>
 
       <box style={{ flexDirection: 'row', gap: 2, marginTop: 1 }}>
@@ -260,7 +260,7 @@ const TakeoverPrompt: React.FC = () => {
           </text>
         </Button>
         <Button
-          onClick={exitSavant-FreeCleanly}
+          onClick={exitSavantFreeCleanly}
           onMouseOver={() => setFocusedIndex(1)}
           style={{ paddingLeft: 1, paddingRight: 1 }}
           border={['top', 'bottom', 'left', 'right']}
@@ -386,7 +386,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
     surface: 'waiting_room',
   })
 
-  useSavant-FreeCtrlCExit()
+  useSavantFreeCtrlCExit()
 
   const [exitHover, setExitHover] = useState(false)
 
@@ -399,10 +399,10 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
     accessTier === 'limited' && !compact ? getLimitedModeNotice(session) : null
   // 'none' = user hasn't joined any queue yet. We're in the pre-chat landing
   // state: show the picker with live N-in-line hints and a prompt. Picking a
-  // model triggers joinSavant-FreeQueue, which POSTs and transitions us to
+  // model triggers joinSavantFreeQueue, which POSTs and transitions us to
   // 'queued' (waiting room) or straight to 'active' (chat) if no wait.
   const isLanding = session?.status === 'none'
-  const streakQuery = useSavant-FreeStreakQuery({
+  const streakQuery = useSavantFreeStreakQuery({
     enabled: SAVANT_FREE_ENABLE_STREAK_IN_UI && (isLanding || isQueued),
   })
   const streak = streakQuery.data?.streak ?? 0
@@ -453,12 +453,12 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
       : SAVANT_FREE_PREMIUM_SESSION_LIMIT
   const sessionLabel = accessTier === 'limited' ? 'sessions' : 'premium sessions'
   const formattedSharedSessionUsed = formatSessionUnits(sharedSessionUsed)
-  const sessionResetAt = getSavant-FreePremiumResetAt({
+  const sessionResetAt = getSavantFreePremiumResetAt({
     rateLimitsByModel,
     nowMs: now,
   })
   const sessionResetAtMs = sessionResetAt.getTime()
-  const sessionResetCountdown = formatSavant-FreePremiumResetCountdown(
+  const sessionResetCountdown = formatSavantFreePremiumResetCountdown(
     sessionResetAt,
     now,
   )
@@ -524,7 +524,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
 
     const delayMs = Math.max(0, sessionResetAtMs - Date.now() + 1_000)
     const timer = setTimeout(() => {
-      refreshSavant-FreeLandingMetadata().catch(() => { })
+      refreshSavantFreeLandingMetadata().catch(() => { })
     }, delayMs)
 
     return () => clearTimeout(timer)
@@ -557,7 +557,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
             keep the âœ• pushed to the right. */}
         <box />
         <Button
-          onClick={exitSavant-FreeCleanly}
+          onClick={exitSavantFreeCleanly}
           onMouseOver={() => setExitHover(true)}
           onMouseOut={() => setExitHover(false)}
           style={{ paddingLeft: 1, paddingRight: 1 }}
@@ -642,7 +642,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
                   {LANDING_HEADING}
                 </span>
               </text>
-              <Savant-FreeModelSelector
+              <SavantFreeModelSelector
                 maxHeight={selectorMaxHeight}
                 onExpandedChange={setSelectorExpanded}
               />
@@ -696,7 +696,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
               >
                 {queuedTitleText}
               </text>
-              <Savant-FreeModelSelector
+              <SavantFreeModelSelector
                 maxHeight={selectorMaxHeight}
                 onExpandedChange={setSelectorExpanded}
               />
@@ -759,7 +759,7 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
                 {session.countryBlockReason === 'anonymous_network' ? (
                   <>
                     We detected{' '}
-                    {formatSavant-FreeHardBlockedPrivacySignals(
+                    {formatSavantFreeHardBlockedPrivacySignals(
                       session.ipPrivacySignals,
                     )}{' '}
                     traffic
@@ -772,20 +772,20 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
                         <span fg={theme.foreground}>{session.countryCode}</span>
                       </>
                     )}
-                    . Savant-Free can't be used from VPN, proxy, or Tor traffic.
-                    Disable it and restart Savant-Free to try again.
+                    . SavantFree can't be used from VPN, proxy, or Tor traffic.
+                    Disable it and restart SavantFree to try again.
                   </>
                 ) : session.countryCode === 'UNKNOWN' ? (
                   <>
                     We couldn't verify an eligible location for this request.
                     VPN, Tor, proxy, or unknown-location traffic can't use
-                    savant-free. Press Ctrl+C to exit.
+                    SavantFree. Press Ctrl+C to exit.
                   </>
                 ) : (
                   <>
                     We detected your location as{' '}
                     <span fg={theme.foreground}>{session.countryCode}</span>,
-                    which is outside the countries where savant-free is currently
+                    which is outside the countries where SavantFree is currently
                     offered. Press Ctrl+C to exit.
                   </>
                 )}
@@ -802,8 +802,8 @@ export const WaitingRoomScreen: React.FC<WaitingRoomScreenProps> = ({
                 âš  Account unavailable
               </text>
               <text style={{ fg: theme.muted, wrapMode: 'word' }}>
-                This account has been suspended and can't use savant-free. If you
-                think this is a mistake, contact support@savant-code.dev. Press
+                This account has been suspended and can't use SavantFree. If you
+                think this is a mistake, contact support@SavantCode.dev. Press
                 Ctrl+C to exit.
               </text>
             </>

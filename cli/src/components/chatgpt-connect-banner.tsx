@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Button } from './button'
 import { useTheme } from '../hooks/use-theme'
@@ -199,7 +199,7 @@ export async function handleChatGptAuthCode(code: string): Promise<{
     return {
       success: true,
       message:
-        'Successfully connected your ChatGPT subscription! Savant-Code will use it for supported OpenAI streaming requests.',
+        'Successfully connected your ChatGPT subscription! SavantCode will use it for supported OpenAI streaming requests.',
     }
   } catch (err) {
     return {

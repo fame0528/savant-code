@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 
 // Embed tree-sitter.wasm into the bun-compile binary at a bunfs path the runtime
 // can find. Without this, web-tree-sitter resolves the wasm via require.resolve,

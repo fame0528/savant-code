@@ -1,4 +1,4 @@
-﻿import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
+import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
 import {
   getChatGptOAuthCredentials,
   getValidChatGptOAuthCredentials,

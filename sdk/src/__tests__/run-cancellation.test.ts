@@ -1,4 +1,4 @@
-﻿import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
+import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
 import { withSystemTags } from '@savant-code/agent-runtime/util/messages'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import { getStubProjectFileContext } from '@savant-code/common/util/file'
@@ -276,7 +276,7 @@ describe('Run Cancellation Handling', () => {
     apiError.responseBody = JSON.stringify({
       error: 'session_model_mismatch',
       message:
-        'This session is bound to deepseek; restart savant-free to switch models.',
+        'This session is bound to deepseek; restart SavantFree to switch models.',
     })
 
     spyOn(mainPromptModule, 'callMainPrompt').mockRejectedValue(
@@ -303,7 +303,7 @@ describe('Run Cancellation Handling', () => {
       error?: string
     }
     expect(output.message).toBe(
-      'This session is bound to deepseek; restart savant-free to switch models.',
+      'This session is bound to deepseek; restart SavantFree to switch models.',
     )
     expect(output.statusCode).toBe(409)
     expect(output.error).toBe('session_model_mismatch')

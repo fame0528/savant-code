@@ -1,17 +1,17 @@
-﻿import { env, IS_DEV } from '@savant-code/common/env'
+import { env, IS_DEV } from '@savant-code/common/env'
 
 import { IS_SAVANT_FREE } from '../utils/constants'
 
 // Get the website URL from environment or use default
 export const WEBSITE_URL = env.NEXT_PUBLIC_SAVANT_CODE_APP_URL
 
-// Savant-Free login flow uses the savant-free web app instead of savant-code.dev
+// SavantFree login flow uses the SavantFree web app instead of SavantCode.dev
 const SAVANT_FREE_WEB_URL = IS_DEV
   ? 'http://localhost:3002'
-  : (env.NEXT_PUBLIC_SAVANT_FREE_APP_URL ?? 'https://savant-free.com')
+  : (env.NEXT_PUBLIC_SAVANT_FREE_APP_URL ?? 'https://SavantFree.com')
 export const LOGIN_WEBSITE_URL = IS_SAVANT_FREE ? SAVANT_FREE_WEB_URL : WEBSITE_URL
 
-// Savant-Code ASCII Logo - compact version for 80-width terminals
+// SavantCode ASCII Logo - compact version for 80-width terminals
 const LOGO_SAVANT_CODE = `
   â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ•—   â–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—
  â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘   â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â•â•â•
@@ -30,8 +30,8 @@ const LOGO_SMALL_SAVANT_CODE = `
   â•šâ•â•â•â•â•â• â•šâ•â•â•â•â•â•
 `
 
-// Savant-Free ASCII Logo
-const LOGO_SAVANT-FREE = `
+// SavantFree ASCII Logo
+const LOGO_SavantFree = `
  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•— â–ˆâ–ˆâ•—   â–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—
  â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—â–ˆâ–ˆâ•‘   â–ˆâ–ˆâ•‘â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â•â•â•
  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•â–ˆâ–ˆâ•‘   â–ˆâ–ˆâ•‘â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—
@@ -40,7 +40,7 @@ const LOGO_SAVANT-FREE = `
  â•šâ•â•     â•šâ•â•  â•šâ•â•â•šâ•â•â•â•â•â•â•â•šâ•â•â•â•â•â•â•â•šâ•â•â•â•â•â•  â•šâ•â•â•â•â•â• â•šâ•â•     â•šâ•â•
 `
 
-const LOGO_SMALL_SAVANT-FREE = `
+const LOGO_SMALL_SavantFree = `
  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—
  â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â–ˆâ–ˆâ•—
  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•
@@ -49,8 +49,8 @@ const LOGO_SMALL_SAVANT-FREE = `
  â•šâ•â•     â•šâ•â•â•â•â•â•
 `
 
-export const LOGO = IS_SAVANT_FREE ? LOGO_SAVANT-FREE : LOGO_SAVANT_CODE
-export const LOGO_SMALL = IS_SAVANT_FREE ? LOGO_SMALL_SAVANT-FREE : LOGO_SMALL_SAVANT_CODE
+export const LOGO = IS_SAVANT_FREE ? LOGO_SavantFree : LOGO_SAVANT_CODE
+export const LOGO_SMALL = IS_SAVANT_FREE ? LOGO_SMALL_SavantFree : LOGO_SMALL_SAVANT_CODE
 
 // Shadow/border characters that receive the sheen animation effect
 export const SHADOW_CHARS = new Set([

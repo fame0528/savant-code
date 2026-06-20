@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
@@ -19,14 +19,14 @@ import {
   logoutUser,
 } from '../../utils/auth'
 import * as AuthModule from '../../utils/auth'
-import * as Savant-CodeApiModule from '../../utils/savant-code-api'
+import * as SavantCodeApiModule from '../../utils/savant-code-api'
 
 type User = AuthModule.User
 
 const ORIGINAL_USER: User = {
   id: 'user-001',
   name: 'CLI Tester',
-  email: 'tester@savant-code.dev',
+  email: 'tester@SavantCode.dev',
   authToken: 'token-original',
   fingerprintId: 'fingerprint-original',
   fingerprintHash: 'fingerprint-hash-original',
@@ -63,9 +63,9 @@ describe('Logout and Re-login helpers', () => {
   }
 
   const mockLogoutApi = () => {
-    spyOn(Savant-CodeApiModule, 'getApiClient').mockReturnValue({
+    spyOn(SavantCodeApiModule, 'getApiClient').mockReturnValue({
       logout: async () => ({ ok: true, status: 200 }),
-    } as ReturnType<typeof Savant-CodeApiModule.getApiClient>)
+    } as ReturnType<typeof SavantCodeApiModule.getApiClient>)
   }
 
   test('logoutUser removes credentials file and returns true', async () => {

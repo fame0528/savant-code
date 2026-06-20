@@ -1,4 +1,4 @@
-﻿import { createPatch } from 'diff'
+import { createPatch } from 'diff'
 
 import { tryToDoStringReplacementWithExtraIndentation } from './generate-diffs-prompt'
 

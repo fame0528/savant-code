@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 
 import { Button } from './button'
 import { TerminalLink } from './terminal-link'
@@ -56,7 +56,7 @@ const TOP_BANNER_REGISTRY: Record<NonNullable<TopBannerType>, BannerConfig> = {
       return (
         <>
           <text style={{ wrapMode: 'word', fg: textColor }}>
-            You started {IS_SAVANT_FREE ? 'Savant-Free' : 'Savant-Code'} in a subdirectory of a git repo.
+            You started {IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'} in a subdirectory of a git repo.
           </text>
           {gitRoot && onSwitchToGitRoot ? (
             <TerminalLink

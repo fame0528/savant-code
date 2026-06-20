@@ -1,4 +1,4 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
 import { feedbackRequestSchema } from '@savant-code/common/schemas/feedback'
 

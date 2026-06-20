@@ -1,4 +1,4 @@
-﻿import { useChatStore } from '../state/chat-store'
+import { useChatStore } from '../state/chat-store'
 import { IS_SAVANT_FREE } from '../utils/constants'
 import { logger } from '../utils/logger'
 import { getSystemMessage } from '../utils/message-history'
@@ -38,7 +38,7 @@ export const handleAdsDisable = (): {
 export const getAdsEnabled = (): boolean => {
   if (IS_SAVANT_FREE) return true
 
-  // Savant-Code LITE is a paid mode now, so use the normal saved setting.
+  // SavantCode LITE is a paid mode now, so use the normal saved setting.
   const settings = loadSettings()
   return settings.adsEnabled ?? false
 }

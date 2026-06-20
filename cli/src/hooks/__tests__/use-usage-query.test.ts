@@ -1,4 +1,4 @@
-﻿import { createMockLogger } from '@savant-code/common/testing/mocks/logger'
+import { createMockLogger } from '@savant-code/common/testing/mocks/logger'
 import { describe, test, expect, beforeEach, afterEach, mock } from 'bun:test'
 
 import {
@@ -25,7 +25,7 @@ describe('fetchUsageData', () => {
   const originalEnv = process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL
 
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL = 'https://test.savant-code.local'
+    process.env.NEXT_PUBLIC_SAVANT_CODE_APP_URL = 'https://test.SavantCode.local'
   })
 
   afterEach(() => {
@@ -222,11 +222,11 @@ describe('fetchUsageData', () => {
     await fetchUsageData({
       authToken: 'test-token',
       clientEnv: {
-        NEXT_PUBLIC_SAVANT_CODE_APP_URL: 'https://test.savant-code.local',
+        NEXT_PUBLIC_SAVANT_CODE_APP_URL: 'https://test.SavantCode.local',
       } as ClientEnv,
     })
 
-    expect(capturedUrl).toBe('https://test.savant-code.local/api/v1/usage')
+    expect(capturedUrl).toBe('https://test.SavantCode.local/api/v1/usage')
   })
 
   test('should log error on failed request', async () => {

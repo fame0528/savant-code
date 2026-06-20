@@ -1,15 +1,15 @@
-﻿import { getRateLimitsByModel } from '@savant-code/common/types/savant-free-session'
+import { getRateLimitsByModel } from '@savant-code/common/types/savant-free-session'
 import { TextAttributes } from '@opentui/core'
 import { useKeyboard } from '@opentui/react'
 import React, { useCallback, useState } from 'react'
 
 import { Button } from './button'
 import {
-  refreshSavant-FreeSession,
-  returnToSavant-FreeLanding,
+  refreshSavantFreeSession,
+  returnToSavantFreeLanding,
 } from '../hooks/use-savant-free-session'
 import { useTheme } from '../hooks/use-theme'
-import { useSavant-FreeSessionStore } from '../state/savant-free-session-store'
+import { useSavantFreeSessionStore } from '../state/savant-free-session-store'
 import { formatSessionUnits } from '../utils/format-session-units'
 import { isPlainEnterKey } from '../utils/terminal-enter-detection'
 import { BORDER_CHARS } from '../utils/ui-constants'
@@ -24,7 +24,7 @@ interface SessionEndedBannerProps {
 }
 
 /**
- * Replaces the chat input when the savant-free session has ended. Captures
+ * Replaces the chat input when the SavantFree session has ended. Captures
  * Enter to start a new same-chat session. Esc returns to model selection
  * once no in-flight work needs the global stream-interrupt handler.
  */
@@ -39,13 +39,13 @@ export const SessionEndedBanner: React.FC<SessionEndedBannerProps> = ({
   // All premium models share one daily pool; the server replicates the same
   // snapshot under each premium model id, so the first entry has the right
   // count.
-  const premiumQuota = useSavant-FreeSessionStore(
+  const premiumQuota = useSavantFreeSessionStore(
     (s) => Object.values(getRateLimitsByModel(s.session) ?? {})[0] ?? null,
   )
   const isQuotaExhausted = premiumQuota
     ? premiumQuota.recentCount >= premiumQuota.limit
     : false
-  const accessTier = useSavant-FreeSessionStore((s) =>
+  const accessTier = useSavantFreeSessionStore((s) =>
     s.session && 'accessTier' in s.session ? s.session.accessTier : 'full',
   )
   const quotaLabel = accessTier === 'limited' ? 'sessions' : 'premium sessions'
@@ -68,7 +68,7 @@ export const SessionEndedBanner: React.FC<SessionEndedBannerProps> = ({
     // re-queued. app.tsx swaps us into <WaitingRoomScreen> on the
     // transition, unmounting this banner â€” no need to clear the pending state on
     // success.
-    returnToSavant-FreeLanding({ resetChat: true }).catch(() =>
+    returnToSavantFreeLanding({ resetChat: true }).catch(() =>
       setPendingAction(null),
     )
   }, [canRestart])
@@ -78,7 +78,7 @@ export const SessionEndedBanner: React.FC<SessionEndedBannerProps> = ({
     setPendingAction('same-chat')
     // Re-POST with the currently selected model and keep the chat/run state
     // intact so the next prompt continues the same conversation.
-    refreshSavant-FreeSession().catch(() => setPendingAction(null))
+    refreshSavantFreeSession().catch(() => setPendingAction(null))
   }, [canRestart])
 
   useKeyboard(

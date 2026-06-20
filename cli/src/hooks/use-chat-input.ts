@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import stringWidth from 'string-width'
 
 import { useChatStore } from '../state/chat-store'
@@ -34,8 +34,8 @@ export const useChatInput = ({
   const inputMode = useChatStore((state) => state.inputMode)
 
   // Estimate the collapsed toggle width as rendered by AgentModeToggle.
-  // In Savant-Free, the toggle is always hidden, so never reserve width for it.
-  // In non-Savant-Free: hide in bash mode, compact height, or narrow width.
+  // In SavantFree, the toggle is always hidden, so never reserve width for it.
+  // In non-SavantFree: hide in bash mode, compact height, or narrow width.
   const estimatedToggleWidth = IS_SAVANT_FREE || inputMode !== 'default' || isCompactHeight || isNarrowWidth
     ? 0
     : stringWidth(`< ${agentMode}`) + 6 // 2 padding + 2 borders + 2 gap

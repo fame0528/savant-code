@@ -1,11 +1,11 @@
-﻿import { COMPOSIO_META_TOOL_NAMES } from '../constants/composio'
+import { COMPOSIO_META_TOOL_NAMES } from '../constants/composio'
 
 import type { ToolResultOutput } from '../types/messages/content-part'
 import type { Tool } from 'ai'
 
 export const toolNameParam = 'cb_tool_name'
 export const endsAgentStepParam = 'cb_easp'
-export const toolXmlName = 'savant-code_tool_call'
+export const toolXmlName = 'SavantCode_tool_call'
 export const startToolTag = `<${toolXmlName}>\n`
 export const endToolTag = `\n</${toolXmlName}>`
 

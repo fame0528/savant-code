@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from 'bun:test'
+import { describe, test, expect } from 'bun:test'
 
 import { getFingerprintType, generateFingerprintIdSync } from '../fingerprint'
 
@@ -69,7 +69,7 @@ describe('fingerprint utilities', () => {
       test('should be case-sensitive', () => {
         expect(getFingerprintType('Enhanced-abc123')).toBe('unknown')
         expect(getFingerprintType('ENHANCED-abc123')).toBe('unknown')
-        expect(getFingerprintType('Savant-Code-cli-abc123')).toBe('unknown')
+        expect(getFingerprintType('savant-code-cli-abc123')).toBe('unknown')
         expect(getFingerprintType('LEGACY-abc123')).toBe('unknown')
       })
     })

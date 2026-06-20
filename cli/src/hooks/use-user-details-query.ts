@@ -1,11 +1,11 @@
-﻿import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { getAuthToken } from '../utils/auth'
 import { getApiClient, setApiClientAuthToken } from '../utils/savant-code-api'
 import { logger as defaultLogger } from '../utils/logger'
 
 import type {
-  Savant-CodeApiClient,
+  SavantCodeApiClient,
   UserField,
   UserDetails,
 } from '../utils/savant-code-api'
@@ -25,7 +25,7 @@ interface FetchUserDetailsParams<T extends UserField> {
   authToken: string
   fields: readonly T[]
   logger?: Logger
-  apiClient?: Savant-CodeApiClient
+  apiClient?: SavantCodeApiClient
 }
 
 /**
@@ -37,7 +37,7 @@ export async function fetchUserDetails<T extends UserField>({
   logger = defaultLogger,
   apiClient: providedApiClient,
 }: FetchUserDetailsParams<T>): Promise<UserDetails<T> | null> {
-  let apiClient: Savant-CodeApiClient
+  let apiClient: SavantCodeApiClient
   if (providedApiClient) {
     apiClient = providedApiClient
   } else {

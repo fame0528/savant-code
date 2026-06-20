@@ -1,16 +1,16 @@
-﻿import { buildArray } from '@savant-code/common/util/array'
+import { buildArray } from '@savant-code/common/util/array'
 import { jsonToolResult } from '@savant-code/common/util/messages'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { Subgoal } from '@savant-code/common/types/session-state'
 
 export const handleAddSubgoal = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'add_subgoal'>
+  toolCall: SavantCodeToolCall<'add_subgoal'>
 
   agentContext: Record<string, Subgoal>
 }): Promise<{
@@ -27,4 +27,4 @@ export const handleAddSubgoal = (async (params: {
 
   await previousToolCallFinished
   return { output: jsonToolResult({ message: 'Successfully added subgoal' }) }
-}) satisfies Savant-CodeToolHandlerFunction<'add_subgoal'>
+}) satisfies SavantCodeToolHandlerFunction<'add_subgoal'>

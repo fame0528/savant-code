@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ChatGPT OAuth PKCE flow for connecting a user's ChatGPT subscription.
  * Experimental and feature-flagged.
  */
@@ -121,12 +121,12 @@ function escapeHtml(s: string): string {
 }
 
 function callbackPageHtml(success: boolean, errorMessage?: string): string {
-  const title = success ? 'Connected â€” Savant-Code' : 'Connection Failed â€” Savant-Code'
+  const title = success ? 'Connected â€” SavantCode' : 'Connection Failed â€” SavantCode'
   const heading = success ? 'âœ“ Connected to ChatGPT' : 'Connection Failed'
   const headingColor = success ? '#4ade80' : '#f87171'
   const body = success
-    ? 'You can close this tab and return to Savant-Code.'
-    : `${escapeHtml(errorMessage ?? 'Unknown error')}. Return to Savant-Code and try /connect:chatgpt again.`
+    ? 'You can close this tab and return to SavantCode.'
+    : `${escapeHtml(errorMessage ?? 'Unknown error')}. Return to SavantCode and try /connect:chatgpt again.`
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>${title}</title></head>
 <body style="font-family:system-ui,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;background:#0a0a0a;color:#e5e5e5">

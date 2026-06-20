@@ -1,4 +1,4 @@
-﻿import { appendFileSync, existsSync, mkdirSync, unlinkSync } from 'fs'
+import { appendFileSync, existsSync, mkdirSync, unlinkSync } from 'fs'
 import path, { dirname } from 'path'
 import { format as stringFormat } from 'util'
 

@@ -1,4 +1,4 @@
-﻿import { convertJsonSchemaToZod } from 'zod-from-json-schema'
+import { convertJsonSchemaToZod } from 'zod-from-json-schema'
 
 import { MCP_TOOL_SEPARATOR } from './mcp-constants'
 

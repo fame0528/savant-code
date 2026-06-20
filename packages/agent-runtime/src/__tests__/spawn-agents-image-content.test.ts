@@ -1,4 +1,4 @@
-﻿import { TEST_USER_ID } from '@savant-code/common/old-constants'
+import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import {
@@ -20,7 +20,7 @@ import * as runAgentStep from '../run-agent-step'
 import { handleSpawnAgentInline } from '../tools/handlers/tool/spawn-agent-inline'
 import { handleSpawnAgents } from '../tools/handlers/tool/spawn-agents'
 
-import type { Savant-CodeToolCall } from '@savant-code/common/tools/list'
+import type { SavantCodeToolCall } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
 import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 import type { ImagePart, TextPart } from '@savant-code/common/types/messages/content-part'
@@ -119,7 +119,7 @@ describe('Spawn Agents Image Content Propagation', () => {
   const createSpawnToolCall = (
     agentType: string,
     prompt = 'test prompt',
-  ): Savant-CodeToolCall<'spawn_agents'> => ({
+  ): SavantCodeToolCall<'spawn_agents'> => ({
     toolName: 'spawn_agents' as const,
     toolCallId: 'test-tool-call-id',
     input: {
@@ -130,7 +130,7 @@ describe('Spawn Agents Image Content Propagation', () => {
   const createInlineSpawnToolCall = (
     agentType: string,
     prompt = 'test prompt',
-  ): Savant-CodeToolCall<'spawn_agent_inline'> => ({
+  ): SavantCodeToolCall<'spawn_agent_inline'> => ({
     toolName: 'spawn_agent_inline' as const,
     toolCallId: 'test-tool-call-id',
     input: {
@@ -298,7 +298,7 @@ describe('Spawn Agents Image Content Propagation', () => {
 
       const imageContent = createImageContent()
 
-      const toolCall: Savant-CodeToolCall<'spawn_agents'> = {
+      const toolCall: SavantCodeToolCall<'spawn_agents'> = {
         toolName: 'spawn_agents' as const,
         toolCallId: 'test-tool-call-id',
         input: {

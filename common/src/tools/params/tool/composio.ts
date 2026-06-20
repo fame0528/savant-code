@@ -1,4 +1,4 @@
-﻿import { COMPOSIO_META_TOOL_NAMES } from '../../../constants/composio'
+import { COMPOSIO_META_TOOL_NAMES } from '../../../constants/composio'
 import z from 'zod/v4'
 
 import { jsonToolResultSchema } from '../utils'
@@ -70,7 +70,7 @@ const composioMetaToolInputSchemas = {
       sync_response_to_workbench: z
         .boolean()
         .default(false)
-        .describe('Always use false. Savant-Code disables Composio workbench.'),
+        .describe('Always use false. SavantCode disables Composio workbench.'),
       session_id: sessionIdParam,
     })
     .catchall(z.unknown()),

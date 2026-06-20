@@ -1,4 +1,4 @@
-﻿import {
+import {
   createPostHogClient,
   generateAnonymousId,
   type AnalyticsClientWithIdentify,

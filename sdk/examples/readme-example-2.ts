@@ -1,4 +1,4 @@
-﻿import { z } from 'zod/v4'
+import { z } from 'zod/v4'
 
 import { SavantClient, getCustomToolDefinition } from '@savant-code/sdk'
 
@@ -7,7 +7,7 @@ import type { AgentDefinition } from '@savant-code/sdk'
 async function main() {
   const client = new SavantClient({
     // Note: You need to pass in your own API key.
-    // Get it here: https://www.savant-code.dev/profile?tab=api-keys
+    // Get it here: https://www.SavantCode.dev/profile?tab=api-keys
     apiKey: process.env.SAVANT_CODE_API_KEY,
     // Optional directory agent runs from (if applicable).
     cwd: process.cwd(),
@@ -61,7 +61,7 @@ async function main() {
 
     handleEvent: (event) => {
       // All events that happen during the run: agent start/finish, tool calls/results, text responses, errors.
-      console.log('Savant-Code Event', JSON.stringify(event))
+      console.log('SavantCode Event', JSON.stringify(event))
     },
   })
 

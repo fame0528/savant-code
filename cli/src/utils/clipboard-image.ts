@@ -1,4 +1,4 @@
-﻿import { spawnSync } from 'child_process'
+import { spawnSync } from 'child_process'
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'fs'
 import os from 'os'
 import path from 'path'

@@ -1,4 +1,4 @@
-﻿import { dirname, isAbsolute, normalize } from 'path'
+import { dirname, isAbsolute, normalize } from 'path'
 
 import {
   finetunedVertexModels,
@@ -204,12 +204,12 @@ async function getRelevantFiles(
     logger,
   })
   const start = performance.now()
-  let savant-codeMessages = [systemMessage(system), ...messagesWithPrompt]
+  let SavantCodeMessages = [systemMessage(system), ...messagesWithPrompt]
 
   // Converts assistant messages to user messages for finetuned model
-  savant-codeMessages = savant-codeMessages
+  SavantCodeMessages = SavantCodeMessages
     .map((msg, i) => {
-      if (msg.role === 'assistant' && i !== savant-codeMessages.length - 1) {
+      if (msg.role === 'assistant' && i !== SavantCodeMessages.length - 1) {
         return castAssistantMessage(msg)
       } else {
         return msg
@@ -220,7 +220,7 @@ async function getRelevantFiles(
 
   let response = await promptFlashWithFallbacks({
     ...params,
-    messages: savant-codeMessages,
+    messages: SavantCodeMessages,
     model: models.openrouter_gemini2_5_flash,
     useFinetunedModel: finetunedModel,
   })

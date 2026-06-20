@@ -1,7 +1,7 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import path from 'path'
 
-import { isSupportedSavant-FreeModelId } from '@savant-code/common/constants/savant-free-models'
+import { isSupportedSavantFreeModelId } from '@savant-code/common/constants/savant-free-models'
 
 import { getConfigDir } from './auth'
 import { AGENT_MODES } from './constants'
@@ -22,10 +22,10 @@ const DEFAULT_SETTINGS: Settings = {
 export interface Settings {
   mode?: AgentMode
   adsEnabled?: boolean
-  /** Last model the user picked in the savant-free model selector. Restored on
-   *  next savant-free launch so users land in the queue for their preferred
+  /** Last model the user picked in the SavantFree model selector. Restored on
+   *  next SavantFree launch so users land in the queue for their preferred
    *  model without re-picking. Persisted as the canonical model id. */
-  savant-freeModel?: string
+  SavantFreeModel?: string
   /** @deprecated Use server-side fallbackToALaCarte setting instead */
   alwaysUseALaCarte?: boolean
   /** @deprecated Use server-side fallbackToALaCarte setting instead */
@@ -106,14 +106,14 @@ const validateSettings = (parsed: unknown): Settings => {
     settings.adsEnabled = obj.adsEnabled
   }
 
-  // Validate savant-freeModel â€” drop unknown ids so a removed model doesn't
+  // Validate SavantFreeModel â€” drop unknown ids so a removed model doesn't
   // strand the user on a non-existent queue. Hidden-but-supported models are
   // kept; access-tier resolution decides whether they are selectable.
   if (
-    typeof obj.savant-freeModel === 'string' &&
-    isSupportedSavant-FreeModelId(obj.savant-freeModel)
+    typeof obj.SavantFreeModel === 'string' &&
+    isSupportedSavantFreeModelId(obj.SavantFreeModel)
   ) {
-    settings.savant-freeModel = obj.savant-freeModel
+    settings.SavantFreeModel = obj.SavantFreeModel
   }
 
   // Validate alwaysUseALaCarte (legacy)
@@ -175,19 +175,19 @@ export const saveModePreference = (mode: AgentMode): void => {
 }
 
 /**
- * Load the saved savant-free model preference. Returns undefined if none is
+ * Load the saved SavantFree model preference. Returns undefined if none is
  * saved yet â€” callers should fall back to DEFAULT_SAVANT_FREE_MODEL_ID.
  */
-export const loadSavant-FreeModelPreference = (): string | undefined => {
-  return loadSettings().savant-freeModel
+export const loadSavantFreeModelPreference = (): string | undefined => {
+  return loadSettings().SavantFreeModel
 }
 
 /**
- * Save the savant-free model preference. Called whenever the user picks a model
+ * Save the SavantFree model preference. Called whenever the user picks a model
  * in the waiting room so the next launch defaults to it.
  */
-export const saveSavant-FreeModelPreference = (model: string): void => {
-  saveSettings({ savant-freeModel: model })
+export const saveSavantFreeModelPreference = (model: string): void => {
+  saveSettings({ SavantFreeModel: model })
 }
 
 /**

@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -487,7 +487,7 @@ describe('Base Deep Agent Integration', () => {
   )
 
   slowIt(
-    'works on a shallow-cloned savant-code repo for a commit-inspired focused task',
+    'works on a shallow-cloned SavantCode repo for a commit-inspired focused task',
     async () => {
       const apiKey = getApiKeyOrSkip()
       if (!apiKey) return
@@ -528,7 +528,7 @@ describe('Base Deep Agent Integration', () => {
 
       await writeTrace({
         testName:
-          'works on a shallow-cloned savant-code repo for a commit-inspired focused task',
+          'works on a shallow-cloned SavantCode repo for a commit-inspired focused task',
         events,
         runOutput: run.output,
         cwd: cloneDir,

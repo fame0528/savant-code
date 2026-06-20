@@ -1,4 +1,4 @@
-﻿import React, { useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { LOGO, LOGO_SMALL, SHADOW_CHARS } from '../login/constants'
 import { parseLogoLines } from '../login/utils'
@@ -53,7 +53,7 @@ interface LogoResult {
  * Returns:
  * - Full ASCII logo for width >= 70
  * - Small ASCII logo for width >= 40
- * - Text variant "SAVANT_CODE" or "Savant-Code CLI" for narrow widths
+ * - Text variant "SAVANT_CODE" or "SavantCode CLI" for narrow widths
  *
  * The hook handles ALL formatting internally including:
  * - Line parsing and width limiting
@@ -74,16 +74,16 @@ export const useLogo = ({
   const ASCII_LOGO_LINES = 6
   const rawLogoString = useMemo(() => {
     if (maxHeight != null && maxHeight < ASCII_LOGO_LINES) {
-      return IS_SAVANT_FREE ? 'SAVANT-FREE' : 'SAVANT_CODE'
+      return IS_SAVANT_FREE ? 'SavantFree' : 'SAVANT_CODE'
     }
     if (availableWidth >= 70) return LOGO
     if (availableWidth >= 20) return LOGO_SMALL
-    return IS_SAVANT_FREE ? 'SAVANT-FREE' : 'SAVANT_CODE'
+    return IS_SAVANT_FREE ? 'SavantFree' : 'SAVANT_CODE'
   }, [availableWidth, maxHeight])
 
   // Format text block for plain text contexts (chat messages, etc.)
   const textBlock = useMemo(() => {
-    if (rawLogoString === 'SAVANT_CODE' || rawLogoString === 'SAVANT-FREE') {
+    if (rawLogoString === 'SAVANT_CODE' || rawLogoString === 'SavantFree') {
       return '' // Don't show ASCII art for text-only variant in plain text contexts
     }
     // Parse and format for plain text display
@@ -95,10 +95,10 @@ export const useLogo = ({
   // Format component for React contexts (login modal, etc.)
   const component = useMemo(() => {
     // Text-only variant for very narrow widths
-    if (rawLogoString === 'SAVANT_CODE' || rawLogoString === 'SAVANT-FREE') {
-      const brandName = IS_SAVANT_FREE ? 'Savant-Free' : 'Savant-Code'
+    if (rawLogoString === 'SAVANT_CODE' || rawLogoString === 'SavantFree') {
+      const brandName = IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'
       // When we collapsed to text purely to fit a short terminal (not because
-      // the terminal is narrow), keep it to the bare brand name â€” "Savant-Free
+      // the terminal is narrow), keep it to the bare brand name â€” "SavantFree
       // CLI" reads as filler in that already-cramped space.
       const forcedByHeight = maxHeight != null && maxHeight < ASCII_LOGO_LINES
       const displayText =

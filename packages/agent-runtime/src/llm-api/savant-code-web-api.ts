@@ -1,4 +1,4 @@
-﻿import { withTimeout } from '@savant-code/common/util/promise'
+import { withTimeout } from '@savant-code/common/util/promise'
 
 import type { ClientEnv, CiEnv } from '@savant-code/common/types/contracts/env'
 import type { JSONObject } from '@savant-code/common/types/json'
@@ -9,7 +9,7 @@ const MAX_RETRIES = 3
 const RETRY_BASE_DELAY_MS = 1000
 const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504])
 
-interface Savant-CodeWebApiEnv {
+interface SavantCodeWebApiEnv {
   clientEnv: ClientEnv
   ciEnv: CiEnv
 }
@@ -36,7 +36,7 @@ const getNumberField = (value: unknown, key: string): number | undefined => {
   return typeof field === 'number' ? field : undefined
 }
 
-const callSavant-CodeV1 = async (params: {
+const callSavantCodeV1 = async (params: {
   endpoint:
     | '/api/v1/web-search'
     | '/api/v1/docs-search'
@@ -44,7 +44,7 @@ const callSavant-CodeV1 = async (params: {
   payload: unknown
   fetch: typeof globalThis.fetch
   logger: Logger
-  env: Savant-CodeWebApiEnv
+  env: SavantCodeWebApiEnv
   baseUrl?: string
   apiKey?: string
   requestName: 'web-search' | 'docs-search' | 'gravity-index'
@@ -54,7 +54,7 @@ const callSavant-CodeV1 = async (params: {
   const apiKey = params.apiKey ?? env.ciEnv.SAVANT_CODE_API_KEY
 
   if (!baseUrl || !apiKey) {
-    return { error: 'Missing Savant-Code base URL or API key' }
+    return { error: 'Missing SavantCode base URL or API key' }
   }
 
   const url = `${baseUrl}${endpoint}`
@@ -164,14 +164,14 @@ export async function callWebSearchAPI(params: {
   repoUrl?: string | null
   fetch: typeof globalThis.fetch
   logger: Logger
-  env: Savant-CodeWebApiEnv
+  env: SavantCodeWebApiEnv
   baseUrl?: string
   apiKey?: string
 }): Promise<{ result?: string; error?: string; creditsUsed?: number }> {
   const { query, depth = 'standard', repoUrl, fetch, logger, env } = params
   const payload = { query, depth, ...(repoUrl ? { repoUrl } : {}) }
 
-  const res = await callSavant-CodeV1({
+  const res = await callSavantCodeV1({
     endpoint: '/api/v1/web-search',
     payload,
     fetch,
@@ -199,7 +199,7 @@ export async function callDocsSearchAPI(params: {
   repoUrl?: string | null
   fetch: typeof globalThis.fetch
   logger: Logger
-  env: Savant-CodeWebApiEnv
+  env: SavantCodeWebApiEnv
   baseUrl?: string
   apiKey?: string
 }): Promise<{ documentation?: string; error?: string; creditsUsed?: number }> {
@@ -209,7 +209,7 @@ export async function callDocsSearchAPI(params: {
   if (typeof maxTokens === 'number') payload.maxTokens = maxTokens
   if (repoUrl) payload.repoUrl = repoUrl
 
-  const res = await callSavant-CodeV1({
+  const res = await callSavantCodeV1({
     endpoint: '/api/v1/docs-search',
     payload,
     fetch,
@@ -234,7 +234,7 @@ export async function callGravityIndexAPI(params: {
   input: JSONObject
   fetch: typeof globalThis.fetch
   logger: Logger
-  env: Savant-CodeWebApiEnv
+  env: SavantCodeWebApiEnv
   baseUrl?: string
   apiKey?: string
 }): Promise<{
@@ -244,7 +244,7 @@ export async function callGravityIndexAPI(params: {
 }> {
   const { input, fetch, logger, env } = params
 
-  const res = await callSavant-CodeV1({
+  const res = await callSavantCodeV1({
     endpoint: '/api/v1/gravity-index',
     payload: input,
     fetch,
@@ -274,7 +274,7 @@ export async function callTokenCountAPI(params: {
   tools?: Array<{ name: string; description?: string; input_schema?: unknown }>
   fetch: typeof globalThis.fetch
   logger: Logger
-  env: Savant-CodeWebApiEnv
+  env: SavantCodeWebApiEnv
   baseUrl?: string
   apiKey?: string
 }): Promise<{ inputTokens?: number; error?: string }> {
@@ -283,7 +283,7 @@ export async function callTokenCountAPI(params: {
   const apiKey = params.apiKey ?? env.ciEnv.SAVANT_CODE_API_KEY
 
   if (!baseUrl || !apiKey) {
-    return { error: 'Missing Savant-Code base URL or API key' }
+    return { error: 'Missing SavantCode base URL or API key' }
   }
 
   const url = `${baseUrl}/api/v1/token-count`

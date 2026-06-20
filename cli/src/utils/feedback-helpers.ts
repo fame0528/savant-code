@@ -1,4 +1,4 @@
-﻿import {
+import {
   MAX_ERROR_ID_LENGTH,
   MAX_ERROR_MESSAGE_LENGTH,
   MAX_ERRORS,

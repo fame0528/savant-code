@@ -1,4 +1,4 @@
-﻿import type { AgentTemplate } from '@savant-code/common/types/agent-template'
+import type { AgentTemplate } from '@savant-code/common/types/agent-template'
 import type { Message } from '@savant-code/common/types/messages/savant-code-message'
 import type {
   AgentState,

@@ -1,4 +1,4 @@
-﻿import { describe, test, expect } from 'bun:test'
+import { describe, test, expect } from 'bun:test'
 
 import {
   appendTextToRootStream,
@@ -1315,7 +1315,7 @@ describe('createAgentBlock', () => {
 
 describe('getAgentBaseName', () => {
   test('extracts base name from scoped versioned name', () => {
-    expect(getAgentBaseName('savant-code/file-picker@0.0.2')).toBe('file-picker')
+    expect(getAgentBaseName('SavantCode/file-picker@0.0.2')).toBe('file-picker')
   })
 
   test('extracts base name from simple versioned name', () => {
@@ -1334,7 +1334,7 @@ describe('getAgentBaseName', () => {
 describe('agentTypesMatch', () => {
   test('matches same base names with different versions', () => {
     expect(
-      getAgentBaseName('savant-code/file-picker@0.0.2') ===
+      getAgentBaseName('SavantCode/file-picker@0.0.2') ===
         getAgentBaseName('file-picker@1.0.0'),
     ).toBe(true)
   })
@@ -1542,7 +1542,7 @@ describe('createSpawnAgentBlocks', () => {
   test('filters out hidden agents', () => {
     const agents = [
       { agent_type: 'file-picker' },
-      { agent_type: 'savant-code/context-pruner' }, // This should be hidden
+      { agent_type: 'SavantCode/context-pruner' }, // This should be hidden
     ]
 
     const result = createSpawnAgentBlocks('tool-1', agents)

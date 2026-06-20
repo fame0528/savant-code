@@ -1,13 +1,13 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { AgentState } from '@savant-code/common/types/session-state'
 
 export const handleSetMessages = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<'set_messages'>
+  toolCall: SavantCodeToolCall<'set_messages'>
 
   agentState: AgentState
 }): Promise<{ output: SavantToolOutput<'set_messages'> }> => {
@@ -16,4 +16,4 @@ export const handleSetMessages = (async (params: {
   await previousToolCallFinished
   agentState.messageHistory = toolCall.input.messages
   return { output: [{ type: 'json', value: { message: 'Messages set.' } }] }
-}) satisfies Savant-CodeToolHandlerFunction<'set_messages'>
+}) satisfies SavantCodeToolHandlerFunction<'set_messages'>

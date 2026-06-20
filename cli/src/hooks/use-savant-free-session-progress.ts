@@ -1,22 +1,22 @@
-﻿import { useNow } from './use-now'
+import { useNow } from './use-now'
 import { IS_SAVANT_FREE } from '../utils/constants'
 
-import type { Savant-FreeSessionResponse } from '../types/savant-free-session'
+import type { SavantFreeSessionResponse } from '../types/savant-free-session'
 
-export interface Savant-FreeSessionProgress {
+export interface SavantFreeSessionProgress {
   /** 0..1, fraction of the session remaining. 1 at admission, 0 at expiry. */
   fraction: number
   remainingMs: number
 }
 
 /**
- * Computes a live progress value for the active savant-free session, ticking at
- * 1Hz. Returns null outside of active state or in non-savant-free builds, so
+ * Computes a live progress value for the active SavantFree session, ticking at
+ * 1Hz. Returns null outside of active state or in non-SavantFree builds, so
  * callers can short-circuit their rendering.
  */
-export function useSavant-FreeSessionProgress(
-  session: Savant-FreeSessionResponse | null,
-): Savant-FreeSessionProgress | null {
+export function useSavantFreeSessionProgress(
+  session: SavantFreeSessionResponse | null,
+): SavantFreeSessionProgress | null {
   const expiresAtMs =
     session?.status === 'active' ? Date.parse(session.expiresAt) : null
   const admittedAtMs =

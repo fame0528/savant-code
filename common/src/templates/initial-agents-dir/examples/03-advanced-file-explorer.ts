@@ -1,4 +1,4 @@
-﻿import type { AgentDefinition, ToolCall } from '../types/agent-definition'
+import type { AgentDefinition, ToolCall } from '../types/agent-definition'
 
 const definition: AgentDefinition = {
   id: 'advanced-file-explorer',
@@ -10,7 +10,7 @@ const definition: AgentDefinition = {
 
   includeMessageHistory: false,
   toolNames: ['spawn_agents', 'set_output'],
-  spawnableAgents: [`savant-code/file-picker@0.0.1`],
+  spawnableAgents: [`SavantCode/file-picker@0.0.1`],
 
   inputSchema: {
     prompt: {
@@ -56,7 +56,7 @@ const definition: AgentDefinition = {
         toolName: 'spawn_agents',
         input: {
           agents: filePickerPrompts.map((promptText) => ({
-            agent_type: 'savant-code/file-picker@0.0.1',
+            agent_type: 'SavantCode/file-picker@0.0.1',
             prompt: promptText,
           })),
         },

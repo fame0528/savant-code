@@ -21,13 +21,13 @@ import { logger } from './logger'
 
 /**
  * Loads custom slash commands from .savant/commands/ and
- * .savant-code/commands/ directories (FID-2026-0620-005).
+ * .SavantCode/commands/ directories (FID-2026-0620-005).
  *
  * Search roots (later overrides earlier):
  * - ~/.savant/commands/   (global)
- * - ~/.savant-code/commands/  (legacy alias)
+ * - ~/.SavantCode/commands/  (legacy alias)
  * - {cwd}/.savant/commands/   (project, highest priority)
- * - {cwd}/.savant-code/commands/  (project, legacy alias)
+ * - {cwd}/.SavantCode/commands/  (project, legacy alias)
  *
  * Each `.md` file becomes a `/<filename-without-ext>` command. YAML
  * frontmatter is strict (Zod-validated); invalid files are skipped
@@ -115,7 +115,7 @@ function warnFirstLoad(name: string, filePath: string): void {
   FIRST_LOAD_SEEN.set(name, filePath)
   // First load: surface a one-time warning to stderr (not the TUI)
   process.stderr.write(
-    `[savant-code] loaded custom command /${name} from ${filePath}\n`,
+    `[SavantCode] loaded custom command /${name} from ${filePath}\n`,
   )
 }
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * E2E test script for the librarian agent.
  *
  * Runs the agent on repo-analysis tasks one at a time, writing full event traces

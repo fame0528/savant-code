@@ -1,4 +1,4 @@
-﻿import { appendFileSync, mkdirSync } from 'fs'
+import { appendFileSync, mkdirSync } from 'fs'
 import path, { dirname } from 'path'
 
 import { IS_DEV } from '@savant-code/common/env'

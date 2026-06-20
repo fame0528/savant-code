@@ -1,4 +1,4 @@
-﻿import { useRenderer } from '@opentui/react'
+import { useRenderer } from '@opentui/react'
 import React, {
   useCallback,
   useEffect,
@@ -460,7 +460,7 @@ export const LoginModal = ({
                   <span fg={theme.secondary}>
                     Tip: Can't copy? Exit and run{' '}
                   </span>
-                  <span fg={theme.primary}>{IS_SAVANT_FREE ? 'savant-free' : 'savant-code'} login</span>
+                  <span fg={theme.primary}>{IS_SAVANT_FREE ? 'SavantFree' : 'SavantCode'} login</span>
                   <span fg={theme.secondary}>
                     {' '}instead.
                   </span>

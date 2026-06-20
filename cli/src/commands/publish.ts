@@ -1,4 +1,4 @@
-﻿import { WEBSITE_URL } from '@savant-code/sdk'
+import { WEBSITE_URL } from '@savant-code/sdk'
 
 import { getUserCredentials } from '../utils/auth'
 import { getApiClient, setApiClientAuthToken } from '../utils/savant-code-api'

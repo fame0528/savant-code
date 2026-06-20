@@ -1,4 +1,4 @@
-﻿import {
+import {
   finetunedVertexModelNames, // Restore usage
   costModes,
   type CostMode,

@@ -1,10 +1,10 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import path from 'path'
 
 import { getConfigDir } from './auth'
 import { logger } from './logger'
 
-interface Savant-FreeInstanceOwner {
+interface SavantFreeInstanceOwner {
   instanceId: string
   pid: number
 }
@@ -13,10 +13,10 @@ const OWNER_FILE = 'savant-free-instance-owner.json'
 
 const getOwnerPath = (): string => path.join(getConfigDir(), OWNER_FILE)
 
-function readOwner(): Savant-FreeInstanceOwner | null {
+function readOwner(): SavantFreeInstanceOwner | null {
   try {
     const raw = fs.readFileSync(getOwnerPath(), 'utf8')
-    const parsed = JSON.parse(raw) as Partial<Savant-FreeInstanceOwner>
+    const parsed = JSON.parse(raw) as Partial<SavantFreeInstanceOwner>
     if (
       typeof parsed.instanceId !== 'string' ||
       typeof parsed.pid !== 'number'
@@ -42,7 +42,7 @@ function isProcessRunning(pid: number): boolean {
   }
 }
 
-export function recordSavant-FreeInstanceOwner(instanceId: string): void {
+export function recordSavantFreeInstanceOwner(instanceId: string): void {
   try {
     fs.mkdirSync(getConfigDir(), { recursive: true })
     fs.writeFileSync(
@@ -57,7 +57,7 @@ export function recordSavant-FreeInstanceOwner(instanceId: string): void {
   }
 }
 
-export function isSavant-FreeInstanceOwnedByDeadLocalProcess(
+export function isSavantFreeInstanceOwnedByDeadLocalProcess(
   instanceId: string,
 ): boolean {
   const owner = readOwner()

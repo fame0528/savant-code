@@ -1,4 +1,4 @@
-﻿import { WEBSITE_URL } from './constants'
+import { WEBSITE_URL } from './constants'
 
 import type { ComposioMetaToolName } from '@savant-code/common/constants/composio'
 import type { ToolResultOutput } from '@savant-code/common/types/messages/content-part'

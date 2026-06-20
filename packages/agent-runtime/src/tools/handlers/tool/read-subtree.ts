@@ -1,11 +1,11 @@
-﻿import { getAllFilePaths } from '@savant-code/common/project-file-tree'
+import { getAllFilePaths } from '@savant-code/common/project-file-tree'
 import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import { truncateFileTreeBasedOnTokenBudget } from '../../../system-prompt/truncate-file-tree'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { Logger } from '@savant-code/common/types/contracts/logger'
@@ -17,7 +17,7 @@ import type {
 type ToolName = 'read_subtree'
 export const handleReadSubtree = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<ToolName>
+  toolCall: SavantCodeToolCall<ToolName>
   fileContext: ProjectFileContext
   logger: Logger
 }): Promise<{
@@ -140,7 +140,7 @@ export const handleReadSubtree = (async (params: {
   }
 
   return { output: jsonToolResult(outputs) }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>
 
 function deepClone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj))

@@ -1,4 +1,4 @@
-﻿import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
+import { CHATGPT_OAUTH_ENABLED } from '@savant-code/common/constants/chatgpt-oauth'
 import { IS_SAVANT_FREE } from '../utils/constants'
 import { isChatGptOAuthValid } from '@savant-code/sdk'
 import { TextAttributes } from '@opentui/core'
@@ -122,7 +122,7 @@ export const UsageBanner = ({ showTime }: { showTime: number }) => {
           />
         )}
 
-        {/* Savant-Code credits section - structured layout */}
+        {/* SavantCode credits section - structured layout */}
         <Button
           onClick={() => {
             safeOpen(WEBSITE_URL + '/usage')

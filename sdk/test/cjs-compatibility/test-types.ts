@@ -1,4 +1,4 @@
-﻿// Test TypeScript type resolution in CommonJS environment
+// Test TypeScript type resolution in CommonJS environment
 import {
   SavantClient as ClientClass,
   getCustomToolDefinition,

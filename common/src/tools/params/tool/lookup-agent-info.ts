@@ -1,4 +1,4 @@
-﻿import z from 'zod/v4'
+import z from 'zod/v4'
 
 import { jsonValueSchema } from '../../../types/json'
 import { $getNativeToolCallExampleString, jsonToolResultSchema } from '../utils'
@@ -22,7 +22,7 @@ ${$getNativeToolCallExampleString({
   toolName,
   inputSchema,
   input: {
-    agentId: 'savant-code/researcher@0.0.1',
+    agentId: 'SavantCode/researcher@0.0.1',
   },
   endsAgentStep,
 })}

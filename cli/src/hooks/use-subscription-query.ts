@@ -1,4 +1,4 @@
-﻿import { useActivityQuery } from './use-activity-query'
+import { useActivityQuery } from './use-activity-query'
 import { getAuthToken } from '../utils/auth'
 import { IS_SAVANT_FREE } from '../utils/constants'
 import { getApiClient } from '../utils/savant-code-api'

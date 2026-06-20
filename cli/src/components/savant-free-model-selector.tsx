@@ -1,4 +1,4 @@
-﻿import { TextAttributes } from '@opentui/core'
+import { TextAttributes } from '@opentui/core'
 import { useKeyboard } from '@opentui/react'
 import React, {
   useCallback,
@@ -13,32 +13,32 @@ import { Button } from './button'
 import {
   FALLBACK_SAVANT_FREE_MODEL_ID,
   SAVANT_FREE_PREMIUM_SESSION_LIMIT,
-  getSavant-FreeDeploymentAvailabilityLabel,
-  getSavant-FreeModelsForAccessTier,
-  getRecommendedSavant-FreeModelId,
-  isSavant-FreeModelAvailable,
-  isSavant-FreePremiumModelId,
+  getSavantFreeDeploymentAvailabilityLabel,
+  getSavantFreeModelsForAccessTier,
+  getRecommendedSavantFreeModelId,
+  isSavantFreeModelAvailable,
+  isSavantFreePremiumModelId,
 } from '@savant-code/common/constants/savant-free-models'
 import { getRateLimitsByModel } from '@savant-code/common/types/savant-free-session'
 
-import { joinSavant-FreeQueue } from '../hooks/use-savant-free-session'
+import { joinSavantFreeQueue } from '../hooks/use-savant-free-session'
 import { useNow } from '../hooks/use-now'
-import { useSavant-FreeModelStore } from '../state/savant-free-model-store'
-import { useSavant-FreeSessionStore } from '../state/savant-free-session-store'
+import { useSavantFreeModelStore } from '../state/savant-free-model-store'
+import { useSavantFreeSessionStore } from '../state/savant-free-session-store'
 import { useTerminalDimensions } from '../hooks/use-terminal-dimensions'
 import { useTheme } from '../hooks/use-theme'
 import {
-  savant-freeModelNavigationDirectionForKey,
-  nextSavant-FreeModelId,
+  SavantFreeModelNavigationDirectionForKey,
+  nextSavantFreeModelId,
 } from '../utils/savant-free-model-navigation'
 import { formatSessionUnits } from '../utils/format-session-units'
 import {
-  formatSavant-FreePremiumResetCountdown,
-  getSavant-FreePremiumResetAt,
+  formatSavantFreePremiumResetCountdown,
+  getSavantFreePremiumResetAt,
 } from '../utils/savant-free-premium-reset'
 import { isPlainEnterKey } from '../utils/terminal-enter-detection'
 
-import type { Savant-FreeModelOption } from '@savant-code/common/constants/savant-free-models'
+import type { SavantFreeModelOption } from '@savant-code/common/constants/savant-free-models'
 import type { KeyEvent, ScrollBoxRenderable } from '@opentui/core'
 
 // The picker opens collapsed to a single recommended hero so a new user can
@@ -63,12 +63,12 @@ import type { KeyEvent, ScrollBoxRenderable } from '@opentui/core'
 type Section = {
   key: 'premium' | 'unlimited' | 'limited'
   label: string
-  models: readonly Savant-FreeModelOption[]
+  models: readonly SavantFreeModelOption[]
 }
 
 // Sentinel id for the expand/collapse toggle so it can ride the same
 // keyboard-navigation list as the model rows (Tab/arrow to it, Enter to fire).
-const TOGGLE_ID = '__savant-free_toggle__'
+const TOGGLE_ID = '__SavantFree_toggle__'
 
 // Right-aligned CTA shown on the focused, joinable row so the highlighted card
 // reads as a button ("you can press Enter here") instead of just a selection.
@@ -103,7 +103,7 @@ const CUE_GAP = 2 // min gap between a row's details and the focused-row cue
  * models don't all fit, and Tab/arrow navigation keeps the focused row
  * scrolled into view.
  */
-interface Savant-FreeModelSelectorProps {
+interface SavantFreeModelSelectorProps {
   /** Max vertical rows the picker may occupy. When the rendered rows exceed
    *  this, the list scrolls (scrollbar shown, focused row kept in view);
    *  otherwise the scrollbox shrinks to fit and no scrollbar appears. */
@@ -114,7 +114,7 @@ interface Savant-FreeModelSelectorProps {
   onExpandedChange?: (expanded: boolean) => void
 }
 
-export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> = ({
+export const SavantFreeModelSelector: React.FC<SavantFreeModelSelectorProps> = ({
   maxHeight,
   onExpandedChange,
 }) => {
@@ -124,25 +124,25 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
   // box (capped at 80 cols), so a wide terminal doesn't actually let us
   // sprawl the buttons across it.
   const { contentMaxWidth } = useTerminalDimensions()
-  const selectedModel = useSavant-FreeModelStore((s) => s.selectedModel)
-  const setSelectedModel = useSavant-FreeModelStore((s) => s.setSelectedModel)
-  const session = useSavant-FreeSessionStore((s) => s.session)
+  const selectedModel = useSavantFreeModelStore((s) => s.selectedModel)
+  const setSelectedModel = useSavantFreeModelStore((s) => s.setSelectedModel)
+  const session = useSavantFreeSessionStore((s) => s.session)
   const accessTier =
     session && 'accessTier' in session ? session.accessTier : 'full'
   const now = useNow(60_000)
   const deploymentAvailabilityLabel = useMemo(
-    () => getSavant-FreeDeploymentAvailabilityLabel(new Date(now)),
+    () => getSavantFreeDeploymentAvailabilityLabel(new Date(now)),
     [now],
   )
   const [pending, setPending] = useState<string | null>(null)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   const availableModels = useMemo(
-    () => getSavant-FreeModelsForAccessTier(accessTier),
+    () => getSavantFreeModelsForAccessTier(accessTier),
     [accessTier],
   )
   const recommendedModel = useMemo(() => {
-    const id = getRecommendedSavant-FreeModelId(accessTier)
+    const id = getRecommendedSavantFreeModelId(accessTier)
     return availableModels.find((m) => m.id === id) ?? availableModels[0]!
   }, [accessTier, availableModels])
   const otherModels = useMemo(
@@ -186,12 +186,12 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
         {
           key: 'premium',
           label: 'PREMIUM',
-          models: otherModels.filter((m) => isSavant-FreePremiumModelId(m.id)),
+          models: otherModels.filter((m) => isSavantFreePremiumModelId(m.id)),
         },
         {
           key: 'unlimited',
           label: 'UNLIMITED',
-          models: otherModels.filter((m) => !isSavant-FreePremiumModelId(m.id)),
+          models: otherModels.filter((m) => !isSavantFreePremiumModelId(m.id)),
         },
       ] satisfies readonly Section[]
     ).filter((section) => section.models.length > 0)
@@ -234,7 +234,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
     if (
       (session?.status === 'none' || !session) &&
       (!renderedModelIds.includes(selectedModel) ||
-        !isSavant-FreeModelAvailable(selectedModel, new Date(now)))
+        !isSavantFreeModelAvailable(selectedModel, new Date(now)))
     ) {
       setSelectedModel(renderedModelIds[0] ?? FALLBACK_SAVANT_FREE_MODEL_ID)
     }
@@ -257,10 +257,10 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
   const premiumUsed = sharedRateLimit?.recentCount ?? 0
   const premiumExhausted = premiumUsed >= SAVANT_FREE_PREMIUM_SESSION_LIMIT
   // The pool resets daily on a Pacific-day boundary regardless of usage, so the
-  // countdown is meaningful even at zero used â€” getSavant-FreePremiumResetAt falls
+  // countdown is meaningful even at zero used â€” getSavantFreePremiumResetAt falls
   // back to the next day boundary when the server hasn't sent a resetAt yet.
-  const premiumResetCountdown = formatSavant-FreePremiumResetCountdown(
-    getSavant-FreePremiumResetAt({ rateLimitsByModel, nowMs: now }),
+  const premiumResetCountdown = formatSavantFreePremiumResetCountdown(
+    getSavantFreePremiumResetAt({ rateLimitsByModel, nowMs: now }),
     now,
   )
 
@@ -279,10 +279,10 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
     nameColumnWidth,
     recommendedOneLineLen,
   } = useMemo(() => {
-    const nameLen = (m: Savant-FreeModelOption) => m.displayName.length
+    const nameLen = (m: SavantFreeModelOption) => m.displayName.length
     const maxNameLen = Math.max(...availableModels.map(nameLen))
 
-    const detailsParts = (model: Savant-FreeModelOption): number[] => {
+    const detailsParts = (model: SavantFreeModelOption): number[] => {
       const parts: number[] = []
       parts.push(model.tagline.length)
       if (model.warning) parts.push(model.warning.length)
@@ -295,7 +295,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
     const joinedLen = (parts: number[]): number =>
       parts.reduce((a, b) => a + b, 0) + Math.max(0, parts.length - 1) * 3 // " Â· "
 
-    const oneLineLen = (model: Savant-FreeModelOption): number =>
+    const oneLineLen = (model: SavantFreeModelOption): number =>
       2 /* indicator + space */ +
       maxNameLen +
       NAME_GAP +
@@ -325,9 +325,9 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
     // Narrow: line 1 = "indicator name Â· tagline", line 2 (if any) =
     // "  warning Â· hours". Compute the max of both so all buttons stay the
     // same width.
-    const labelLineLen = (m: Savant-FreeModelOption) =>
+    const labelLineLen = (m: SavantFreeModelOption) =>
       2 + m.displayName.length + 3 + m.tagline.length
-    const detailsLineLen = (m: Savant-FreeModelOption) => {
+    const detailsLineLen = (m: SavantFreeModelOption) => {
       const parts: number[] = []
       if (m.warning) parts.push(m.warning.length)
       if (m.availability === 'deployment_hours') {
@@ -357,7 +357,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
   ])
 
   const rowWraps = useCallback(
-    (m: Savant-FreeModelOption) =>
+    (m: SavantFreeModelOption) =>
       wrapDetails && (!!m.warning || m.availability === 'deployment_hours'),
     [wrapDetails],
   )
@@ -417,7 +417,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
 
   const isJoinable = useCallback(
     (modelId: string) => {
-      if (!isSavant-FreeModelAvailable(modelId, new Date(now))) return false
+      if (!isSavantFreeModelAvailable(modelId, new Date(now))) return false
       const rateLimit = rateLimitsByModel?.[modelId]
       return !rateLimit || rateLimit.recentCount < rateLimit.limit
     },
@@ -430,7 +430,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
       if (modelId === committedModelId) return
       if (!isJoinable(modelId)) return
       setPending(modelId)
-      joinSavant-FreeQueue(modelId).finally(() => setPending(null))
+      joinSavantFreeQueue(modelId).finally(() => setPending(null))
     },
     [pending, committedModelId, isJoinable],
   )
@@ -458,7 +458,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
       (key: KeyEvent) => {
         if (pending) return
         const name = key.name ?? ''
-        const direction = savant-freeModelNavigationDirectionForKey(key)
+        const direction = SavantFreeModelNavigationDirectionForKey(key)
         // Use the shared Enter detector so the keypad Enter and the niche
         // Linux terminals that send \n (linefeed) for Enter also commit; a
         // raw name === 'return' check silently ignores those, which looks
@@ -479,7 +479,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
           return
         }
         if (!direction) return
-        const targetId = nextSavant-FreeModelId({
+        const targetId = nextSavantFreeModelId({
           modelIds: navIds,
           focusedId,
           direction,
@@ -503,7 +503,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
   )
 
   const renderModelButton = (
-    model: Savant-FreeModelOption,
+    model: SavantFreeModelOption,
     options: { recommended?: boolean } = {},
   ) => {
     // Single visual state: the focused row IS the highlight. The user's
@@ -538,7 +538,7 @@ export const Savant-FreeModelSelector: React.FC<Savant-FreeModelSelectorProps> =
         : theme.border
 
     // Deployment-hours rows show "until 5pm PT" while open and "opens 9am ET"
-    // while closed (the label flips inside getSavant-FreeDeploymentAvailabilityLabel),
+    // while closed (the label flips inside getSavantFreeDeploymentAvailabilityLabel),
     // so the same string carries both the in-hours and out-of-hours signals
     // without a separate "Closed" chip. Greyed-out fgColor handles the rest.
     const hasHours = model.availability === 'deployment_hours'

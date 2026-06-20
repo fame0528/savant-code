@@ -1,4 +1,4 @@
-﻿import { deepseekModels } from '@savant-code/common/constants/model-config'
+import { deepseekModels } from '@savant-code/common/constants/model-config'
 
 import { publisher } from '../constants'
 import type { SecretAgentDefinition } from '../types/secret-agent-definition'

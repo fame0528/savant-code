@@ -1,4 +1,4 @@
-﻿import { TEST_USER_ID } from '@savant-code/common/old-constants'
+import { TEST_USER_ID } from '@savant-code/common/old-constants'
 import { TEST_AGENT_RUNTIME_IMPL } from '@savant-code/common/testing/impl/agent-runtime'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import { assistantMessage } from '@savant-code/common/util/messages'
@@ -18,7 +18,7 @@ import { handleSpawnAgentInline } from '../tools/handlers/tool/spawn-agent-inlin
 import { getMatchingSpawn } from '../tools/handlers/tool/spawn-agent-utils'
 import { handleSpawnAgents } from '../tools/handlers/tool/spawn-agents'
 
-import type { Savant-CodeToolCall } from '@savant-code/common/tools/list'
+import type { SavantCodeToolCall } from '@savant-code/common/tools/list'
 import type { AgentTemplate } from '@savant-code/common/types/agent-template'
 import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 
@@ -110,36 +110,36 @@ describe('Spawn Agents Permissions', () => {
     describe('exact matches with publisher/agent@version format', () => {
       it('should match exact publisher/agent@version', () => {
         const spawnableAgents = [
-          'savant-code/thinker@1.0.0',
-          'savant-code/reviewer@2.1.0',
+          'SavantCode/thinker@1.0.0',
+          'SavantCode/reviewer@2.1.0',
         ]
         const result = getMatchingSpawn(
           spawnableAgents,
-          'savant-code/thinker@1.0.0',
+          'SavantCode/thinker@1.0.0',
         )
-        expect(result).toBe('savant-code/thinker@1.0.0')
+        expect(result).toBe('SavantCode/thinker@1.0.0')
       })
 
       it('should not match different versions', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0']
         const result = getMatchingSpawn(
           spawnableAgents,
-          'savant-code/thinker@2.0.0',
+          'SavantCode/thinker@2.0.0',
         )
         expect(result).toBeNull()
       })
 
       it('should not match different publishers', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0']
         const result = getMatchingSpawn(spawnableAgents, 'acme/thinker@1.0.0')
         expect(result).toBeNull()
       })
 
       it('should not match different agent names', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0']
         const result = getMatchingSpawn(
           spawnableAgents,
-          'savant-code/reviewer@1.0.0',
+          'SavantCode/reviewer@1.0.0',
         )
         expect(result).toBeNull()
       })
@@ -147,19 +147,19 @@ describe('Spawn Agents Permissions', () => {
 
     describe('publisher/agent format without version', () => {
       it('should match publisher/agent when child has no version', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0', 'acme/reviewer']
-        const result = getMatchingSpawn(spawnableAgents, 'savant-code/thinker')
-        expect(result).toBe('savant-code/thinker@1.0.0')
+        const spawnableAgents = ['SavantCode/thinker@1.0.0', 'acme/reviewer']
+        const result = getMatchingSpawn(spawnableAgents, 'SavantCode/thinker')
+        expect(result).toBe('SavantCode/thinker@1.0.0')
       })
 
       it('should match exact publisher/agent without version', () => {
-        const spawnableAgents = ['savant-code/thinker', 'acme/reviewer']
-        const result = getMatchingSpawn(spawnableAgents, 'savant-code/thinker')
-        expect(result).toBe('savant-code/thinker')
+        const spawnableAgents = ['SavantCode/thinker', 'acme/reviewer']
+        const result = getMatchingSpawn(spawnableAgents, 'SavantCode/thinker')
+        expect(result).toBe('SavantCode/thinker')
       })
 
       it('should not match when publisher differs', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0']
         const result = getMatchingSpawn(spawnableAgents, 'acme/thinker')
         expect(result).toBeNull()
       })
@@ -173,9 +173,9 @@ describe('Spawn Agents Permissions', () => {
       })
 
       it('should match agent@version when spawnable has publisher but child does not', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0', 'reviewer@2.0.0']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0', 'reviewer@2.0.0']
         const result = getMatchingSpawn(spawnableAgents, 'thinker@1.0.0')
-        expect(result).toBe('savant-code/thinker@1.0.0')
+        expect(result).toBe('SavantCode/thinker@1.0.0')
       })
 
       it('should not match when versions differ', () => {
@@ -199,24 +199,24 @@ describe('Spawn Agents Permissions', () => {
       })
 
       it('should match simple agent name when spawnable has publisher', () => {
-        const spawnableAgents = ['savant-code/thinker@1.0.0', 'reviewer']
+        const spawnableAgents = ['SavantCode/thinker@1.0.0', 'reviewer']
         const result = getMatchingSpawn(spawnableAgents, 'thinker')
-        expect(result).toBe('savant-code/thinker@1.0.0')
+        expect(result).toBe('SavantCode/thinker@1.0.0')
       })
 
       it('should match underscored agent name when spawnable has publisher and version', () => {
-        const spawnableAgents = ['savant-code/file-picker@1.0.0', 'reviewer']
+        const spawnableAgents = ['SavantCode/file-picker@1.0.0', 'reviewer']
         const result = getMatchingSpawn(spawnableAgents, 'file_picker')
-        expect(result).toBe('savant-code/file-picker@1.0.0')
+        expect(result).toBe('SavantCode/file-picker@1.0.0')
       })
 
       it('should match underscored published agent ID to hyphenated spawnable agent', () => {
-        const spawnableAgents = ['savant-code/file-picker@1.0.0']
+        const spawnableAgents = ['SavantCode/file-picker@1.0.0']
         const result = getMatchingSpawn(
           spawnableAgents,
-          'savant-code/file_picker@1.0.0',
+          'SavantCode/file_picker@1.0.0',
         )
-        expect(result).toBe('savant-code/file-picker@1.0.0')
+        expect(result).toBe('SavantCode/file-picker@1.0.0')
       })
 
       it('should match simple agent name when spawnable has version', () => {
@@ -261,7 +261,7 @@ describe('Spawn Agents Permissions', () => {
       })
 
       it('should prioritize exact matches over partial matches', () => {
-        const spawnableAgents = ['thinker', 'savant-code/thinker@1.0.0']
+        const spawnableAgents = ['thinker', 'SavantCode/thinker@1.0.0']
         const result = getMatchingSpawn(spawnableAgents, 'thinker')
         expect(result).toBe('thinker') // First match wins
       })
@@ -272,7 +272,7 @@ describe('Spawn Agents Permissions', () => {
     const createSpawnToolCall = (
       agentType: string,
       prompt = 'test prompt',
-    ): Savant-CodeToolCall<'spawn_agents'> => ({
+    ): SavantCodeToolCall<'spawn_agents'> => ({
       toolName: 'spawn_agents' as const,
       toolCallId: 'test-tool-call-id',
       input: {
@@ -321,24 +321,24 @@ describe('Spawn Agents Permissions', () => {
 
     it('should allow underscored published agent_type when hyphenated agent is spawnable', async () => {
       const parentAgent = createMockAgent('parent', [
-        'savant-code/file-picker@1.0.0',
+        'SavantCode/file-picker@1.0.0',
       ])
-      const childAgent = createMockAgent('savant-code/file-picker@1.0.0')
+      const childAgent = createMockAgent('SavantCode/file-picker@1.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
-      const toolCall = createSpawnToolCall('savant-code/file_picker@1.0.0')
+      const toolCall = createSpawnToolCall('SavantCode/file_picker@1.0.0')
 
       const { output } = await handleSpawnAgents({
         ...handleSpawnAgentsBaseParams,
         agentState: sessionState.mainAgentState,
         agentTemplate: parentAgent,
-        localAgentTemplates: { 'savant-code/file-picker@1.0.0': childAgent },
+        localAgentTemplates: { 'SavantCode/file-picker@1.0.0': childAgent },
         toolCall,
       })
 
       expect(JSON.stringify(output)).toContain('Mock agent response')
       expect(mockLoopAgentSteps).toHaveBeenCalledTimes(1)
       expect(mockLoopAgentSteps.mock.calls[0][0].agentState.agentType).toBe(
-        'savant-code/file-picker@1.0.0',
+        'SavantCode/file-picker@1.0.0',
       )
     })
 
@@ -385,16 +385,16 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should handle versioned agent permissions correctly', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@1.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@1.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
-      const toolCall = createSpawnToolCall('savant-code/thinker@1.0.0')
+      const toolCall = createSpawnToolCall('SavantCode/thinker@1.0.0')
 
       const { output } = await handleSpawnAgents({
         ...handleSpawnAgentsBaseParams,
         agentState: sessionState.mainAgentState,
         agentTemplate: parentAgent,
-        localAgentTemplates: { 'savant-code/thinker@1.0.0': childAgent },
+        localAgentTemplates: { 'SavantCode/thinker@1.0.0': childAgent },
         toolCall,
       })
 
@@ -403,8 +403,8 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should allow spawning simple agent name when parent allows versioned agent', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@1.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@1.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
       const toolCall = createSpawnToolCall('thinker') // Simple name
 
@@ -414,7 +414,7 @@ describe('Spawn Agents Permissions', () => {
         agentTemplate: parentAgent,
         localAgentTemplates: {
           thinker: childAgent,
-          'savant-code/thinker@1.0.0': childAgent, // Register with both keys
+          'SavantCode/thinker@1.0.0': childAgent, // Register with both keys
         },
         toolCall,
       })
@@ -424,16 +424,16 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should reject when version mismatch exists', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@2.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@2.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
-      const toolCall = createSpawnToolCall('savant-code/thinker@2.0.0')
+      const toolCall = createSpawnToolCall('SavantCode/thinker@2.0.0')
 
       const { output } = await handleSpawnAgents({
         ...handleSpawnAgentsBaseParams,
         agentState: sessionState.mainAgentState,
         agentTemplate: parentAgent,
-        localAgentTemplates: { 'savant-code/thinker@2.0.0': childAgent },
+        localAgentTemplates: { 'SavantCode/thinker@2.0.0': childAgent },
         toolCall,
       })
 
@@ -450,7 +450,7 @@ describe('Spawn Agents Permissions', () => {
       const reviewerAgent = createMockAgent('reviewer')
       const sessionState = getInitialSessionState(mockFileContext)
 
-      const toolCall: Savant-CodeToolCall<'spawn_agents'> = {
+      const toolCall: SavantCodeToolCall<'spawn_agents'> = {
         toolName: 'spawn_agents' as const,
         toolCallId: 'test-tool-call-id',
         input: {
@@ -485,7 +485,7 @@ describe('Spawn Agents Permissions', () => {
     const createInlineSpawnToolCall = (
       agentType: string,
       prompt = 'test prompt',
-    ): Savant-CodeToolCall<'spawn_agent_inline'> => ({
+    ): SavantCodeToolCall<'spawn_agent_inline'> => ({
       toolName: 'spawn_agent_inline' as const,
       toolCallId: 'test-tool-call-id',
       input: {
@@ -550,17 +550,17 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should handle versioned inline agent permissions correctly', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@1.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@1.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
-      const toolCall = createInlineSpawnToolCall('savant-code/thinker@1.0.0')
+      const toolCall = createInlineSpawnToolCall('SavantCode/thinker@1.0.0')
 
       // Should not throw
       await handleSpawnAgentInline({
         ...handleSpawnAgentInlineBaseParams,
         agentState: sessionState.mainAgentState,
         agentTemplate: parentAgent,
-        localAgentTemplates: { 'savant-code/thinker@1.0.0': childAgent },
+        localAgentTemplates: { 'SavantCode/thinker@1.0.0': childAgent },
         toolCall,
       })
 
@@ -568,8 +568,8 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should allow spawning simple agent name inline when parent allows versioned agent', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@1.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@1.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
       const toolCall = createInlineSpawnToolCall('thinker') // Simple name
 
@@ -580,7 +580,7 @@ describe('Spawn Agents Permissions', () => {
         agentTemplate: parentAgent,
         localAgentTemplates: {
           thinker: childAgent,
-          'savant-code/thinker@1.0.0': childAgent, // Register with both keys
+          'SavantCode/thinker@1.0.0': childAgent, // Register with both keys
         },
         toolCall,
       })
@@ -589,16 +589,16 @@ describe('Spawn Agents Permissions', () => {
     })
 
     it('should reject inline spawn when version mismatch exists', async () => {
-      const parentAgent = createMockAgent('parent', ['savant-code/thinker@1.0.0'])
-      const childAgent = createMockAgent('savant-code/thinker@2.0.0')
+      const parentAgent = createMockAgent('parent', ['SavantCode/thinker@1.0.0'])
+      const childAgent = createMockAgent('SavantCode/thinker@2.0.0')
       const sessionState = getInitialSessionState(mockFileContext)
-      const toolCall = createInlineSpawnToolCall('savant-code/thinker@2.0.0')
+      const toolCall = createInlineSpawnToolCall('SavantCode/thinker@2.0.0')
 
       const result = handleSpawnAgentInline({
         ...handleSpawnAgentInlineBaseParams,
         agentState: sessionState.mainAgentState,
         agentTemplate: parentAgent,
-        localAgentTemplates: { 'savant-code/thinker@2.0.0': childAgent },
+        localAgentTemplates: { 'SavantCode/thinker@2.0.0': childAgent },
         toolCall,
       })
 

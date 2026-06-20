@@ -1,4 +1,4 @@
-﻿import { createMockFs } from '@savant-code/common/testing/mocks/filesystem'
+import { createMockFs } from '@savant-code/common/testing/mocks/filesystem'
 import { createMockLogger } from '@savant-code/common/testing/mocks/logger'
 import { describe, it, expect } from 'bun:test'
 

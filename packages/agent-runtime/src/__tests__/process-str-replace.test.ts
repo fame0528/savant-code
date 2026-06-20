@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from 'bun:test'
+import { describe, expect, it } from 'bun:test'
 import { applyPatch } from 'diff'
 
 import { processStrReplace } from '../process-str-replace'

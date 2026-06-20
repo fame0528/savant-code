@@ -1,4 +1,4 @@
-﻿import { execSync } from 'child_process'
+import { execSync } from 'child_process'
 
 import { createMockTimers } from '@savant-code/common/testing/mocks/timers'
 import { describe, test, expect, beforeEach, afterEach, spyOn } from 'bun:test'

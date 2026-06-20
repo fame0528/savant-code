@@ -1,11 +1,11 @@
-﻿/**
+/**
  * Provide sensible defaults for required client env vars during SDK tests.
  * Keeps tests from failing when a developer hasn't exported the full web env.
  */
 const testDefaults: Record<string, string> = {
   NEXT_PUBLIC_SC_ENVIRONMENT: 'test',
   NEXT_PUBLIC_SAVANT_CODE_APP_URL: 'http://localhost:3000',
-  NEXT_PUBLIC_SUPPORT_EMAIL: 'support@savant-code.dev',
+  NEXT_PUBLIC_SUPPORT_EMAIL: 'support@SavantCode.dev',
   NEXT_PUBLIC_POSTHOG_API_KEY: 'test-posthog-key',
   NEXT_PUBLIC_POSTHOG_HOST_URL: 'https://us.i.posthog.com',
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_placeholder',

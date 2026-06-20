@@ -1,4 +1,4 @@
-﻿import { validateAgents } from '@savant-code/common/templates/agent-validation'
+import { validateAgents } from '@savant-code/common/templates/agent-validation'
 import {
   normalizeAgentIdForLookup,
   parsePublishedAgentId,
@@ -57,14 +57,14 @@ export async function getAgentTemplate(
 
   const parsed = parsePublishedAgentId(normalizedAgentId)
   if (!parsed) {
-    // If agentId doesn't parse as publisher/agent format, try as savant-code/agentId
-    const savant-codeParsed = parsePublishedAgentId(
+    // If agentId doesn't parse as publisher/agent format, try as SavantCode/agentId
+    const SavantCodeParsed = parsePublishedAgentId(
       `${DEFAULT_ORG_PREFIX}${normalizedAgentId}`,
     )
-    if (savant-codeParsed) {
+    if (SavantCodeParsed) {
       const dbAgent = await fetchAgentFromDatabase({
         ...params,
-        parsedAgentId: savant-codeParsed,
+        parsedAgentId: SavantCodeParsed,
       })
       if (dbAgent) {
         databaseAgentCache.set(dbAgent.id, dbAgent)

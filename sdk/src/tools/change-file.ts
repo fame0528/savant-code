@@ -1,4 +1,4 @@
-﻿import path from 'path'
+import path from 'path'
 
 import { fileExists } from '@savant-code/common/util/file'
 import { applyPatch } from 'diff'

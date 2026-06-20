@@ -1,5 +1,5 @@
-﻿/**
- * Savant-Free Web referral tiers.
+/**
+ * SavantFree Web referral tiers.
  *
  * Each *qualified* referral (referred user's GitHub account is at least
  * MIN_GITHUB_ACCOUNT_AGE_MONTHS old at signup) raises the referrer's tier.
@@ -15,7 +15,7 @@
  *  referrer just gets no credit (anti-farming). */
 export const MIN_GITHUB_ACCOUNT_AGE_MONTHS = 4
 
-export interface Savant-FreeReferralTier {
+export interface SavantFreeReferralTier {
   /** Tier index (0-based, in ascending order of referralsRequired). */
   tier: number
   /** Qualified referrals needed to reach this tier. */
@@ -24,12 +24,12 @@ export interface Savant-FreeReferralTier {
   standardModelDailyLimit: number
   /** Daily message cap for premium models. */
   premiumModelDailyLimit: number
-  /** Whether the "Powered by Savant-Free" watermark is removed from deploys. */
+  /** Whether the "Powered by SavantFree" watermark is removed from deploys. */
   removesWatermark: boolean
 }
 
 /** Tier ladder: 1 referral, then +2 (3 total), then +4 (7 total). */
-export const SAVANT_FREE_REFERRAL_TIERS: readonly Savant-FreeReferralTier[] = [
+export const SAVANT_FREE_REFERRAL_TIERS: readonly SavantFreeReferralTier[] = [
   {
     tier: 0,
     referralsRequired: 0,
@@ -85,7 +85,7 @@ export const SAVANT_FREE_WATERMARK_REMOVAL_REFERRALS =
 /** Highest tier unlocked by the given qualified referral count. */
 export function getReferralTier(
   qualifiedReferralCount: number | null | undefined,
-): Savant-FreeReferralTier {
+): SavantFreeReferralTier {
   const count = Math.max(0, qualifiedReferralCount ?? 0)
   let unlocked = SAVANT_FREE_REFERRAL_TIERS[0]
   for (const tier of SAVANT_FREE_REFERRAL_TIERS) {
@@ -97,7 +97,7 @@ export function getReferralTier(
 }
 
 /** Tier limits by tier index (clamped into range). */
-export function getTierLimits(tier: number): Savant-FreeReferralTier {
+export function getTierLimits(tier: number): SavantFreeReferralTier {
   const clamped = Math.min(Math.max(0, tier), MAX_SAVANT_FREE_REFERRAL_TIER)
   return SAVANT_FREE_REFERRAL_TIERS.find((t) => t.tier === clamped)!
 }
@@ -105,7 +105,7 @@ export function getTierLimits(tier: number): Savant-FreeReferralTier {
 /** Next tier above the given qualified referral count, or null if maxed. */
 export function getNextReferralTier(
   qualifiedReferralCount: number | null | undefined,
-): Savant-FreeReferralTier | null {
+): SavantFreeReferralTier | null {
   const current = getReferralTier(qualifiedReferralCount)
   return (
     SAVANT_FREE_REFERRAL_TIERS.find((tier) => tier.tier === current.tier + 1) ??

@@ -1,11 +1,11 @@
-﻿import { jsonToolResult } from '@savant-code/common/util/messages'
+import { jsonToolResult } from '@savant-code/common/util/messages'
 
 import { getAgentTemplate } from '../../../templates/agent-registry'
 import { formatValueForError } from '../../../util/format-value'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type {
@@ -18,7 +18,7 @@ import type { AgentState } from '@savant-code/common/types/session-state'
 type ToolName = 'set_output'
 export const handleSetOutput = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<ToolName>
+  toolCall: SavantCodeToolCall<ToolName>
 
   agentState: AgentState
   apiKey: string
@@ -89,7 +89,7 @@ export const handleSetOutput = (async (params: {
   agentState.output = finalOutput as Record<string, unknown>
 
   return { output: jsonToolResult({ message: 'Output set' }) }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>
 
 function getZodIssueCount(error: unknown): number {
   if (

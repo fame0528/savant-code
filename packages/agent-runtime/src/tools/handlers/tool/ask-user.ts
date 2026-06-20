@@ -1,6 +1,6 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 
@@ -9,7 +9,7 @@ type ToolName = 'ask_user'
 // Handler for ask_user - delegates to client
 export const handleAskUser = (async (params: {
   previousToolCallFinished: Promise<void>
-  toolCall: Savant-CodeToolCall<ToolName>
+  toolCall: SavantCodeToolCall<ToolName>
   requestClientToolCall: (toolCall: any) => Promise<any>
 }): Promise<{ output: SavantToolOutput<ToolName> }> => {
   const { previousToolCallFinished, toolCall, requestClientToolCall } = params
@@ -20,4 +20,4 @@ export const handleAskUser = (async (params: {
   return {
     output: result,
   }
-}) satisfies Savant-CodeToolHandlerFunction<ToolName>
+}) satisfies SavantCodeToolHandlerFunction<ToolName>

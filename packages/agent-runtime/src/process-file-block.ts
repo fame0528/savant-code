@@ -1,4 +1,4 @@
-﻿import {
+import {
   promptSuccess,
   type PromptResult,
 } from '@savant-code/common/util/error'

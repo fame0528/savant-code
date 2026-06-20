@@ -1,4 +1,4 @@
-﻿import type { ToolName } from '@savant-code/common/tools/constants'
+import type { ToolName } from '@savant-code/common/tools/constants'
 import type { ToolResultOutput } from '@savant-code/common/types/messages/content-part'
 import type { z } from 'zod/v4'
 
@@ -44,7 +44,7 @@ export function getCustomToolDefinition<
 }: {
   toolName: TN extends ToolName
     ? TN & {
-        error: `Hi there. This is a message from the Savant-Code team: You have used a custom tool where you needed to use overrideTools instead for name: ${TN}`
+        error: `Hi there. This is a message from the SavantCode team: You have used a custom tool where you needed to use overrideTools instead for name: ${TN}`
       }
     : TN
   inputSchema: z.ZodType<Args, Input>

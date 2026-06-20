@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SDK-specific environment variable types.
  *
  * Extends base types from common with SDK-specific vars for:

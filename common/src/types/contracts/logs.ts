@@ -1,4 +1,4 @@
-﻿/** Severity levels for the unified logs stream. */
+/** Severity levels for the unified logs stream. */
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'fatal'
 
 /** Origin of a log row. */

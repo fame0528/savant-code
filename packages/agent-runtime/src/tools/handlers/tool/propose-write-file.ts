@@ -1,13 +1,13 @@
-﻿import { createPatch } from 'diff'
+import { createPatch } from 'diff'
 
 import {
   getProposedContent,
   setProposedContent,
 } from './proposed-content-store'
 
-import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 import type {
-  Savant-CodeToolCall,
+  SavantCodeToolCall,
   SavantToolOutput,
 } from '@savant-code/common/tools/list'
 import type { RequestOptionalFileFn } from '@savant-code/common/types/contracts/client'
@@ -22,7 +22,7 @@ import type { ParamsExcluding } from '@savant-code/common/types/function-params'
 export const handleProposeWriteFile = (async (
   params: {
     previousToolCallFinished: Promise<void>
-    toolCall: Savant-CodeToolCall<'propose_write_file'>
+    toolCall: SavantCodeToolCall<'propose_write_file'>
 
     logger: Logger
     runId: string
@@ -84,4 +84,4 @@ export const handleProposeWriteFile = (async (
       },
     ],
   }
-}) as Savant-CodeToolHandlerFunction<'propose_write_file'>
+}) as SavantCodeToolHandlerFunction<'propose_write_file'>

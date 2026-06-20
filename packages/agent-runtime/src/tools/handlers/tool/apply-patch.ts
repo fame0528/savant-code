@@ -1,4 +1,4 @@
-﻿import type { Savant-CodeToolHandlerFunction } from '../handler-function-type'
+import type { SavantCodeToolHandlerFunction } from '../handler-function-type'
 
 export const handleApplyPatch = (async ({
   previousToolCallFinished,
@@ -14,4 +14,4 @@ export const handleApplyPatch = (async ({
   return {
     output: await requestClientToolCall(clientToolCall),
   }
-}) satisfies Savant-CodeToolHandlerFunction<'apply_patch'>
+}) satisfies SavantCodeToolHandlerFunction<'apply_patch'>

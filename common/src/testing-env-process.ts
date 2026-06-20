@@ -1,4 +1,4 @@
-﻿import type { BaseEnv, ProcessEnv } from './types/contracts/env'
+import type { BaseEnv, ProcessEnv } from './types/contracts/env'
 
 /**
  * Test-only helpers for process env snapshots.
@@ -62,7 +62,7 @@ export const createTestProcessEnv = (
   OPEN_TUI_THEME: undefined,
   OPENTUI_THEME: undefined,
 
-  // Savant-Code CLI-specific
+  // SavantCode CLI-specific
   SAVANT_CODE_IS_BINARY: undefined,
   SAVANT_CODE_CLI_VERSION: undefined,
   SAVANT_CODE_CLI_TARGET: undefined,

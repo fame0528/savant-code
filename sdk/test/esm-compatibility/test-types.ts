@@ -1,4 +1,4 @@
-﻿// Test TypeScript type resolution in ESM environment
+// Test TypeScript type resolution in ESM environment
 import {
   SavantClient as ClientClass,
   getCustomToolDefinition,

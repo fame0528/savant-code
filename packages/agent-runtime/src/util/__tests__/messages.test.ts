@@ -1,4 +1,4 @@
-﻿import {
+import {
   assistantMessage,
   jsonToolResult,
   systemMessage,
@@ -23,7 +23,7 @@ import {
 } from '../../util/messages'
 import * as tokenCounter from '../token-counter'
 
-import type { Savant-CodeToolMessage } from '@savant-code/common/tools/list'
+import type { SavantCodeToolMessage } from '@savant-code/common/tools/list'
 import type { Message } from '@savant-code/common/types/messages/savant-code-message'
 import type {
   TextPart,
@@ -780,7 +780,7 @@ describe('getPreviouslyReadFiles', () => {
           file: 'test.ts',
           errorMessage: 'error',
         }),
-      } satisfies Savant-CodeToolMessage<'write_file'>,
+      } satisfies SavantCodeToolMessage<'write_file'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -804,7 +804,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'export const utils = {}',
           },
         ] as const),
-      } satisfies Savant-CodeToolMessage<'read_files'>,
+      } satisfies SavantCodeToolMessage<'read_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -833,7 +833,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'export const Button = () => {}',
           },
         ] as const),
-      } satisfies Savant-CodeToolMessage<'find_files'>,
+      } satisfies SavantCodeToolMessage<'find_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -857,7 +857,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'content 1',
           },
         ]),
-      } satisfies Savant-CodeToolMessage<'read_files'>,
+      } satisfies SavantCodeToolMessage<'read_files'>,
       {
         role: 'tool',
         toolName: 'find_files',
@@ -868,7 +868,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'content 2',
           },
         ]),
-      } satisfies Savant-CodeToolMessage<'find_files'>,
+      } satisfies SavantCodeToolMessage<'find_files'>,
       userMessage('Some user message'),
     ]
 
@@ -899,7 +899,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'another small content',
           },
         ] as const),
-      } satisfies Savant-CodeToolMessage<'read_files'>,
+      } satisfies SavantCodeToolMessage<'read_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -939,7 +939,7 @@ describe('getPreviouslyReadFiles', () => {
         content: jsonToolResult({
           message: 'No files found matching the criteria',
         }),
-      } satisfies Savant-CodeToolMessage<'find_files'>,
+      } satisfies SavantCodeToolMessage<'find_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -961,7 +961,7 @@ describe('getPreviouslyReadFiles', () => {
             content: 'test content',
           },
         ]),
-      } satisfies Savant-CodeToolMessage<'read_files'>,
+      } satisfies SavantCodeToolMessage<'read_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })
@@ -975,7 +975,7 @@ describe('getPreviouslyReadFiles', () => {
         toolName: 'read_files',
         toolCallId: 'test-id',
         content: jsonToolResult([]),
-      } satisfies Savant-CodeToolMessage<'read_files'>,
+      } satisfies SavantCodeToolMessage<'read_files'>,
     ]
 
     const result = getPreviouslyReadFiles({ messages, logger })

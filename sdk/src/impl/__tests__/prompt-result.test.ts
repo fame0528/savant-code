@@ -1,4 +1,4 @@
-﻿import {
+import {
   ABORT_ERROR_MESSAGE,
   isAbortError,
   promptAborted,

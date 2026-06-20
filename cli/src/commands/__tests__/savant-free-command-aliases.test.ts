@@ -1,7 +1,7 @@
-﻿import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'bun:test'
 
-describe('savant-free command aliases', () => {
-  test('/model aliases /end-session in savant-free', () => {
+describe('SavantFree command aliases', () => {
+  test('/model aliases /end-session in SavantFree', () => {
     const slashCommandsUrl = new URL(
       '../../data/slash-commands.ts',
       import.meta.url,
@@ -38,12 +38,12 @@ describe('savant-free command aliases', () => {
         SAVANT_FREE_MODE: 'true',
         NODE_ENV: 'test',
         NEXT_PUBLIC_SC_ENVIRONMENT: 'test',
-        NEXT_PUBLIC_SAVANT_CODE_APP_URL: 'https://app.savant-code.test',
-        NEXT_PUBLIC_SUPPORT_EMAIL: 'support@savant-code.test',
+        NEXT_PUBLIC_SAVANT_CODE_APP_URL: 'https://app.SavantCode.test',
+        NEXT_PUBLIC_SUPPORT_EMAIL: 'support@SavantCode.test',
         NEXT_PUBLIC_POSTHOG_API_KEY: 'phc_test_key',
-        NEXT_PUBLIC_POSTHOG_HOST_URL: 'https://posthog.savant-code.test',
+        NEXT_PUBLIC_POSTHOG_HOST_URL: 'https://posthog.SavantCode.test',
         NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_123',
-        NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL: 'https://stripe.savant-code.test',
+        NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL: 'https://stripe.SavantCode.test',
         NEXT_PUBLIC_WEB_PORT: '3000',
       },
       stderr: 'pipe',

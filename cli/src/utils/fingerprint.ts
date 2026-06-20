@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Enhanced fingerprinting for CLI authentication.
  *
  * Uses hardware-based identifiers to create deterministic fingerprints,

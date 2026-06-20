@@ -1,4 +1,4 @@
-﻿import { ApplyPatchComponent } from './apply-patch'
+import { ApplyPatchComponent } from './apply-patch'
 import { CodeSearchComponent } from './code-search'
 import {
   ManageConnectionsComponent,

@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 
 import { BottomBanner } from './bottom-banner'
 import { useSubscriptionQuery } from '../hooks/use-subscription-query'
@@ -103,7 +103,7 @@ export const HelpBanner = () => {
           </box>
         </box>
 
-        {/* Credits Section â€” hidden in Savant-Free */}
+        {/* Credits Section â€” hidden in SavantFree */}
         {!IS_SAVANT_FREE && (
           <box style={{ flexDirection: 'column', gap: 0 }}>
             <SectionHeader>Credits</SectionHeader>

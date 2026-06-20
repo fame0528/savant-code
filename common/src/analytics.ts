@@ -1,4 +1,4 @@
-﻿import { env, DEBUG_ANALYTICS } from '@savant-code/common/env'
+import { env, DEBUG_ANALYTICS } from '@savant-code/common/env'
 
 import { createPostHogClient, type AnalyticsClient } from './analytics-core'
 import { AnalyticsEvent } from './constants/analytics-events'

@@ -1,4 +1,4 @@
-﻿import { KNOWLEDGE_FILE_NAMES_LOWERCASE } from '@savant-code/common/constants/knowledge'
+import { KNOWLEDGE_FILE_NAMES_LOWERCASE } from '@savant-code/common/constants/knowledge'
 import { escapeString } from '@savant-code/common/util/string'
 import { z } from 'zod/v4'
 

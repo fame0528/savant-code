@@ -57,7 +57,7 @@ export const MODEL_CONTEXT_WINDOWS: Record<string, number> = {
   'gemini-1.5-flash': 1_000_000,
   'gemini-2.0-flash': 1_000_000,
 
-  // Savant-Code custom (savant-free variants)
+  // SavantCode custom (SavantFree variants)
   'savant-free-flash': 1_000_000,
   'savant-free-pro': 200_000,
 }

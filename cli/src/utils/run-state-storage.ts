@@ -1,4 +1,4 @@
-﻿import * as fs from 'fs'
+import * as fs from 'fs'
 import path from 'path'
 import { randomUUID } from 'node:crypto'
 

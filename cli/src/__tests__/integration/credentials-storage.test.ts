@@ -1,4 +1,4 @@
-﻿import fs from 'fs'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
@@ -28,7 +28,7 @@ import type { User } from '../../utils/auth'
  * These tests verify the complete flow of saving, loading, and managing
  * user credentials on the file system. Credentials are stored in:
  * - Dev: ~/.config/savant-code-dev/credentials.json
- * - Prod: ~/.config/savant-code/credentials.json
+ * - Prod: ~/.config/SavantCode/credentials.json
  *
  * Tests ensure:
  * - Directories are created if missing
@@ -188,7 +188,7 @@ describe('Credentials Storage Integration', () => {
       )
     })
 
-    test('should use savant-code directory in production environment', async () => {
+    test('should use SavantCode directory in production environment', async () => {
       // Restore getConfigDir to use real implementation
       mock.restore()
 
@@ -199,7 +199,7 @@ describe('Credentials Storage Integration', () => {
 
       // Call real getConfigDir to verify it doesn't include '-dev'
       const configDir = authModule.getConfigDir()
-      expect(configDir).toEqual(path.join(os.homedir(), '.config', 'savant-code'))
+      expect(configDir).toEqual(path.join(os.homedir(), '.config', 'SavantCode'))
     })
 
     test('should allow credentials to persist across simulated CLI restarts', () => {

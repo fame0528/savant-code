@@ -1,7 +1,7 @@
-﻿import { API_KEY_ENV_VAR } from '@savant-code/common/constants/paths'
+import { API_KEY_ENV_VAR } from '@savant-code/common/constants/paths'
 
 import { WEBSITE_URL } from './constants'
-import { getSavant-CodeApiKeyFromEnv } from './env'
+import { getSavantCodeApiKeyFromEnv } from './env'
 import { run } from './run'
 
 import type { RunOptions, SavantClientOptions } from './run'
@@ -14,10 +14,10 @@ export class SavantClient {
   }
 
   constructor(options: SavantClientOptions) {
-    const foundApiKey = options.apiKey ?? getSavant-CodeApiKeyFromEnv()
+    const foundApiKey = options.apiKey ?? getSavantCodeApiKeyFromEnv()
     if (!foundApiKey) {
       throw new Error(
-        `Savant-Code API key not found. Please provide an apiKey in the constructor of SavantClient or set the ${API_KEY_ENV_VAR} environment variable.`,
+        `SavantCode API key not found. Please provide an apiKey in the constructor of SavantClient or set the ${API_KEY_ENV_VAR} environment variable.`,
       )
     }
 
@@ -36,14 +36,14 @@ export class SavantClient {
   }
 
   /**
-   * Run a Savant-Code agent with the specified options.
+   * Run a SavantCode agent with the specified options.
    *
    * @param agent - The agent to run. Use 'base' for the default agent, or specify a custom agent ID if you made your own agent config.
    * @param prompt - The user prompt describing what you want the agent to do.
    * @param params - (Optional) Additional parameters for the agent. Most agents don't use this, but some custom agents can take a JSON object as input in addition to the user prompt string.
    * @param handleEvent - (Optional) Callback function that receives every event during execution (assistant messages, tool calls, etc.). This allows you to stream the agent's progress in real-time. We will likely add a token-by-token streaming callback in the future.
    * @param previousRun - (Optional) JSON state returned from a previous run() call. Use this to continue a conversation or session with the agent, maintaining context from previous interactions.
-   * @param projectFiles - (Optional) All the files in your project as a plain JavaScript object. Keys should be the full path from your current directory to each file, and values should be the string contents of the file. Example: { "src/index.ts": "console.log('hi')" }. This helps Savant-Code pick good source files for context.
+   * @param projectFiles - (Optional) All the files in your project as a plain JavaScript object. Keys should be the full path from your current directory to each file, and values should be the string contents of the file. Example: { "src/index.ts": "console.log('hi')" }. This helps SavantCode pick good source files for context.
    * @param knowledgeFiles - (Optional) Knowledge files to inject into every run() call. Uses the same schema as projectFiles - keys are file paths and values are file contents. These files are added directly to the agent's context.
    * @param agentDefinitions - (Optional) Array of custom agent definitions. Each object should satisfy the AgentDefinition type. You can input the agent's id field into the agent parameter to run that agent.
    * @param customToolDefinitions - (Optional) Array of custom tool definitions that extend the agent's capabilities. Each tool definition includes a name, Zod schema for input validation, and a handler function. These tools can be called by the agent during execution.
@@ -60,7 +60,7 @@ export class SavantClient {
   }
 
   /**
-   * Check connection to the Savant-Code backend by hitting the /healthz endpoint.
+   * Check connection to the SavantCode backend by hitting the /healthz endpoint.
    *
    * @returns Promise that resolves to true if connected, false otherwise
    */

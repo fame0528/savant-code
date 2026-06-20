@@ -1,4 +1,4 @@
-﻿import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
+import * as mainPromptModule from '@savant-code/agent-runtime/main-prompt'
 import { getInitialSessionState } from '@savant-code/common/types/session-state'
 import { getStubProjectFileContext } from '@savant-code/common/util/file'
 import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test'

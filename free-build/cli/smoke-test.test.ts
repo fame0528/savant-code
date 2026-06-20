@@ -1,19 +1,19 @@
-﻿#!/usr/bin/env bun
+#!/usr/bin/env bun
 /**
- * Savant-Free Binary Smoke Test
+ * SavantFree Binary Smoke Test
  *
- * Verifies the compiled Savant-Free binary:
+ * Verifies the compiled SavantFree binary:
  * 1. Reports a valid version number
- * 2. Shows Savant-Free branding (not Savant-Code) in --help output
+ * 2. Shows SavantFree branding (not SavantCode) in --help output
  * 3. Excludes mode flags (--free, --max, --plan) from --help
- * 4. Renders the Savant-Free title screen (ASCII logo) in tmux
+ * 4. Renders the SavantFree title screen (ASCII logo) in tmux
  *
  * Prerequisites:
- *   bun savant-free/cli/build.ts <version>   # build the binary
+ *   bun SavantFree/cli/build.ts <version>   # build the binary
  *   brew install tmux                     # for title-screen test
  *
  * Run:
- *   bun test savant-free/cli/smoke-test.test.ts
+ *   bun test SavantFree/cli/smoke-test.test.ts
  */
 
 import { execFileSync, execSync, spawn, spawnSync } from 'child_process'
@@ -23,7 +23,7 @@ import path from 'path'
 import { describe, test, expect, afterEach } from 'bun:test'
 
 const REPO_ROOT = path.join(__dirname, '..', '..')
-const BINARY_PATH = path.join(REPO_ROOT, 'cli', 'bin', 'savant-free')
+const BINARY_PATH = path.join(REPO_ROOT, 'cli', 'bin', 'SavantFree')
 const TIMEOUT_MS = 20_000
 
 // ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ function isTmuxAvailable(): boolean {
   if (process.env.CI === 'true' || process.env.CI === '1') return false
   try {
     execSync(
-      'which tmux && tmux new-session -d -s __savant-free_tmux_check__ && tmux kill-session -t __savant-free_tmux_check__',
+      'which tmux && tmux new-session -d -s __SavantFree_tmux_check__ && tmux kill-session -t __SavantFree_tmux_check__',
       { stdio: 'pipe', timeout: 5000 },
     )
     return true
@@ -104,7 +104,7 @@ const tmuxAvailable = isTmuxAvailable()
 // Tests
 // ---------------------------------------------------------------------------
 
-describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
+describe.skipIf(!binaryExists)('SavantFree Binary Smoke Tests', () => {
   test(
     '--version outputs a valid semver version',
     () => {
@@ -121,26 +121,26 @@ describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
   )
 
   test(
-    '--help shows Savant-Free branding',
+    '--help shows SavantFree branding',
     () => {
       const output = stripAnsiCodes(runBinary(['--help']))
 
-      // CLI name is "savant-free"
-      expect(output).toContain('Usage: savant-free')
-      // Description is Savant-Free-specific
+      // CLI name is "SavantFree"
+      expect(output).toContain('Usage: SavantFree')
+      // Description is savant-free-specific
       expect(output).toContain('Free AI coding assistant')
-      // Must NOT contain the Savant-Code CLI name in the usage line
-      expect(output).not.toContain('Usage: savant-code')
+      // Must NOT contain the SavantCode CLI name in the usage line
+      expect(output).not.toContain('Usage: SavantCode')
     },
     TIMEOUT_MS,
   )
 
   test(
-    '--help excludes mode flags (Savant-Free is free-only)',
+    '--help excludes mode flags (SavantFree is free-only)',
     () => {
       const output = stripAnsiCodes(runBinary(['--help']))
 
-      // Mode flags should not be present in Savant-Free
+      // Mode flags should not be present in SavantFree
       expect(output).not.toMatch(/--free\b/)
       expect(output).not.toMatch(/--max\b/)
       expect(output).not.toMatch(/--plan\b/)
@@ -160,7 +160,7 @@ describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
       // The local URL is intentionally unreachable; the smoke signal is that
       // Commander accepted `login` and the CLI entered the login flow.
       expect(result.status).not.toBe(0)
-      expect(output).toContain('Savant-Free Login')
+      expect(output).toContain('SavantFree Login')
       expect(output).toContain('Generating login URL')
       expect(output).not.toContain('too many arguments')
       expect(output).not.toContain('unknown command')
@@ -187,7 +187,7 @@ describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
     })
 
     test(
-      'displays Savant-Free ASCII logo on startup',
+      'displays SavantFree ASCII logo on startup',
       async () => {
         sessionName = `savant-free-smoke-${Date.now()}`
 
@@ -218,19 +218,19 @@ describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
         // Bail with a descriptive error if the title screen never appeared
         if (!cleanOutput.includes('â–ˆâ–ˆ')) {
           throw new Error(
-            `Savant-Free title screen did not render within 10s. Captured output:\n${cleanOutput}`,
+            `SavantFree title screen did not render within 10s. Captured output:\n${cleanOutput}`,
           )
         }
 
-        // Verify it's the SAVANT-FREE logo, not SAVANT_CODE.
-        // The Savant-Free 'F' character's third line starts with the crossbar:
+        // Verify it's the SavantFree logo, not SAVANT_CODE.
+        // The SavantFree 'F' character's third line starts with the crossbar:
         //   â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•
-        // whereas Savant-Code 'C' has:
+        // whereas SavantCode 'C' has:
         //   â–ˆâ–ˆâ•‘     â–ˆâ–ˆâ•‘   â–ˆâ–ˆâ•‘
         // We check for the F + R pattern on line 3 of the logo.
         expect(cleanOutput).toContain('â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•—  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ•”â•')
 
-        // The Savant-Code logo's distinctive C+O opening should NOT appear
+        // The SavantCode logo's distinctive C+O opening should NOT appear
         expect(cleanOutput).not.toContain('â–ˆâ–ˆâ•”â•â•â•â•â•â–ˆâ–ˆâ•”â•â•â•â–ˆâ–ˆâ•—')
       },
       TIMEOUT_MS,
@@ -240,9 +240,9 @@ describe.skipIf(!binaryExists)('Savant-Free Binary Smoke Tests', () => {
 
 // Show skip messages so test output is informative
 if (!binaryExists) {
-  describe('Savant-Free Binary Required', () => {
+  describe('SavantFree Binary Required', () => {
     test.skip(
-      'Build the binary first: bun savant-free/cli/build.ts <version>',
+      'Build the binary first: bun SavantFree/cli/build.ts <version>',
       () => {},
     )
   })
