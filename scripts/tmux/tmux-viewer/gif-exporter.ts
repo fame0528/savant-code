@@ -2,17 +2,39 @@
  * GIF Exporter - Renders tmux session captures as an animated GIF
  *
  * Uses node-canvas to render terminal content as frames and gif-encoder-2 to encode.
+ *
+ * FID-2026-0620-002 — `canvas` is an `optionalDependency` because it requires
+ * native GTK3 + headers to build and fails on Windows. We lazy-load it
+ * inside `renderSessionToGif` so the module loads successfully on platforms
+ * where canvas isn't available; calling the GIF exporter there throws a
+ * helpful error.
  */
 
 import path from 'path'
 
-import { createCanvas } from 'canvas'
 import GIFEncoder from 'gif-encoder-2'
 
 import type { SessionData, Capture } from './types'
 import type { CanvasRenderingContext2D } from 'canvas'
 
 // Types are in gif-encoder-2.d.ts
+
+/**
+ * Lazy import: `canvas` is an optional native dep (GTK3 required on Linux;
+ * fails on Windows). Loaded here so module initialization succeeds even
+ * when canvas isn't installed.
+ */
+async function loadCanvas(): Promise<typeof import('canvas')> {
+  try {
+    return await import('canvas')
+  } catch (err) {
+    throw new Error(
+      `GIF export requires the optional 'canvas' native module, which is not installed on this platform. ` +
+        `On Linux, install GTK3 + headers (e.g. 'sudo apt install libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev'). ` +
+        `On Windows, this feature is not currently supported. Original error: ${err instanceof Error ? err.message : String(err)}`,
+    )
+  }
+}
 
 export interface GifExportOptions {
   /** Output file path for the GIF */
@@ -218,7 +240,8 @@ export async function renderSessionToGif(
     showLabel,
   })
 
-  // Create canvas
+  // Create canvas (lazy-loaded; throws if not available)
+  const { createCanvas } = await loadCanvas()
   const canvas = createCanvas(width, height)
   const ctx = canvas.getContext('2d')
 

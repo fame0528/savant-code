@@ -29,9 +29,11 @@
     "ci": "bun run build:sdk && bun run build:savant-free"
   },
   "dependencies": {
-    "canvas": "^3.2.0",
     "gif-encoder-2": "^1.0.5",
     "zod": "^4.2.1"
+  },
+  "optionalDependencies": {
+    "canvas": "^3.2.0"
   },
   "overrides": {
     "react": "^19.0.0",
