@@ -7,6 +7,8 @@ import { getCliEnv } from './utils/env'
 
 const require = createRequire(import.meta.url)
 
+export type OutputFormat = 'tui' | 'stream-json'
+
 export type ParsedArgs = {
   initialPrompt: string | null
   command?: string
@@ -16,6 +18,7 @@ export type ParsedArgs = {
   continueId?: string | null
   cwd?: string
   initialMode?: AgentMode
+  outputFormat: OutputFormat
 }
 
 export function loadPackageVersion(): string {
@@ -87,6 +90,10 @@ export function parseArgs({
         '--cwd <directory>',
         'Set the working directory (default: current directory)',
       )
+      .option(
+        '--output-format <format>',
+        'Output format (FID-2026-0620-006): "tui" (default, interactive) or "stream-json" (NDJSON to stdout, for CI/scripting). Auto-detected when stdout is not a TTY.',
+      )
       .option('--lite', 'Start in LITE mode')
       .option('--free', 'Start in LITE mode (deprecated alias)')
       .option('--max', 'Start in MAX mode')
@@ -130,5 +137,23 @@ export function parseArgs({
         : null,
     cwd: options.cwd,
     initialMode,
+    // FID-2026-0620-006 — stream-JSON output mode. Auto-detect TTY per Q11.
+    outputFormat: resolveOutputFormat(options.outputFormat),
   }
+}
+
+/**
+ * Resolves the effective output format, applying TTY auto-detection.
+ *
+ * FID-2026-0620-006 — Q11: "Should TUI mode auto-fallback to stream-json
+ * when stdout is not a TTY? My recommendation: yes, auto-detect."
+ */
+function resolveOutputFormat(explicit?: string): OutputFormat {
+  if (explicit === 'stream-json') return 'stream-json'
+  if (explicit === 'tui') return 'tui'
+  // Auto-detect: if stdout is not a TTY, default to stream-json so
+  // pipelines (`savant-code ... | jq`, redirects to file) work out of
+  // the box without explicit flags.
+  if (!process.stdout.isTTY) return 'stream-json'
+  return 'tui'
 }

@@ -49,6 +49,17 @@ export {
   type ActivateSkillOptions,
 } from './skills/load-skills'
 
+export {
+  StreamJsonEmitter,
+  createStdoutEmitter,
+} from './utils/stream-json-emitter'
+
+export {
+  STREAM_JSON_SCHEMA_VERSION,
+  type StreamEvent,
+  type StreamEventType,
+} from './types/stream-events'
+
 export type {
   SkillDefinition,
   SkillMetadata,

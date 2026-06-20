@@ -174,11 +174,27 @@ async function main(): Promise<void> {
     continueId,
     cwd,
     initialMode,
+    outputFormat,
   } = parseArgs()
 
   const isLoginCommand = command === 'login'
   const isPublishCommand = command === 'publish'
   const hasAgentOverride = Boolean(agent?.trim())
+
+  // FID-2026-0620-006 — stream-JSON output mode. When set (explicitly
+  // or via TTY auto-detection), skip the entire TUI path and run the
+  // agent once, emitting NDJSON events to stdout.
+  if (outputFormat === 'stream-json') {
+    const cwdResolved = cwd ?? process.cwd()
+    setProjectRoot(cwdResolved)
+    const exitCode = await runStreamJsonMode({
+      initialPrompt,
+      cwd: cwdResolved,
+      agent: agent?.trim() || 'base',
+      model: 'auto',
+    })
+    process.exit(exitCode)
+  }
 
   await initializeApp({ cwd })
 
