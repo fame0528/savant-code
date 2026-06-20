@@ -28,7 +28,7 @@
   "dependencies": {
     "gpt-tokenizer": "^2.8.1",
     "zod-from-json-schema": "0.4.2",
-    "lodash": "4.17.23"
+    "lodash": "^4.18.0"
   },
   "devDependencies": {}
 }
