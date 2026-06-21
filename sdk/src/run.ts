@@ -529,15 +529,26 @@ async function runOnce({
   const promptId = Math.random().toString(36).substring(2, 15)
 
   // Send input
-  const userInfo = await getUserInfoFromApiKey({
-    ...agentRuntimeImpl,
-    apiKey,
-    fields: ['id'],
-  })
-  if (!userInfo) {
+  // Per user feedback (2026-06-20): "savant is not an api provider, savant is
+  // the consumer". In direct-OpenRouter mode (no SAVANT_CODE_API_KEY), we
+  // skip the user-info lookup because there is no SavantCode backend to
+  // resolve the user against. We synthesize a placeholder userId so the rest
+  // of the run pipeline (cost logging, analytics) can still proceed without
+  // touching the network.
+  const isDirectMode = !apiKey
+  const userInfo = isDirectMode
+    ? null
+    : await getUserInfoFromApiKey({
+        ...agentRuntimeImpl,
+        apiKey,
+        fields: ['id'],
+      })
+  if (!isDirectMode && !userInfo) {
     return getCancelledRunState('Invalid API key or user not found')
   }
-  const userId = userInfo.id
+  const userId = isDirectMode
+    ? 'direct-mode-user'
+    : userInfo!.id
 
   if (signal?.aborted) {
     return getCancelledRunState('Run cancelled by user.')

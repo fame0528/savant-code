@@ -107,8 +107,13 @@ type OpenRouterUsageAccounting = {
 /**
  * Get the appropriate model for a request.
  *
- * If ChatGPT OAuth credentials are available and the model is an OpenAI model,
- * returns an OpenAI direct model. Otherwise, returns the SavantCode backend model.
+ * Priority:
+ * 1. ChatGPT OAuth direct (if credentials are available and model is allowlisted)
+ * 2. Direct OpenRouter (if OPENROUTER_API_KEY is set and SAVANT_CODE_API_KEY is not —
+ *    i.e. user is using OpenRouter as their primary, no SavantCode backend)
+ * 3. SavantCode backend with BYOK OpenRouter (if both keys are set — backend
+ *    routes through OpenRouter using the user's key for upstream billing)
+ * 4. SavantCode backend (default — user has a SavantCode account)
  *
  * This function is async because it may need to refresh the OAuth token.
  */
@@ -138,7 +143,7 @@ export async function getModelForRequest(
 
       if (chatGptOAuthCredentials) {
         return {
-          model: createOpenAIOAuthModel(
+          model: createOpenAIOauthModel(
             model,
             chatGptOAuthCredentials.accessToken,
           ),
@@ -152,6 +157,18 @@ export async function getModelForRequest(
           'ChatGPT OAuth credentials unavailable. Please reconnect with /connect:chatgpt.',
         )
       }
+    }
+  }
+
+  const openrouterApiKey = getByokOpenrouterApiKeyFromEnv()
+
+  // Direct OpenRouter mode: user has an OpenRouter key but no SavantCode backend
+  // key. Route directly to https://openrouter.ai/api/v1 with the user's key.
+  // This is the natural mode for the open-source CLI — no vendor lock-in.
+  if (openrouterApiKey && !apiKey) {
+    return {
+      model: createOpenRouterDirectModel(openrouterApiKey, model),
+      isChatGptOAuth: false,
     }
   }
 
@@ -188,6 +205,33 @@ function createOpenAIOAuthModel(
     fetch: createChatGptBackendFetch(),
     supportsStructuredOutputs: true,
     includeUsage: undefined,
+  })
+}
+
+/**
+ * Create a model that routes directly to OpenRouter using the user's own key.
+ * No SavantCode backend involved — the user is the consumer of OpenRouter's API.
+ *
+ * Requires OPENROUTER_API_KEY (or the legacy SAVANT_CODE_BYOK_OPENROUTER alias).
+ * OpenRouter recommends sending HTTP-Referer + X-Title for app attribution.
+ */
+function createOpenRouterDirectModel(
+  openrouterApiKey: string,
+  model: string,
+): LanguageModel {
+  return new OpenAICompatibleChatLanguageModel(model, {
+    provider: 'openrouter',
+    url: ({ path: endpoint }) =>
+      new URL(path.join('/api/v1', endpoint), 'https://openrouter.ai').toString(),
+    headers: () => ({
+      Authorization: `Bearer ${openrouterApiKey}`,
+      'HTTP-Referer': 'https://savant-code.dev',
+      'X-Title': 'Savant-Code',
+      'user-agent': `ai-sdk/openai-compatible/${VERSION}/savant-code-direct-openrouter`,
+    }),
+    fetch: undefined,
+    includeUsage: undefined,
+    supportsStructuredOutputs: true,
   })
 }
 

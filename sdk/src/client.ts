@@ -1,7 +1,7 @@
 import { API_KEY_ENV_VAR } from '@savant-code/common/constants/paths'
 
 import { WEBSITE_URL } from './constants'
-import { getSavantCodeApiKeyFromEnv } from './env'
+import { getSavantCodeApiKeyFromEnv, getByokOpenrouterApiKeyFromEnv } from './env'
 import { run } from './run'
 
 import type { RunOptions, SavantClientOptions } from './run'
@@ -15,14 +15,21 @@ export class SavantClient {
 
   constructor(options: SavantClientOptions) {
     const foundApiKey = options.apiKey ?? getSavantCodeApiKeyFromEnv()
-    if (!foundApiKey) {
+    const hasOpenRouterKey = Boolean(getByokOpenrouterApiKeyFromEnv())
+
+    if (!foundApiKey && !hasOpenRouterKey) {
       throw new Error(
-        `SavantCode API key not found. Please provide an apiKey in the constructor of SavantClient or set the ${API_KEY_ENV_VAR} environment variable.`,
+        `SavantCode API key not found. Please provide an apiKey in the constructor of SavantClient, set the ${API_KEY_ENV_VAR} environment variable, or set OPENROUTER_API_KEY for direct OpenRouter usage.`,
       )
     }
 
+    // If no SavantCode key but an OpenRouter key is set, we use the
+    // 'direct OpenRouter' code path in model-provider.ts (apiKey is
+    // empty/falsy → triggers the !apiKey branch). The model-provider
+    // already routes this case to https://openrouter.ai/api/v1 with the
+    // user's OpenRouter key as Bearer auth.
     this.options = {
-      apiKey: foundApiKey,
+      apiKey: foundApiKey ?? '',
       handleEvent: (event) => {
         if (event.type === 'error') {
           throw new Error(
