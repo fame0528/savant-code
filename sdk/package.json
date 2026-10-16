@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@savant-code/sdk",
   "private": false,
   "version": "0.2.0",
@@ -74,7 +74,7 @@
   "devDependencies": {
     "@types/diff": "8.0.0",
     "@types/micromatch": "^4.0.9",
-    "adm-zip": "^0.5.12",
+    "adm-zip": "^0.6.0",
     "dts-bundle-generator": "^9.5.1",
     "node-fetch": "^3.3.2"
   },
